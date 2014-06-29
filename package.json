@@ -1,6 +1,6 @@
 {
     "name": "baboon-frontend",
-    "branchVersion": "0.1.*",
+    "branchVersion": "0.5.*",
     "repository": {
         "type": "git",
         "url": "https://github.com/litixsoft/baboon-frontend.git"
