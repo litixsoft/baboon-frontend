@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <title>Example</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/main_vendor.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="main">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="container">
+
+      <!--<div ng-include="'common/navigation/navbar.html'"></div>-->
+
+      <!--<h4>Tree with standard list</h4>-->
+      <!--<com-nav-tree></com-nav-tree>-->
+
+        <!--<hr>-->
+
+      <!--<h4>Tree with custom list</h4>-->
+      <!--<com-nav-tree nav-linklist="nav1"></com-nav-tree>-->
+
+        <!--<hr>-->
+
+      <!--<h4>Tree with standard top list</h4>-->
+      <!--<com-nav type="top"></com-nav>-->
+
+        <!--<hr>-->
+
+      <!--<h4>Tree with custom top list</h4>-->
+      <!--<com-nav nav-linklist="nav1" type="top"></com-nav>-->
+
+        <!--<hr>-->
+
+      <!--<h4>Tree with standard flat list</h4>-->
+        <div class="header">
+            <com-nav type="list" orientation="horizontal" class="pull-right"></com-nav>
+            <h3 class="text-muted">example</h3>
+        </div>
+
+
+      <div ng-view=""></div>
+
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+      </div>
+    </div>
+
+    <!--[if lt IE 9]>
+    <!-- build:js(.) scripts/main/ie_vendor.js -->
+    <script src="bower_components/es5-shim/es5-shim.min.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <!-- endbuild -->
+    <![endif]-->
+
+    <!-- build:js(.) scripts/main/vendor.js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/main/scripts.js -->
+        <script src="common/navigation/navigation.js"></script>
+        <script src="modules/main/main.js"></script>
+        <script src="modules/main/home/home.js"></script>
+        <script src="modules/main/home/contact/contact.js"></script>
+        <script src="modules/main/home/about/about.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
