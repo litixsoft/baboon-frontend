@@ -4,7 +4,7 @@ Baboon SPA frontend reference application, based on Angular, backend independent
 
 ## Documentation
 
-## Configure server for toplevel app's in html5Mode
+## Configure server for html5Mode
 
 ### Express Rewrites
 ```javascript
