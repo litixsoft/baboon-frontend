@@ -19,44 +19,52 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="container">
-
-      <!--<div ng-include="'common/navigation/navbar.html'"></div>-->
-
-      <!--<h4>Tree with standard list</h4>-->
-      <!--<com-nav-tree></com-nav-tree>-->
-
-        <!--<hr>-->
-
-      <!--<h4>Tree with custom list</h4>-->
-      <!--<com-nav-tree nav-linklist="nav1"></com-nav-tree>-->
-
-        <!--<hr>-->
-
-      <!--<h4>Tree with standard top list</h4>-->
-      <!--<com-nav type="top"></com-nav>-->
-
-        <!--<hr>-->
-
-      <!--<h4>Tree with custom top list</h4>-->
-      <!--<com-nav nav-linklist="nav1" type="top"></com-nav>-->
-
-        <!--<hr>-->
-
-      <!--<h4>Tree with standard flat list</h4>-->
+    <div id="singlepageFrame" class="ng-cloak">
         <div class="header">
-            <com-nav type="list" orientation="horizontal" class="pull-right"></com-nav>
-            <h3 class="text-muted">example</h3>
+            <div class="p-wrapper">
+                <div class="action-area">
+                    <!--<div class="login-area pull-right" ng-include="'common/popup_login/popup_login.html'"></div>-->
+                    <div class="flag-area pull-right">
+                        <div class="btn-group dark-select">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                select language&nbsp;&nbsp;<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a ng-href="" ng-click="switchLocale('de-de')"><img src="images/flag-germany48.png" width="48px" height="48px" title="Sprachauswahl: deutsche Sprache auswählen!"/>&nbsp;&nbsp;german</a>
+                                    <a ng-href="" ng-click="switchLocale('en-us')"><img src="images/flag-usa48.png" width="48px" height="48px" title="Language selection: select english language!"/>&nbsp;&nbsp;english</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <h3 class="text-muted">baboon-angular</h3>
+            </div>
         </div>
+        <!-- Add your site or application content here -->
+        <div class="layout-content">
+            <div class="col-left">
+                <div class="container">
+                    <com-nav-tree></com-nav-tree>
 
+                </div>
+            </div>
+            <div class="col-right">
+                <div class="container">
 
-      <div ng-view=""></div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
+                </div>
+            </div>
+            <div class="col-center">
+                <div class="view-container">
+                    <div class="container" ng-view=""></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="footer">
+            <p>♥ from the Baboon team</p>
+        </div>
 
     <!--[if lt IE 9]>
     <!-- build:js(.) scripts/main/ie_vendor.js -->

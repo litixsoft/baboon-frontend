@@ -1,27 +1,97 @@
-/* Space out content a bit */
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+
+#singlepageFrame {
+  .layout-content{
+    .col-center{
+      border-right: 1px solid #E5E5E5;
+      border-left: 1px solid #E5E5E5;
+      &:before{
+        content: 'Center Column';
+        position:absolute;
+        display:block;
+        text-align: center;
+        margin:0px;
+        color:#ccc;
+        font-size: 11px;
+        background:#f6f6f6;
+        padding:2px 5px;
+        text-shadow: 0 0 1px white;
+        border-radius: 0 0 5px 0;
+        border-bottom:1px solid #eeeeee;
+        border-left:1px solid #eeeeee;
+        border-right:1px solid #eeeeee;
+      }
+    }
+    .col-left{
+      &:before{
+        content: 'Left Column';
+        position:absolute;
+        display:block;
+        text-align: center;
+        margin:0;
+        color:#ccc;
+        font-size: 11px;
+        background:#f6f6f6;
+        padding:2px 5px;
+        text-shadow: 0 0 1px white;
+        border-radius: 0 0 5px 0;
+        border-bottom:1px solid #eeeeee;
+        border-left:1px solid #eeeeee;
+        border-right:1px solid #eeeeee;
+      }
+    }
+    .col-right{
+      &:before{
+        content: 'Right Column';
+        position:absolute;
+        display:block;
+        text-align: center;
+        margin:0;
+        color:#ccc;
+        font-size: 11px;
+        background:#f6f6f6;
+        padding:2px 5px;
+        text-shadow: 0 0 1px white;
+        border-radius: 0 0 5px 0;
+        border-bottom:1px solid #eeeeee;
+        border-left:1px solid #eeeeee;
+        border-right:1px solid #eeeeee;
+      }
+    }
+  }
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
 
 /* Custom page header */
 .header {
+  padding:10px 0;
+  text-align:center;
+  //  position:fixed;
+  //  top:0;
+  //  left:0;
+  //  width:100%;
   border-bottom: 1px solid #e5e5e5;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+
+  ul.nav{
+    display:inline-block;
+  }
 }
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.content{
+  padding:10px 0;
+  .jumbotron{
+    box-shadow:0 0 6px rgba(0,0,0,0.4);
+    border:1px solid white;
+  }
+}
+.content.beige-noise{
+  //  background:#f4f4f4;
 }
 
 /* Custom page footer */
@@ -57,23 +127,4 @@ body {
 }
 .marketing p + h4 {
   margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
 }
