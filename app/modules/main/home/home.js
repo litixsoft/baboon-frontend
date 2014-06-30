@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('main.home', [
+    'main.home.navexample',
     'main.home.about',
     'main.home.contact'
 ])

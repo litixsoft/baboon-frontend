@@ -15,6 +15,11 @@ angular.module('common.navigation',[])
                             'app': 'main'
                         },
                         {
+                            'title': 'Navigation Examples',
+                            'route': '/main/navexample',
+                            'app': 'main'
+                        },
+                        {
                             'title': 'About',
                             'route': '/main/about',
                             'app': 'main'
@@ -299,7 +304,7 @@ angular.module('common.navigation',[])
                             '<div class="nav-icon {{data.icon}}"></div>'+
                             '<a ng-if="!data.norouting && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>'+
                             '<a ng-if="!data.norouting && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>'+
-                            '<a ng-if="data.norouting" ng-class="{spacer: data.children.length > 0}" ng-click="openRedirect(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>'+
+                            '<a ng-if="data.norouting" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>'+
                         '</div>'+
                         '<ul class="display {{data.hide}}" ng-if="data.children.length">'+
                             '<li ng-repeat="data in data.children" ng-include="\'bbc/navigation/tpls/treeview/inner.html\'"></li>'+
@@ -323,42 +328,6 @@ angular.module('common.navigation',[])
                         }
                     });
                     return found;
-                };
-
-                scope.findFirstLink = function (list, _level){
-                    var level =  _level || 0;
-                    var childs = 0;
-
-                    for(var link in list){
-                        if(level===0){
-                            level = list[link].level;
-                        }
-                        if(!list[link].norouting){
-                            if(level === list[link].level){
-                                return list[link].route;
-                            } else {
-                                childs++;
-                            }
-                        }
-                    }
-                    if(childs > 0){
-                        return scope.findFirstLink(list, (level+1));
-                    }
-                };
-
-                scope.openRedirect = function(list) {
-                    var redirect = scope.findFirstLink(list.children);
-                    var currentApp = ACTIVE_APP;
-                    if(redirect){
-                        list.hide = 'bbc-open';
-                        if(list.app !== currentApp){
-                            window.location = redirect;
-                        } else {
-                            $location.path(redirect);
-                        }
-                    } else {
-                        window.location = '/';
-                    }
                 };
 
                 scope.toggleShow = function (data) {
