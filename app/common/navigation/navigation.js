@@ -6,20 +6,18 @@ angular.module('common.navigation',[])
             [
                 {
                     'title': 'Home',
-                    'route': '/main/home',
+                    'norouting': true,
                     'app': 'main',
                     'children': [
                         {
+                            'title': 'Start',
+                            'route': '/main/home',
+                            'app': 'main'
+                        },
+                        {
                             'title': 'About',
                             'route': '/main/about',
-                            'app': 'main'//,
-//                            'children': [
-//                                {
-//                                    'title': 'Imprint',
-//                                    'route': '/main/about/imprint',
-//                                    'app': 'main'
-//                                }
-//                            ]
+                            'app': 'main'
                         },
                         {
                             'title': 'Contact',
