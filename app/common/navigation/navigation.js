@@ -5,12 +5,12 @@ angular.module('common.navigation',[])
         standard :
             [
                 {
-                    'title': 'Home',
+                    'title': 'Main',
                     'norouting': true,
                     'app': 'main',
                     'children': [
                         {
-                            'title': 'Start',
+                            'title': 'Home',
                             'route': '/main/home',
                             'app': 'main'
                         },

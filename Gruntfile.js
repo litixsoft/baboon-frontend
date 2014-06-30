@@ -154,6 +154,19 @@ module.exports = function (grunt) {
                     }
                 }
             },
+            testDist: {
+                options: {
+                    port: 9001,
+                    middleware: function (connect) {
+                        return [
+                            connect.static(appConfig.dist),
+                            connect().use('/', function(req, res, next) {
+                                connectRewrite(req, res, appConfig.app, next);
+                            })
+                        ];
+                    }
+                }
+            },
             dist: {
                 options: {
                     open: true,
@@ -187,6 +200,32 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/app/**/*.spec.js',
                     '<%= yeoman.app %>/common/**/*.spec.js'
                 ]
+            },
+            jslint: {
+                options: {
+                    reporter: 'jslint',
+                    reporterOutput: '<%= yeoman.reports %>/lint/jshint.xml'
+                },
+                files: {
+                    src: [
+                        'Gruntfile.js',
+                        '<%= yeoman.app %>/app/**/*.js',
+                        '<%= yeoman.app %>/common/**/*.js'
+                    ]
+                }
+            },
+            checkstyle: {
+                options: {
+                    reporter: 'checkstyle',
+                    reporterOutput: '<%= yeoman.reports %>/lint/jshint_checkstyle.xml'
+                },
+                files: {
+                    src: [
+                        'Gruntfile.js',
+                        '<%= yeoman.app %>/app/**/*.js',
+                        '<%= yeoman.app %>/common/**/*.js'
+                    ]
+                }
             }
         },
 
@@ -205,6 +244,8 @@ module.exports = function (grunt) {
                 ]
             },
             server: '.tmp',
+            test: '<%= yeoman.reports %>/test',
+            jslint: '<%= yeoman.reports %>/jslint',
             coverage: '<%= yeoman.reports %>/coverage'
         },
 
@@ -387,6 +428,14 @@ module.exports = function (grunt) {
             coverage: {
                 configFile: 'test/karma.coverage.conf.js'
             },
+            ci: {
+                configFile: 'test/karma.conf.js',
+                reporters: ['mocha', 'junit'],
+                junitReporter: {
+                    outputFile: '<%= yeoman.reports %>/test/client/karma.xml',
+                    suite: 'karma'
+                }
+            },
             cobertura: {
                 configFile: 'test/karma.coverage.conf.js',
                 coverageReporter: {
@@ -417,6 +466,16 @@ module.exports = function (grunt) {
                     }
                 ]
             }
+        },
+        bgShell: {
+            updateWebdriver: {
+                cmd: 'node node_modules/protractor/bin/webdriver-manager update',
+                fail: true
+            },
+            protractor: {
+                cmd: 'node node_modules/protractor/bin/protractor test/e2e.conf.js',
+                fail: true
+            }
         }
     });
 
@@ -445,12 +504,38 @@ module.exports = function (grunt) {
         'karma:unit'
     ]);
 
+    grunt.registerTask('e2e', [
+        'bgShell:updateWebdriver',
+        'build:dev',
+        'connect:test',
+        'bgShell:protractor'
+    ]);
+
+    // test scenarios production mode
+    grunt.registerTask('e2e:dist', [
+        'bgShell:updateWebdriver',
+        'build',
+        'connect:testDist',
+        'bgShell:protractor'
+    ]);
+
     grunt.registerTask('cover', [
         'build:dev',
         'clean:coverage',
         'connect:test',
         'karma:coverage',
         'open:coverage'
+    ]);
+
+    grunt.registerTask('ci', [
+        'clean:test',
+        'clean:coverage',
+        'clean:jslint',
+        'jshint:jslint',
+        'jshint:checkstyle',
+        'karma:ci',
+        'karma:coverage',
+        'karma:cobertura'
     ]);
 
     grunt.registerTask('build:dev', [
