@@ -310,8 +310,6 @@ angular.module('common.navigation',[])
 
                 scope.app = ACTIVE_APP;
 
-                var linkList = NAVOBJ[scope.navLinklist || 'standard'];
-                scope.navList = $comNavProvider.getTree(linkList,{current: scope.app});
 
                 scope.openAll = function(list) {
                     var found = false;
@@ -365,21 +363,6 @@ angular.module('common.navigation',[])
                     }
                 };
 
-//                $bbcNavigation.getTree(function (error, navList) {
-//                    if (error || navList.length === 0) {
-//                        scope.navList = [];
-//                    }
-//                    else {
-//                        scope.navList = navList;
-//                        angular.forEach(scope.navList,function(value){
-//                            if(value.app===scope.app){
-//                                value.hide = 'bbc-open';
-//                            }
-//                        });
-//                        scope.openAll(scope.navList);
-//                    }
-//                });
-
                 scope.toggleShow = function (data) {
                     if (data.hide === 'bbc-close' || data.hide === undefined) {
                         data.hide = 'bbc-open';
@@ -395,6 +378,17 @@ angular.module('common.navigation',[])
                 scope.isActiveApp = function (app) {
                     return app === ACTIVE_APP;
                 };
+
+                var linkList = NAVOBJ[scope.navLinklist || 'standard'];
+                scope.navList = $comNavProvider.getTree(linkList,{current: scope.app});
+                if (scope.navList.length !== 0) {
+                    angular.forEach(scope.navList,function(value){
+                        if(value.app===scope.app){
+                            value.hide = 'bbc-open';
+                        }
+                    });
+                    scope.openAll(scope.navList);
+                }
             }
         };
     });
