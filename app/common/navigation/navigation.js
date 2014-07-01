@@ -36,7 +36,7 @@ angular.module('common.navigation',[])
                     'app': 'admin'
                 }
             ],
-        nav1:[
+        footer:[
             {
                 'title': 'About',
                 'route': '/main/about',
@@ -134,7 +134,7 @@ angular.module('common.navigation',[])
                         if(value.children) {
                             var openLink = scope.openAll(value.children);
                             if (openLink) {
-                                value.hide = 'bbc-open';
+                                value.hide = 'nav-open';
                             }
                         }
                         if(value.route===$location.path()){
@@ -145,10 +145,10 @@ angular.module('common.navigation',[])
                 };
 
                 scope.toggleShow = function (data) {
-                    if (data.hide === 'bbc-close' || data.hide === undefined) {
-                        data.hide = 'bbc-open';
+                    if (data.hide === 'nav-close' || data.hide === undefined) {
+                        data.hide = 'nav-open';
                     } else {
-                        data.hide = 'bbc-close';
+                        data.hide = 'nav-close';
                     }
                 };
 
@@ -165,7 +165,7 @@ angular.module('common.navigation',[])
                 if (scope.navList.length !== 0) {
                     angular.forEach(scope.navList,function(value){
                         if(value.app===scope.app){
-                            value.hide = 'bbc-open';
+                            value.hide = 'nav-open';
                         }
                     });
                     scope.openAll(scope.navList);
