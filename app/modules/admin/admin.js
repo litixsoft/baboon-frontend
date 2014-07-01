@@ -3,6 +3,7 @@
 angular.module('admin', [
     'ngRoute',
     'common.navigation',
+    'ui.bootstrap',
     'admin.home'
 ])
     .constant('ACTIVE_APP', 'admin')

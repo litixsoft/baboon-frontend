@@ -3,6 +3,7 @@
 angular.module('main', [
     'ngRoute',
     'common.navigation',
+    'ui.bootstrap',
     'main.home'
 ])
     .constant('ACTIVE_APP', 'main')
