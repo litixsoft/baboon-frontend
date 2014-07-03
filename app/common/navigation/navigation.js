@@ -1,42 +1,41 @@
 'use strict';
 
-angular.module('common.navigation',[])
-    .constant('NAVOBJ',{
-        standard :
-            [
-                {
-                    'title': 'Main',
-                    'app': 'main',
-                    'children': [
-                        {
-                            'title': 'Home',
-                            'route': '/main/home',
-                            'app': 'main'
-                        },
-                        {
-                            'title': 'Navigation Examples',
-                            'route': '/main/navexample',
-                            'app': 'main'
-                        },
-                        {
-                            'title': 'About',
-                            'route': '/main/about',
-                            'app': 'main'
-                        },
-                        {
-                            'title': 'Contact',
-                            'route': '/main/contact',
-                            'app': 'main'
-                        }
-                    ]
-                },
-                {
-                    'title': 'Admin',
-                    'route': '/admin/home',
-                    'app': 'admin'
-                }
-            ],
-        footer:[
+angular.module('common.navigation', [])
+    .constant('NAVOBJ', {
+        standard: [
+            {
+                'title': 'Main',
+                'app': 'main',
+                'children': [
+                    {
+                        'title': 'Home',
+                        'route': '/main/home',
+                        'app': 'main'
+                    },
+                    {
+                        'title': 'Navigation Examples',
+                        'route': '/main/navexample',
+                        'app': 'main'
+                    },
+                    {
+                        'title': 'About',
+                        'route': '/main/about',
+                        'app': 'main'
+                    },
+                    {
+                        'title': 'Contact',
+                        'route': '/main/contact',
+                        'app': 'main'
+                    }
+                ]
+            },
+            {
+                'title': 'Admin',
+                'route': '/admin/home',
+                'app': 'admin'
+            }
+        ],
+        footer: [
             {
                 'title': 'About',
                 'route': '/main/about',
@@ -55,7 +54,7 @@ angular.module('common.navigation',[])
                 'app': 'main'
             }
         ],
-        toplevel:[
+        toplevel: [
             {
                 'title': 'Home',
                 'route': '/main/home',
@@ -68,16 +67,16 @@ angular.module('common.navigation',[])
             }
         ]
     })
-    .directive('comNav', function($location, ACTIVE_APP, NAVOBJ) {
+    .directive('comNav', function ($location, ACTIVE_APP, NAVOBJ) {
         return {
             restrict: 'E',
             replace: true,
-            template:   '<ul class="nav nav-pills">' +
-                            '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
-                                '<a ng-href="{{item.route}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
-                                '<a ng-href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
-                            '</li>' +
-                        '</ul>',
+            template: '<ul class="nav nav-pills">' +
+                '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
+                '<a ng-href="{{item.route}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
+                '<a ng-href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
+                '</li>' +
+                '</ul>',
 
             scope: {
                 orientation: '@',
@@ -100,45 +99,45 @@ angular.module('common.navigation',[])
             }
         };
     })
-    .directive('comNavTree', function($location, $templateCache, ACTIVE_APP, NAVOBJ) {
+    .directive('comNavTree', function ($location, $templateCache, ACTIVE_APP, NAVOBJ) {
         return {
             restrict: 'E',
             replace: true,
-            template:   '<ul class="navlist">'+
-                            '<li ng-repeat="data in navList"  ng-include="\'bbc/navigation/tpls/treeview/inner.html\'"></li>'+
-                        '</ul>',
+            template: '<ul class="navlist">' +
+                '<li ng-repeat="data in navList"  ng-include="\'bbc/navigation/tpls/treeview/inner.html\'"></li>' +
+                '</ul>',
             scope: {
                 navLinklist: '@'
             },
             link: function (scope) {
 
                 $templateCache.put('bbc/navigation/tpls/treeview/inner.html',
-                        '<div class="list-item" ng-class="{active: isActive(data.route)}">'+
-                            '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>'+
-                            '<div class="nav-icon {{data.icon}}"></div>'+
-                            '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>'+
-                            '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>'+
-                            '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>'+
-                        '</div>'+
-                        '<ul class="display {{data.hide}}" ng-if="data.children.length">'+
-                            '<li ng-repeat="data in data.children" ng-include="\'bbc/navigation/tpls/treeview/inner.html\'"></li>'+
+                        '<div class="list-item" ng-class="{active: isActive(data.route)}">' +
+                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                        '<div class="nav-icon {{data.icon}}"></div>' +
+                        '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
+                        '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
+                        '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
+                        '</div>' +
+                        '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
+                        '<li ng-repeat="data in data.children" ng-include="\'bbc/navigation/tpls/treeview/inner.html\'"></li>' +
                         '</ul>');
 
 
                 scope.app = ACTIVE_APP;
 
 
-                scope.openAll = function(list) {
+                scope.openAll = function (list) {
                     var found = false;
-                    angular.forEach(list, function(value){
-                        if(value.children) {
+                    angular.forEach(list, function (value) {
+                        if (value.children) {
                             var openLink = scope.openAll(value.children);
                             if (openLink) {
                                 value.hide = 'nav-open';
                             }
                         }
-                        if(value.route===$location.path()){
-                            found=true;
+                        if (value.route === $location.path()) {
+                            found = true;
                         }
                     });
                     return found;
@@ -163,8 +162,8 @@ angular.module('common.navigation',[])
 
                 scope.navList = NAVOBJ[scope.navLinklist || 'standard'];
                 if (scope.navList.length !== 0) {
-                    angular.forEach(scope.navList,function(value){
-                        if(value.app===scope.app){
+                    angular.forEach(scope.navList, function (value) {
+                        if (value.app === scope.app) {
                             value.hide = 'nav-open';
                         }
                     });

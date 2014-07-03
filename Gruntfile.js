@@ -161,7 +161,7 @@ module.exports = function (grunt) {
                         return [
                             connect.static(appConfig.dist),
                             connect().use('/', function(req, res, next) {
-                                connectRewrite(req, res, appConfig.app, next);
+                                connectRewrite(req, res, appConfig.dist, next);
                             })
                         ];
                     }

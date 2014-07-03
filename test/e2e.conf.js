@@ -15,7 +15,7 @@ exports.config = {
     // protractor is called.
     specs: ['e2e/*.spec.js'],
 
-    baseUrl: 'http://127.0.0.1:9001',
+    baseUrl: 'http://localhost:9001',
 
     // Options to be passed to Jasmine-node.
     jasmineNodeOpts: {
