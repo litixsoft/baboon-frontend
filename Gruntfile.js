@@ -476,7 +476,18 @@ module.exports = function (grunt) {
                 cmd: 'node node_modules/protractor/bin/protractor test/e2e.conf.js',
                 fail: true
             }
+        },
+        changelog: {
+            options: {
+            }
         }
+    });
+
+    // Register tasks.
+    grunt.registerTask('git:commitHook', 'Install git commit hook', function () {
+        grunt.file.copy('validate-commit-msg.js', '.git/hooks/commit-msg');
+        require('fs').chmodSync('.git/hooks/commit-msg', '0755');
+        grunt.log.ok('Registered git hook: commit-msg');
     });
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -497,6 +508,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
+        'git:commitHook',
         'newer:jshint:test',
         'newer:jshint:all',
         'build:dev',
