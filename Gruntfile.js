@@ -18,7 +18,7 @@ module.exports = function (grunt) {
      *
      * @param {!string} folder The path to the code coverage folder.
      */
-    function getCoverageReport (folder) {
+    function getCoverageReport(folder) {
         var reports = grunt.file.expand(folder + '*/index.html');
 
         if (reports && reports.length > 0) {
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
      * @param {!string} root The base path of documents
      * @param {!function} next Callback for next function in stack
      */
-    function connectRewrite (req, res, root, next) {
+    function connectRewrite(req, res, root, next) {
 
         var appFile = 'index.html';
         var urlPath = url.parse(req.url).pathname;
@@ -47,11 +47,11 @@ module.exports = function (grunt) {
             appFile = arr[1] + '.html';
         }
 
-        if (!fs.existsSync(path.join(root, appFile ))) {
+        if (!fs.existsSync(path.join(root, appFile))) {
             appFile = 'index.html';
         }
 
-        fs.readFile(path.join(root, appFile), function(error, buffer){
+        fs.readFile(path.join(root, appFile), function (error, buffer) {
             if (error) {
                 return next(error);
             }
@@ -128,7 +128,7 @@ module.exports = function (grunt) {
                                 connect.static('./bower_components')
                             ),
                             connect.static(appConfig.app),
-                            connect().use('/', function(req, res, next) {
+                            connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.app, next);
                             })
                         ];
@@ -147,7 +147,7 @@ module.exports = function (grunt) {
                                 connect.static('./bower_components')
                             ),
                             connect.static(appConfig.app),
-                            connect().use('/', function(req, res, next) {
+                            connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.app, next);
                             })
                         ];
@@ -160,7 +160,7 @@ module.exports = function (grunt) {
                     middleware: function (connect) {
                         return [
                             connect.static(appConfig.dist),
-                            connect().use('/', function(req, res, next) {
+                            connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.dist, next);
                             })
                         ];
@@ -173,7 +173,7 @@ module.exports = function (grunt) {
                     middleware: function (connect) {
                         return [
                             connect.static(appConfig.dist),
-                            connect().use('/', function(req, res, next) {
+                            connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.dist, next);
                             })
                         ];
@@ -302,29 +302,33 @@ module.exports = function (grunt) {
             html: ['<%= yeoman.dist %>/**/*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
             options: {
-                assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+                assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/images']
             }
         },
 
         imagemin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.{png,jpg,jpeg,gif}',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.{png,jpg,jpeg,gif}',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
 
         svgmin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.svg',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.svg',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
 
@@ -480,6 +484,15 @@ module.exports = function (grunt) {
         changelog: {
             options: {
             }
+        },
+        bump: {
+            options: {
+                files: ['package.json'],
+                updateConfigs: ['pkg'],
+                commitFiles: ['.'],
+                commitMessage: 'chore: release v%VERSION%',
+                push: false
+            }
         }
     });
 
@@ -570,6 +583,14 @@ module.exports = function (grunt) {
         'usemin',
         'htmlmin'
     ]);
+
+    grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
+        grunt.task.run([
+            'bump:' + (version || 'patch') + ':bump-only',
+            'changelog',
+            'bump-commit'
+        ]);
+    });
 
     grunt.registerTask('default', ['test']);
 };
