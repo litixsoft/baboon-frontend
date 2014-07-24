@@ -1,10 +1,48 @@
 {
   "name": "baboon-frontend",
-  "version": "0.5.2",
+  "version": "0.5.0",
+  "description": "Baboon SPA frontend reference application, based on Angular, backend independent.",
+  "homepage": "https://github.com/litixsoft/baboon-frontend",
+  "author": {
+    "name": "Litixsoft GmbH",
+    "email": "development@litixsoft.de",
+    "url": "http://www.litixsoft.de"
+  },
+  "maintainers": [
+    {
+      "name": "Timo Liebetrau",
+      "email": "t.liebetrau@litixsoft.de"
+    },
+    {
+      "name": "Sven Bernstein",
+      "email": "s.bernstein@litixsoft.de"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/litixsoft/baboon-frontend.git"
   },
+  "bugs": {
+    "url": "https://github.com/litixsoft/baboon-frontend/issues"
+  },
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/litixsoft/baboon-frontend/blob/master/LICENSE"
+    }
+  ],
+  "keywords": [
+    "baboon",
+    "spa",
+    "spa framework",
+    "MEAN stack frontend",
+    "single page",
+    "realtime",
+    "frontend",
+    "angular frontend",
+    "stand alone angular frontend"
+  ],
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.1",

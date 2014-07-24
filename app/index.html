@@ -70,7 +70,7 @@
         engine.on('upgrade', function (msg) {
             console.log('socket upgrade connection to:', msg.query.transport);
 
-            socket.emit('/api/users', {}, function(error, result) {
+            socket.emit('/users', {}, function(error, result) {
                 console.log(result);
             });
 
@@ -80,7 +80,7 @@
                 }
             }
 
-            socket.emit('/api/users/:id', {request:request}, function(error, result) {
+            socket.emit('/users/:id', {request:request}, function(error, result) {
                 console.log(result);
             });
         });

@@ -31,7 +31,7 @@ angular.module('main.home', [
             }
         ];
 
-        $http.get('http://localhost:3000/api/users').
+        $http.get('http://localhost:3000/users').
             success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
                 // when the response is availablex

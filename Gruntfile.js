@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                 'Content-Type': 'text/html',
                 'Content-Length': buffer.length
             });
+
             res.end(buffer);
         });
     }
@@ -435,14 +436,14 @@ module.exports = function (grunt) {
         // Test settings
         karma: {
             unit: {
-                configFile: 'test/karma.conf.js',
+                configFile: 'config/karma.conf.js',
                 singleRun: true
             },
             coverage: {
-                configFile: 'test/karma.coverage.conf.js'
+                configFile: 'config/karma.coverage.conf.js'
             },
             ci: {
-                configFile: 'test/karma.conf.js',
+                configFile: 'config/karma.conf.js',
                 reporters: ['mocha', 'junit'],
                 junitReporter: {
                     outputFile: '<%= yeoman.reports %>/test/client/karma.xml',
@@ -450,7 +451,7 @@ module.exports = function (grunt) {
                 }
             },
             cobertura: {
-                configFile: 'test/karma.coverage.conf.js',
+                configFile: 'config/karma.coverage.conf.js',
                 coverageReporter: {
                     type: 'cobertura',
                     dir: '<%= yeoman.reports %>/coverage'
@@ -486,7 +487,7 @@ module.exports = function (grunt) {
                 fail: true
             },
             protractor: {
-                cmd: 'node node_modules/protractor/bin/protractor test/e2e.conf.js',
+                cmd: 'node node_modules/protractor/bin/protractor config/e2e.conf.js',
                 fail: true
             }
         },
