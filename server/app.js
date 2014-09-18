@@ -20,17 +20,20 @@ module.exports = function(options) {
   const APP_PATH = path.join(ROOT_PATH, 'app');
   var debug = require('debug')('baboon:app');
   var app = express();
+  var env = app.get('env');
 
   app.use(favicon(ROOT_PATH + '/app/favicon.ico'));
   app.use(logger('dev'));
-  app.use(express.static(path.join(ROOT_PATH, '.tmp')));
-  app.use(express.static(APP_PATH));
-  app.use('/bower_components', express.static(path.join(ROOT_PATH, 'bower_components')));
-  app.use(require('connect-livereload')({
-    port: 35729
-  }));
 
-  // Just send the app-name.html or index.html to support HTML5Mode
+  if ('development' === env || 'test' === env) {
+    app.use(require('connect-livereload')());
+    app.use(express.static(path.join(ROOT_PATH, '.tmp')));
+    app.use(express.static(APP_PATH));
+    app.use('/bower_components', express.static(path.join(ROOT_PATH, 'bower_components')));
+  }
+
+
+  // Just send the app-name.html or index.html to support HTML5Mode ..
   app.all('/:app*', function (req, res) {
 
     var app = req.params.app;

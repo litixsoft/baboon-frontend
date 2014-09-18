@@ -91,106 +91,115 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: ['<%= yeoman.app %>/modules/**/*.js', '<%= yeoman.app %>/common/**/*.js'],
-        tasks: ['newer:jshint:all'],
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        }
+        tasks: ['jshint:all']
       },
       jsTest: {
         files: ['<%= yeoman.app %>/**/*.spec.js', '<%= yeoman.app %>/common/**/*.spec.js'],
-        tasks: ['newer:jshint:test', 'karma:unit']
+        tasks: ['jshint:test', 'karma:unit']
       },
       styles: {
         files: ['<%= yeoman.app %>/**/*.less'],
-        tasks: ['newer:less', 'autoprefixer']
+        tasks: ['less', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
       },
       livereload: {
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        },
         files: [
-          '<%= yeoman.app %>/**/*.html',
           '.tmp/styles/**/*.css',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+          '<%= yeoman.app %>/**/*.html',
+          '<%= yeoman.app %>/**/*.js',
+          '!<%= yeoman.app %>/**/*.spec.js',
+          '<%= yeoman.app %>/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+        ],
+        options: {
+          livereload: true
+        }
+      },
+      express: {
+        files: [
+          'server/**/*.{js,json}'
+        ],
+        tasks: ['express:dev', 'wait'],
+        options: {
+          livereload: true,
+          nospawn: true //Without this option specified express won't be reloaded
+        }
       }
     },
 
     // The actual grunt server settings
-    connect: {
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        livereload: 35729
-      },
-      livereload: {
-        options: {
-          open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app),
-              connect().use('/', function (req, res, next) {
-                connectRewrite(req, res, appConfig.app, next);
-              })
-            ];
-          }
-        }
-      },
-      test: {
-        options: {
-          port: 9001,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app),
-              connect().use('/', function (req, res, next) {
-                connectRewrite(req, res, appConfig.app, next);
-              })
-            ];
-          }
-        }
-      },
-      testDist: {
-        options: {
-          port: 9001,
-          middleware: function (connect) {
-            return [
-              connect.static(appConfig.dist),
-              connect().use('/', function (req, res, next) {
-                connectRewrite(req, res, appConfig.dist, next);
-              })
-            ];
-          }
-        }
-      },
-      dist: {
-        options: {
-          open: true,
-          middleware: function (connect) {
-            return [
-              connect.static(appConfig.dist),
-              connect().use('/', function (req, res, next) {
-                connectRewrite(req, res, appConfig.dist, next);
-              })
-            ];
-          }
-        }
-      }
-    },
+    //connect: {
+    //  options: {
+    //    port: 9000,
+    //    // Change this to '0.0.0.0' to access the server from outside.
+    //    hostname: 'localhost',
+    //    livereload: 35729
+    //  },
+    //  livereload: {
+    //    options: {
+    //      open: true,
+    //      middleware: function (connect) {
+    //        return [
+    //          connect.static('.tmp'),
+    //          connect().use(
+    //            '/bower_components',
+    //            connect.static('./bower_components')
+    //          ),
+    //          connect.static(appConfig.app),
+    //          connect().use('/', function (req, res, next) {
+    //            connectRewrite(req, res, appConfig.app, next);
+    //          })
+    //        ];
+    //      }
+    //    }
+    //  },
+    //  test: {
+    //    options: {
+    //      port: 9001,
+    //      middleware: function (connect) {
+    //        return [
+    //          connect.static('.tmp'),
+    //          connect.static('test'),
+    //          connect().use(
+    //            '/bower_components',
+    //            connect.static('./bower_components')
+    //          ),
+    //          connect.static(appConfig.app),
+    //          connect().use('/', function (req, res, next) {
+    //            connectRewrite(req, res, appConfig.app, next);
+    //          })
+    //        ];
+    //      }
+    //    }
+    //  },
+    //  testDist: {
+    //    options: {
+    //      port: 9001,
+    //      middleware: function (connect) {
+    //        return [
+    //          connect.static(appConfig.dist),
+    //          connect().use('/', function (req, res, next) {
+    //            connectRewrite(req, res, appConfig.dist, next);
+    //          })
+    //        ];
+    //      }
+    //    }
+    //  },
+    //  dist: {
+    //    options: {
+    //      open: true,
+    //      middleware: function (connect) {
+    //        return [
+    //          connect.static(appConfig.dist),
+    //          connect().use('/', function (req, res, next) {
+    //            connectRewrite(req, res, appConfig.dist, next);
+    //          })
+    //        ];
+    //      }
+    //    }
+    //  }
+    //},
 
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
@@ -458,6 +467,8 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    // Backend server for livereload
     express: {
       options: {
         port: process.env.PORT || 3000
@@ -468,13 +479,10 @@ module.exports = function (grunt) {
           debug: true,
           delay: 10
         }
-      },
-      prod: {
-        options: {
-          script: 'dist/server/app.js'
-        }
       }
     },
+
+    // Open browser for livereload or coverage
     open: {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
@@ -485,6 +493,8 @@ module.exports = function (grunt) {
         }
       }
     },
+
+    // Build css files
     less: {
       target: {
         options: {
@@ -501,6 +511,8 @@ module.exports = function (grunt) {
         ]
       }
     },
+
+    // Run commands
     bgShell: {
       updateWebdriver: {
         cmd: 'node node_modules/protractor/bin/webdriver-manager update',
@@ -511,9 +523,13 @@ module.exports = function (grunt) {
         fail: true
       }
     },
+
+    // Update CHANGELOG.md
     changelog: {
       options: {}
     },
+
+    // Update version, changelog and commit
     bump: {
       options: {
         files: ['package.json'],
@@ -553,11 +569,8 @@ module.exports = function (grunt) {
       'build:dev',
       'express:dev',
       'wait',
-      'open',
+      'open:server',
       'watch'
-
-      //'connect:livereload',
-      //'watch'
     ]);
   });
 
