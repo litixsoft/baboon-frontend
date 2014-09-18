@@ -60,15 +60,15 @@
     <!--<script src="http://localhost:3000/socket.io/socket.io.js"></script>-->
 
     <script>
-        var socket = io.connect('http://localhost:3000');
-        var engine = socket.io.engine;
+        //var socket = io.connect('http://localhost:3000');
+        //var engine = socket.io.engine;
 
-        socket.on('connect', function (data) {
-            console.log('socket connected with:', engine.transport.query.transport);
-        });
+        //socket.on('connect', function (data) {
+            //console.log('socket connected with:', engine.transport.query.transport);
+        //});
 
-        engine.on('upgrade', function (msg) {
-            console.log('socket upgrade connection to:', msg.query.transport);
+//        engine.on('upgrade', function (msg) {
+//            console.log('socket upgrade connection to:', msg.query.transport);
 
 //            socket.emit('/users', {}, function(error, result) {
 //                console.log(result);
@@ -84,18 +84,19 @@
 //                console.log(result);
 //            });
 
-            socket.emit('/awesomeThings', {}, function(error, result) {
-                console.log(result);
-            });
-        });
+//            socket.emit('/awesomeThings', {}, function(error, result) {
+//                console.log(result);
+//            });
+//        });
+//
+//        socket.on('disconnect', function() {
+//            console.log('socket disconected');
+//        });
+//
+//        socket.on('news', function (data) {
+//            console.log(data);
+//        });
 
-        socket.on('disconnect', function() {
-            console.log('socket disconected');
-        });
-
-        socket.on('news', function (data) {
-            console.log(data);
-        });
     </script>
 
     <!-- build:js(.) scripts/main/vendor.js -->

@@ -1,0 +1,9 @@
+{
+  "MONGODB":
+    [
+      {
+        "url": "mongodb://localhost:27017/baboon-backend-test", "name": "bbTest"
+      },
+      {}
+    ]
+}
