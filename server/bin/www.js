@@ -29,7 +29,16 @@ options.server = server;
 
 // Socket.io
 //var io = require('../socket.io.js')(options);
-
+//io.on('connection', function (socket) {
+//  debug('Client connect to socket.io');
+//
+//  socket.on('echo', function (data, callback) {
+//
+//    return callback(null, {message: 'Antwort vom Server'} );
+//
+//  });
+//
+//});
 //var db = lib.lxMongoDb;
 //
 //// Connect to databases

@@ -43,8 +43,7 @@
     "angular frontend",
     "stand alone angular frontend"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "body-parser": "^1.8.2",
     "compression": "^1.1.0",
