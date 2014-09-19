@@ -1,6 +1,6 @@
 {
   "name": "baboon-frontend",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Baboon SPA frontend reference application, based on Angular, backend independent.",
   "homepage": "https://github.com/litixsoft/baboon-frontend",
   "author": {
