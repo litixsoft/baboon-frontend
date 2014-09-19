@@ -399,7 +399,8 @@ module.exports = function (grunt) {
     env: {
       dev: {
         NODE_ENV: 'development',
-        DEBUG: '*'
+        DEBUG: '*',
+        RELOAD: true
       },
       pro: {
         NODE_ENV: 'production',

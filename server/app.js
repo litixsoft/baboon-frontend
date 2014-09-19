@@ -25,6 +25,7 @@ module.exports = function(options) {
   var debug = require('debug')('baboon:app');
   var app = express();
   var env = app.get('env');
+  var RELOAD = process.env.RELOAD || null;
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +35,12 @@ module.exports = function(options) {
 
   // development config
   if ('development' === env ) {
-    app.use(require('connect-livereload')());
+
+    // Check livereload
+    if (RELOAD) {
+      app.use(require('connect-livereload')());
+    }
+
     app.use(favicon(config.ROOT_PATH + '/app/favicon.ico'));
     app.use(express.static(path.join(config.ROOT_PATH, '.tmp')));
     app.use(express.static(config.APP_PATH));
@@ -46,7 +52,7 @@ module.exports = function(options) {
     app.use(compression());
     app.use(favicon(config.ROOT_PATH + '/build/dist/favicon.ico'));
     config.APP_PATH = path.join(config.ROOT_PATH, 'build', 'dist');
-    app.use(express.static(config.APP_PATH));
+    app.use(express.static(config.APP_PATH, {maxAge: '10d'}));
   }
 
   // Just send the app-name.html or index.html to support HTML5Mode ..
