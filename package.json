@@ -1,7 +1,7 @@
 {
   "name": "baboon-frontend",
   "version": "0.5.2",
-  "description": "Baboon SPA frontend reference application, based on Angular, backend independent.",
+  "description": "Baboon singlepage reference application, based on Angular, backend independent.",
   "homepage": "https://github.com/litixsoft/baboon-frontend",
   "author": {
     "name": "Litixsoft GmbH",
@@ -43,7 +43,8 @@
     "angular frontend",
     "stand alone angular frontend"
   ],
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "body-parser": "^1.8.2",
     "compression": "^1.1.0",
@@ -58,7 +59,6 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-concat": "^0.5.0",
-    "grunt-contrib-connect": "^0.8.0",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-cssmin": "^0.10.0",
     "grunt-contrib-htmlmin": "^0.3.0",
