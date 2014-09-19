@@ -17,10 +17,9 @@ var LxConfig = function (rootPath) {
     self.API_PATH = path.join(rootPath, 'server', 'api');
     self.LIB_PATH = path.join(rootPath, 'server', 'lib');
 
-
     self.NODE_ENV = process.env.NODE_ENV;
-    self.PORT = process.env.PORT || 3000;
-    self.HOST = process.env.HOST || 'localhost';
+    self.PORT = process.env.PORT;
+    self.HOST = process.env.HOST;
 
     self.MONGODB = [
         {url: 'mongodb://localhost:27017/baboon-backend-test', name: 'bbTest'}

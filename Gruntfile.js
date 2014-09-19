@@ -2,8 +2,8 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
-var url = require('url');
+//var fs = require('fs');
+//var url = require('url');
 
 module.exports = function (grunt) {
 
@@ -37,33 +37,33 @@ module.exports = function (grunt) {
    * @param {!string} root The base path of documents
    * @param {!function} next Callback for next function in stack
    */
-  function connectRewrite(req, res, root, next) {
-
-    var appFile = 'index.html';
-    var urlPath = url.parse(req.url).pathname;
-    var arr = urlPath.split('/');
-
-    if (arr[1] !== 'main' || arr[1] !== '') {
-      appFile = arr[1] + '.html';
-    }
-
-    if (!fs.existsSync(path.join(root, appFile))) {
-      appFile = 'index.html';
-    }
-
-    fs.readFile(path.join(root, appFile), function (error, buffer) {
-      if (error) {
-        return next(error);
-      }
-
-      res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Content-Length': buffer.length
-      });
-
-      res.end(buffer);
-    });
-  }
+  //function connectRewrite(req, res, root, next) {
+  //
+  //  var appFile = 'index.html';
+  //  var urlPath = url.parse(req.url).pathname;
+  //  var arr = urlPath.split('/');
+  //
+  //  if (arr[1] !== 'main' || arr[1] !== '') {
+  //    appFile = arr[1] + '.html';
+  //  }
+  //
+  //  if (!fs.existsSync(path.join(root, appFile))) {
+  //    appFile = 'index.html';
+  //  }
+  //
+  //  fs.readFile(path.join(root, appFile), function (error, buffer) {
+  //    if (error) {
+  //      return next(error);
+  //    }
+  //
+  //    res.writeHead(200, {
+  //      'Content-Type': 'text/html',
+  //      'Content-Length': buffer.length
+  //    });
+  //
+  //    res.end(buffer);
+  //  });
+  //}
 
   // Configurable paths for the application
   var appConfig = {
@@ -468,15 +468,47 @@ module.exports = function (grunt) {
       }
     },
 
+    // Set environment
+    env: {
+      dev: {
+        NODE_ENV: 'development',
+        DEBUG: '*'
+      },
+      pro: {
+        NODE_ENV: 'production',
+        DEBUG: '*'
+      },
+      e2eDist : {
+        NODE_ENV: 'production',
+        DEBUG: 'baboon*',
+        PORT: 9001
+      }
+    },
+
     // Backend server for livereload
     express: {
       options: {
-        port: process.env.PORT || 3000
+        port: 9000
       },
       dev: {
         options: {
           script: 'server/bin/www.js',
           debug: true,
+          delay: 10
+        }
+      },
+      test: {
+        options: {
+          port: 9001,
+          script: 'server/bin/www.js',
+          debug: true,
+          delay: 10
+        }
+      },
+      pro: {
+        options: {
+          script: 'server/bin/www.js',
+          debug: false,
           delay: 10
         }
       }
@@ -541,6 +573,11 @@ module.exports = function (grunt) {
     }
   });
 
+  // Register tasks.
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+    this.async();
+  });
+
   // Used for delaying livereload until after server has restarted
   grunt.registerTask('wait', function () {
     grunt.log.ok('Waiting for server reload...');
@@ -553,7 +590,7 @@ module.exports = function (grunt) {
     }, 1500);
   });
 
-  // Register tasks.
+
   grunt.registerTask('git:commitHook', 'Install git commit hook', function () {
     grunt.file.copy('validate-commit-msg.js', '.git/hooks/commit-msg');
     require('fs').chmodSync('.git/hooks/commit-msg', '0755');
@@ -562,11 +599,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      return grunt.task.run(['build', 'env:pro', 'express:pro', 'wait', 'open:server', 'express-keepalive']);
     }
 
     grunt.task.run([
       'build:dev',
+      'env:dev',
       'express:dev',
       'wait',
       'open:server',
@@ -574,24 +612,19 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
-
   grunt.registerTask('test', [
-    'git:commitHook',
-    'newer:jshint:test',
-    'newer:jshint:all',
+    'jshint:test',
+    'jshint:all',
     'build:dev',
-    'connect:test',
+    'express:test',
     'karma:unit'
   ]);
 
   grunt.registerTask('e2e', [
     'bgShell:updateWebdriver',
     'build:dev',
-    'connect:test',
+    'env:dev',
+    'express:test',
     'bgShell:protractor'
   ]);
 
@@ -599,24 +632,27 @@ module.exports = function (grunt) {
   grunt.registerTask('e2e:dist', [
     'bgShell:updateWebdriver',
     'build',
-    'connect:testDist',
+    'env:e2eDist',
+    'express:test',
     'bgShell:protractor'
   ]);
 
   grunt.registerTask('cover', [
     'build:dev',
     'clean:coverage',
-    'connect:test',
+    'express:test',
     'karma:coverage',
     'open:coverage'
   ]);
 
-  grunt.registerTask('ci', [
+  grunt.registerTask('reports', [
     'clean:test',
     'clean:coverage',
     'clean:jslint',
     'jshint:jslint',
     'jshint:checkstyle',
+    'build:dev',
+    'express:test',
     'karma:ci',
     'karma:coverage',
     'karma:cobertura'

@@ -1,8 +1,12 @@
 var fs = require('fs');
 var express = require('express');
+var compression = require('compression');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var cors = require('cors');
 
 /**
  *
@@ -16,22 +20,34 @@ module.exports = function(options) {
     throw new Error('Parameter Error: config required');
   }
 
-  const ROOT_PATH = config.ROOT_PATH;
-  const APP_PATH = path.join(ROOT_PATH, 'app');
+  config.APP_PATH = path.join(config.ROOT_PATH, 'app');
+
   var debug = require('debug')('baboon:app');
   var app = express();
   var env = app.get('env');
 
-  app.use(favicon(ROOT_PATH + '/app/favicon.ico'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(methodOverride());
+  app.use(cors());
   app.use(logger('dev'));
 
-  if ('development' === env || 'test' === env) {
+  // development config
+  if ('development' === env ) {
     app.use(require('connect-livereload')());
-    app.use(express.static(path.join(ROOT_PATH, '.tmp')));
-    app.use(express.static(APP_PATH));
-    app.use('/bower_components', express.static(path.join(ROOT_PATH, 'bower_components')));
+    app.use(favicon(config.ROOT_PATH + '/app/favicon.ico'));
+    app.use(express.static(path.join(config.ROOT_PATH, '.tmp')));
+    app.use(express.static(config.APP_PATH));
+    app.use('/bower_components', express.static(path.join(config.ROOT_PATH, 'bower_components')));
   }
 
+  // production config
+  if ('production' === env ) {
+    app.use(compression());
+    app.use(favicon(config.ROOT_PATH + '/build/dist/favicon.ico'));
+    config.APP_PATH = path.join(config.ROOT_PATH, 'build', 'dist');
+    app.use(express.static(config.APP_PATH));
+  }
 
   // Just send the app-name.html or index.html to support HTML5Mode ..
   app.all('/:app*', function (req, res) {
@@ -39,11 +55,11 @@ module.exports = function(options) {
     var app = req.params.app;
     var appFile = app + '.html';
 
-    if (appFile === 'main.html' || !fs.existsSync(path.join(APP_PATH, appFile ))) {
-      res.sendfile('index.html', {root: APP_PATH});
+    if (appFile === 'main.html' || !fs.existsSync(path.join(config.APP_PATH, appFile ))) {
+      res.sendfile('index.html', {root: config.APP_PATH});
     }
     else {
-      res.sendfile(appFile, {root: APP_PATH});
+      res.sendfile(appFile, {root: config.APP_PATH});
     }
   });
 
