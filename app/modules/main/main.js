@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('main', [
-    'ngRoute',
-    'common.navigation',
-    'ui.bootstrap',
-    'main.home'
+  //'common.navigation',
+  'ui.router',
+  'ui.bootstrap',
+  'main.home',
+  'main.about',
+  'main.contact',
+  'main.navExample'
 ])
-    .constant('ACTIVE_APP', 'main')
-    .config(function ($routeProvider, $locationProvider) {
+  .constant('ACTIVE_APP', 'main')
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
-        // Routing and navigation
-        $routeProvider.otherwise({redirectTo: '/main/home'});
-        $locationProvider.html5Mode(true);
-
-    });
+    // Routing and navigation
+    $urlRouterProvider.otherwise('/main/home');
+    $locationProvider.html5Mode(true);
+  });

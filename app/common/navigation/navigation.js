@@ -14,7 +14,7 @@ angular.module('common.navigation', [])
                     },
                     {
                         'title': 'Navigation Examples',
-                        'route': '/main/navexample',
+                        'route': '/main/nav_example',
                         'app': 'main'
                     },
                     {
