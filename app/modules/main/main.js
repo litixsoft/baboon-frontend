@@ -2,6 +2,7 @@
 
 angular.module('main', [
   //'common.navigation',
+  'lx.layout.directives',
   'ui.router',
   'ui.bootstrap',
   'main.home',

@@ -3,53 +3,59 @@
 <head>
   <base href="/">
   <meta charset="utf-8">
-  <title>Example</title>
+  <title>Baboon - Webtoolkit</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
   <!-- build:css(.) styles/main_vendor.css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
   <!-- endbuild -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main/main.css">
   <!-- endbuild -->
 </head>
-<body ng-app="main">
+<body ng-app="main" class="lx-fixed-header lx-fixed-left-bar" lx-mobile-resize>
+
 <!--[if lt IE 10]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-  your browser</a> to improve your experience.</p>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please
+  <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div id="singlepageFrame" class="ng-cloak">
-  <div class="header">
-    <div class="p-wrapper">
-      <h3 class="text-muted">baboon v0.5.0-beta.2</h3>
-    </div>
-  </div>
-  <!-- Add your site or application content here -->
-  <div class="layout-content">
-    <div class="col-left">
-      <div class="container">
-        <!--<com-nav-tree></com-nav-tree>-->
+<!-- header with logo, navigation and user area -->
+<header id="lx-header" data-ng-include="'common/includes/header.html'"></header>
 
-      </div>
-    </div>
-    <div class="col-right">
-      <div class="container">
+<!-- navigation on the left side -->
+<aside id="lx-panel-left"><span data-ng-include="'common/includes/left-panel.html'"></span></aside>
 
-      </div>
-    </div>
-    <div class="col-center">
-      <div class="view-container">
-        <div class="container" ui-view=""></div>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-  <div class="footer">
-    <p>♥ from the Baboon team</p>
-  </div>
-</div>
+<section id="main" role="main">
+  <div id="lx-breadcrumps"><span>Your are here: <span><a href="#">Test</a> <i class="fa fa-angle-right"></i> <a
+    href="#">Sub</a> <i class="fa fa-angle-right"></i> <a href="#">SubSub</a></span></span></div>
+
+  <ui-view></ui-view>
+  <!--<h1>Baboon <span class="semi-bold">Frontend</span> <small>the easy Layout</small></h1>-->
+  <!--<br>-->
+  <!--<p>We are happy that you are using are new frontend with bootstrap and angular.</p>-->
+  <!--<br>-->
+  <!--<div class="well">-->
+  <!--<p>Inhalt in dem Ding...</p>-->
+  <!--</div>-->
+
+</section>
+
+<!-- navigation on the right side -->
+<aside id="lx-panel-right"><span data-ng-include="'common/includes/right-panel.html'"></span></aside>
+
+<!-- footer area -->
+<footer id="lx-footer" class="page-footer">
+  <div data-ng-include="'common/includes/footer.html'"></div>
+</footer>
+
+<!-- Metrobutton menu, black stripe on top with colored tiles -->
+<section id="lx-shortcut"><span data-ng-include="'common/includes/shortcut.html'"></span></section>
+
+<div id="lx-panel-left-background"></div>
 
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
@@ -62,6 +68,7 @@
 
 <!-- build:js({.tmp,app}) scripts/main/scripts.js -->
 <!--<script src="common/navigation/navigation.js"></script>-->
+<script src="common/directives/lx.layout.directives.js"></script>
 <script src="modules/main/main.js"></script>
 <script src="modules/main/home/home.js"></script>
 <script src="modules/main/nav_example/nav_example.js"></script>
@@ -70,24 +77,24 @@
 <!-- endbuild -->
 
 <!--<script>-->
-  <!--var socket = io.connect('http://localhost:9000');-->
-  <!--var engine = socket.io.engine;-->
+<!--var socket = io.connect('http://localhost:9000');-->
+<!--var engine = socket.io.engine;-->
 
-  <!--socket.on('connect', function () {-->
-    <!--console.log('socket connected with:', engine.transport.query.transport);-->
-  <!--});-->
+<!--socket.on('connect', function () {-->
+<!--console.log('socket connected with:', engine.transport.query.transport);-->
+<!--});-->
 
-  <!--engine.on('upgrade', function (msg) {-->
-    <!--console.log('socket upgrade connection to:', msg.query.transport);-->
+<!--engine.on('upgrade', function (msg) {-->
+<!--console.log('socket upgrade connection to:', msg.query.transport);-->
 
-    <!--socket.emit('echo', {}, function (error, result) {-->
-      <!--console.log(result);-->
-    <!--});-->
-  <!--});-->
+<!--socket.emit('echo', {}, function (error, result) {-->
+<!--console.log(result);-->
+<!--});-->
+<!--});-->
 
-  <!--socket.on('disconnect', function () {-->
-    <!--console.log('socket disconected');-->
-  <!--});-->
+<!--socket.on('disconnect', function () {-->
+<!--console.log('socket disconected');-->
+<!--});-->
 <!--</script>-->
 </body>
 </html>
