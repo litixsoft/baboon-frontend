@@ -70,6 +70,9 @@ module.exports = function (grunt) {
       livereload: {
         files: [
           '.tmp/styles/**/*.css',
+          '<%= yeoman.app %>/*.html',
+          '<%= yeoman.app %>/modules/**/*.html',
+          '<%= yeoman.app %>/common/**/*.html',
           '<%= yeoman.app %>/**/*.html',
           '<%= yeoman.app %>/**/*.js',
           '!<%= yeoman.app %>/**/*.spec.js',
@@ -291,8 +294,7 @@ module.exports = function (grunt) {
               '.htaccess',
               '*.html',
               '{,*/}*.html',
-              'images/{,*/}*.{webp}',
-              'fonts/*'
+              'assets/**'
             ]
           },
           {
