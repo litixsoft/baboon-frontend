@@ -28,43 +28,6 @@ module.exports = function (grunt) {
     return '';
   }
 
-  /**
-   * Connect rewrite middleware
-   * Send static html app file in html5mode with toplevel apps
-   *
-   * @param {!object} req The request object
-   * @param {!object} res The response object
-   * @param {!string} root The base path of documents
-   * @param {!function} next Callback for next function in stack
-   */
-  //function connectRewrite(req, res, root, next) {
-  //
-  //  var appFile = 'index.html';
-  //  var urlPath = url.parse(req.url).pathname;
-  //  var arr = urlPath.split('/');
-  //
-  //  if (arr[1] !== 'main' || arr[1] !== '') {
-  //    appFile = arr[1] + '.html';
-  //  }
-  //
-  //  if (!fs.existsSync(path.join(root, appFile))) {
-  //    appFile = 'index.html';
-  //  }
-  //
-  //  fs.readFile(path.join(root, appFile), function (error, buffer) {
-  //    if (error) {
-  //      return next(error);
-  //    }
-  //
-  //    res.writeHead(200, {
-  //      'Content-Type': 'text/html',
-  //      'Content-Length': buffer.length
-  //    });
-  //
-  //    res.end(buffer);
-  //  });
-  //}
-
   // Configurable paths for the application
   var appConfig = {
     app: 'app',
@@ -573,7 +536,7 @@ module.exports = function (grunt) {
     'open:coverage'
   ]);
 
-  grunt.registerTask('reports', [
+  grunt.registerTask('ci', [
     'clean:test',
     'clean:coverage',
     'clean:jslint',
