@@ -10,11 +10,11 @@
   <meta name="author" content="">
   <!-- Title -->
   <title>Baboon Webtoolkit</title>
-  <!-- build:css(.) assets/css/main_vendor.css -->
+  <!-- build:css(.) assets/css/admin_vendor.css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
   <!-- endbuild -->
-  <!-- build:css(.tmp) assets/css/main.css -->
-  <link rel="stylesheet" href="css/main/main.css">
+  <!-- build:css(.tmp) assets/css/admin.css -->
+  <link rel="stylesheet" href="css/admin/admin.css">
   <!-- endbuild -->
 </head>
 <body ng-app="main">
@@ -23,19 +23,19 @@
   Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<header data-ng-include="'assets/includes/header.html'"></header>
+<header data-ng-include="'common/includes/header.html'"></header>
 <div class="container" ui-view=""></div>
 
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 
-<!-- build:js(.) app/main/vendor.js -->
+<!-- build:js(.) app/admin/vendor.js -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) app/main/app.js -->
+<!-- build:js({.tmp,app}) app/admin/app.js -->
 <!--<script src="common/navigation/navigation.js"></script>-->
 <script src="modules/main/main.js"></script>
 <script src="modules/main/home/home.js"></script>
