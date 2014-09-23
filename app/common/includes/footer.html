@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-sm-12">
+		<label class="col-sm-1 control-label">Spalte</label>
+		<div class="col-sm-11">
+            <ul data-drop="true" ng-model="uidata.columns" jqyoui-droppable="{onDrop: 'dropCol'}" data-jqyoui-options="columnDropOptions">
+                <li ng-repeat="c in uidata.columns" class="bi-drag-inline" style="background:rgba(255,255,255,0.2);display:inline;padding:5px;border-radius:5px;">
+                    {{ c.name }}
+                    <a ng-click="removeDrag($index, uidata.columns)" href="javascript:void(0)"><i class="glyphicon glyphicon-remove"></i></a>
+                </li>
+            </ul>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-sm-12">
+		<label class="col-sm-1 control-label">Zeile</label>
+		<div class="col-sm-11">
+            <ul data-drop="true" ng-model="uidata.rows" jqyoui-droppable="{onDrop: 'dropRow'}" data-jqyoui-options="rowDropOptions">
+                <li ng-repeat="r in uidata.rows" class="bi-drag-inline" style="background:rgba(255,255,255,0.2);display:inline;padding:5px;border-radius:5px;">
+                    {{ r.name }}
+                    <a ng-click="removeDrag($index, uidata.rows)" href="javascript:void(0)"><i class="glyphicon glyphicon-remove"></i></a>
+                </li>
+            </ul>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-sm-12">
+		<label class="col-sm-1 control-label">Werte</label>
+		<div class="col-sm-11">
+            <ul data-drop="true" ng-model="uidata.measures" jqyoui-droppable data-jqyoui-options="measureDropOptions">
+                <li ng-repeat="m in uidata.measures" class="bi-drag-inline" style="background:rgba(255,255,255,0.2);display:inline;padding:5px;border-radius:5px;">
+                    {{ m.name }}
+                    <a ng-click="removeDrag($index, uidata.measures)" href="javascript:void(0)"><i class="glyphicon glyphicon-remove"></i></a>
+                </li>
+            </ul>
+		</div>
+	</div>
+</div>
