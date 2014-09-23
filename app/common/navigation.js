@@ -21,6 +21,18 @@ angular.module('common.navigation', ['lx.navigation'])
         state: 'mainContact',
         route: '/main/contact',
         app: 'main'
+      },
+      {
+        title: 'Examples',
+        state: 'examplesHome',
+        route: '/examples/home',
+        app: 'examples'
+      },
+      {
+        title: 'Admin',
+        state: 'adminHome',
+        route: '/admin/home',
+        app: 'admin'
       }
     ],
     standard: [

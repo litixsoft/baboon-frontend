@@ -1,16 +1,16 @@
 'use strict';
 
-angular.module('admin', [
+angular.module('examples', [
   'common.navigation',
   'ui.router',
   'ui.bootstrap',
-  'admin.home'
+  'examples.home'
 ])
-  .constant('ACTIVE_APP', 'admin')
+  .constant('ACTIVE_APP', 'examples')
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
     // Routing and navigation
-    $urlRouterProvider.otherwise('/admin/home');
+    $urlRouterProvider.otherwise('/examples/home');
     $locationProvider.html5Mode(true);
   });
 

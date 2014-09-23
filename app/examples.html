@@ -9,15 +9,15 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <!-- Title -->
-  <title>Baboon Webtoolkit</title>
-  <!-- build:css(app) assets/css/main_vendor.css -->
+  <title>Baboon Webtoolkit - Admin</title>
+  <!-- build:css(app) assets/css/examples_vendor.css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
   <!-- endbuild -->
-  <!-- build:css(.tmp) assets/css/main.css -->
-  <link rel="stylesheet" href="css/main/main.css">
+  <!-- build:css(.tmp) assets/css/examples.css -->
+  <link rel="stylesheet" href="css/examples/examples.css">
   <!-- endbuild -->
 </head>
-<body ng-app="main">
+<body ng-app="examples">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser.
   Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -29,20 +29,17 @@
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 
-
-<!-- build:js(app) app/main/vendor.js -->
+<!-- build:js(app) app/examples/vendor.js -->
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="lib/lx_navigation/lx_navigation.js"></script>
 <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) app/main/app.js -->
+<!-- build:js({.tmp,app}) app/examples/app.js -->
 <script src="common/navigation.js"></script>
-<script src="modules/main/main.js"></script>
-<script src="modules/main/home/home.js"></script>
-<script src="modules/main/contact/contact.js"></script>
-<script src="modules/main/about/about.js"></script>
+<script src="modules/examples/examples.js"></script>
+<script src="modules/examples/home/home.js"></script>
 <!-- endbuild -->
 </body>
 </html>
