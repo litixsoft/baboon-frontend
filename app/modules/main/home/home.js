@@ -2,7 +2,13 @@
 
 angular.module('main.home', [])
   .config(function ($stateProvider) {
-    $stateProvider.state('mainHome',{url:'/main/home',templateUrl:'/modules/main/home/home.html',controller: 'HomeCtrl'});
+    $stateProvider.state('mainHome',{
+      url:'/main/home',
+      templateUrl:'/modules/main/home/home.html',
+      controller: 'HomeCtrl',
+      data: {
+        app: 'main'
+      }});
   })
   .controller('HomeCtrl', function ($scope, $http) {
     $scope.awesomeThings = [

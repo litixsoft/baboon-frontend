@@ -29,20 +29,20 @@
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 
-<!-- build:js(.) app/main/vendor.js -->
-<script src="bower_components/angular/angular.js"></script>
+
+<!-- build:js(app) app/main/vendor.js -->
+<script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="lib/lx_navigation/lx_navigation.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) app/main/app.js -->
-<!--<script src="common/navigation/navigation.js"></script>-->
+<script src="common/navigation/navigation.js"></script>
 <script src="modules/main/main.js"></script>
 <script src="modules/main/home/home.js"></script>
-<script src="modules/main/nav_example/nav_example.js"></script>
 <script src="modules/main/contact/contact.js"></script>
 <script src="modules/main/about/about.js"></script>
 <!-- endbuild -->
-
 </body>
 </html>

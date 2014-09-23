@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('main', [
-  //'common.navigation',
+  'common.navigation',
   'ui.router',
   'ui.bootstrap',
   'main.home',
   'main.about',
-  'main.contact',
-  'main.navExample'
+  'main.contact'
 ])
   .constant('ACTIVE_APP', 'main')
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
