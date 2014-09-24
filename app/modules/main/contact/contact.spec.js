@@ -2,22 +2,22 @@
 
 describe('Module: main.home.contact', function () {
 
-    // load the controller's module
-    beforeEach(module('main'));
+  // load the controller's module
+  beforeEach(module('main'));
 
-    var MainHomeContactCtrl,
-        scope;
+  var ContactCtrl, scope;
 
-    // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope) {
-        scope = $rootScope.$new();
-        MainHomeContactCtrl = $controller('MainHomeContactCtrl', {
-            $scope: scope
-        });
-    }));
-
-    it('should attach correct vars to the scope', function () {
-        expect(scope.view).toBe('contact');
-        expect(scope.controller).toBe('MainHomeContactCtrl');
+  // Initialize the controller and a mock scope
+  beforeEach(inject(function ($controller, $rootScope) {
+    scope = $rootScope.$new();
+    ContactCtrl = $controller('ContactCtrl', {
+      $scope: scope
     });
+  }));
+
+  it('should attach a vars to the scope', function () {
+    expect(scope.app).toBe('main');
+    expect(scope.view).toBe('contact');
+    expect(scope.controller).toBe('ContactCtrl');
+  });
 });

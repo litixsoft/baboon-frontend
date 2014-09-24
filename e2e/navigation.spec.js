@@ -1,67 +1,103 @@
 'use strict';
 
-describe('Scenario: User navigates the application.', function () {
+describe('Scenario: test application routing.', function () {
 
-    it('should be the correct scope by route /', function() {
-        browser.get('/');
-
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+  it('should be correct redirect to /main/home by route /', function () {
+    browser.get('/');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - Home');
     });
+  });
 
-    it('should be the correct scope by route /foo', function() {
-        browser.get('/foo');
-
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+  it('should be the correct redirect by route /foo', function () {
+    browser.get('/foo');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - Home');
     });
+  });
 
-    it('should be the correct scope by route /main', function() {
-        browser.get('/main');
-
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+  it('should be the correct redirect by route /main', function () {
+    browser.get('/main');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - Home');
     });
+  });
 
-    it('should be the correct scope by route /main/home', function() {
-        browser.get('/main/home');
-
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+  it('should be the correct scope by route /main/home', function () {
+    browser.get('/main/home');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - Home');
     });
+  });
 
-    it('should be the correct scope by route /main/about', function() {
-        browser.get('/main/about');
-
-        var view = element(by.binding('view'));
-        expect(view.getText()).toEqual('This is the: about view and the: MainHomeAboutCtrl controller.');
+  it('should be the correct scope by route /main/about', function () {
+    browser.get('/main/about');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - About');
     });
+  });
 
-    it('should be the correct scope by route /main/contact', function() {
-        browser.get('/main/contact');
-
-        var view = element(by.binding('view'));
-        expect(view.getText()).toEqual('This is the: contact view and the: MainHomeContactCtrl controller.');
+  it('should be the correct scope by route /main/contact', function () {
+    browser.get('/main/contact');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Main - Contact');
     });
+  });
 
-    it('should be the correct scope by route /admin', function() {
-        browser.get('/admin');
+  it('should be correct redirect to /examples/home by route /examples', function () {
+    browser.get('/examples');
 
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
     });
+  });
 
-    it('should be the correct scope by route /admin/foo', function() {
-        browser.get('/admin/foo');
+  it('should be correct redirect to /examples/home by route /examples/foo', function () {
+    browser.get('/examples/foo');
 
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
     });
+  });
 
-    it('should be the correct scope by route /admin/home', function() {
-        browser.get('/admin/home');
+  it('should be correct content by route /examples/home', function () {
+    browser.get('/examples/home');
 
-        var thingList = element.all(by.repeater('thing in awesomeThings'));
-        expect(thingList.count()).toEqual(3);
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
     });
+  });
+
+  it('should be correct redirect to /admin/home by route /admin', function () {
+    browser.get('/admin');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Admin - Home');
+    });
+  });
+
+  it('should be correct redirect to /admin/home by route /admin/foo', function () {
+    browser.get('/admin/foo');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Admin - Home');
+    });
+  });
+
+  it('should be correct redirect to /admin/home by route /admin/home', function () {
+    browser.get('/admin/home');
+    element.all(by.css('.lx-intro h1')).then(function(items) {
+      expect(items.length).toBe(1);
+      expect(items[0].getText()).toBe('Admin - Home');
+    });
+  });
 });
