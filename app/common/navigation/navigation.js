@@ -1,12 +1,80 @@
 'use strict';
 
-angular.module('lx.navigation', [])
+//
+angular.module('navigation', [])
+  .constant('NAVIGATION', {
 
+    main: [
+      {
+        title: 'Home',
+        state: 'mainHome',
+        route: '/main/home',
+        app: 'main'
+      },
+      {
+        title: 'About',
+        state: 'mainAbout',
+        route: '/main/about',
+        app: 'main'
+      },
+      {
+        title: 'Contact',
+        state: 'mainContact',
+        route: '/main/contact',
+        app: 'main'
+      },
+      {
+        title: 'Examples',
+        state: 'examplesHome',
+        route: '/examples/home',
+        app: 'examples'
+      },
+      {
+        title: 'Admin',
+        state: 'adminHome',
+        route: '/admin/home',
+        app: 'admin'
+      }
+    ],
+    standard: [
+      {
+        'title': 'Main',
+        'app': 'main',
+        'children': [
+          {
+            'title': 'Home',
+            'route': '/main/home',
+            'app': 'main'
+          },
+          {
+            'title': 'Navigation Examples',
+            'route': '/main/nav_example',
+            'app': 'main'
+          },
+          {
+            'title': 'About',
+            'route': '/main/about',
+            'app': 'main'
+          },
+          {
+            'title': 'Contact',
+            'route': '/main/contact',
+            'app': 'main'
+          }
+        ]
+      },
+      {
+        'title': 'Admin',
+        'route': '/admin/home',
+        'app': 'admin'
+      }
+    ]
+  })
   .directive('comNav', function ($location, ACTIVE_APP, NAVIGATION) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: 'assets/includes/navigation_list.html',
+      templateUrl: 'common/navigation/nav_list.html',
 
       scope: {
         orientation: '@',
@@ -33,7 +101,7 @@ angular.module('lx.navigation', [])
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: 'assets/includes/navigation_tree_outside.html',
+      templateUrl: 'common/navigation/nav_tree_outside.html',
       scope: {
         navLinklist: '@'
       },

@@ -20,7 +20,6 @@ module.exports = function(config) {
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/bower_components/angular-ui-router/release/angular-ui-router.js',
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      'app/lib/**/*.js',
       'app/common/**/*.js',
       'app/modules/**/*.js'
     ],

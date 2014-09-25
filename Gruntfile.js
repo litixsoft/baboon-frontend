@@ -67,14 +67,11 @@ module.exports = function (grunt) {
       },
       livereload: {
         files: [
-          '.tmp/styles/**/*.css',
+          '.tmp/css/**/*.css',
           '<%= yeoman.app %>/*.html',
-          '<%= yeoman.app %>/modules/**/*.html',
-          '<%= yeoman.app %>/common/**/*.html',
-          '<%= yeoman.app %>/**/*.html',
-          '<%= yeoman.app %>/**/*.js',
-          '!<%= yeoman.app %>/**/*.spec.js',
-          '<%= yeoman.app %>/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.app %>/{modules,common,assets}/**/*.html',
+          '<%= yeoman.app %>/{common,modules,assets}/**/*.js',
+          '<%= yeoman.app %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         options: {
           livereload: true
@@ -315,22 +312,6 @@ module.exports = function (grunt) {
             src: ['common/**/*.html', 'modules/**/*.html']
           }
         ]
-      },
-      coverageE2E: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '.tmp/instrumentedE2E/app',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            'bower_components/**/*',
-            '*.html',
-            '{,*/}*.html',
-            'assets/**'
-          ]
-        }]
       }
     },
 
@@ -477,21 +458,6 @@ module.exports = function (grunt) {
         commitFiles: ['.'],
         commitMessage: 'chore: release v%VERSION%',
         push: false
-      }
-    },
-    protractor_coverage: {
-      options: {
-        // Task-specific options go here.
-      },
-      your_target: {
-        // Target-specific file lists and/or options go here.
-      }
-    },
-    instrument: {
-      files: ['app/common/**/*.js', 'app/modules/**/*.js'],
-      options: {
-        lazy: true,
-        basePath: "instrumented"
       }
     }
   });

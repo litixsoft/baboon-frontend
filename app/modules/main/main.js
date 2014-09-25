@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('main', [
-  'common.navigation',
+  'navigation',
   'ui.router',
   'ui.bootstrap',
   'main.home',
