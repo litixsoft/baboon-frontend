@@ -55,7 +55,7 @@ module.exports = function (grunt) {
         tasks: ['jshint:all']
       },
       jsTest: {
-        files: ['<%= yeoman.app %>/**/*.spec.js', '<%= yeoman.app %>/common/**/*.spec.js'],
+        files: ['<%= yeoman.app %>/modules/**/*.spec.js', '<%= yeoman.app %>/common/**/*.spec.js'],
         tasks: ['jshint:test', 'karma:unit']
       },
       styles: {
@@ -377,7 +377,8 @@ module.exports = function (grunt) {
     // Backend server for livereload
     express: {
       options: {
-        port: 9000
+        port: 9000,
+        host: '127.0.0.1'
       },
       dev: {
         options: {
@@ -406,7 +407,7 @@ module.exports = function (grunt) {
     // Open browser for livereload or coverage
     open: {
       server: {
-        url: 'http://localhost:<%= express.options.port %>'
+        url: 'http://<%= express.options.host %>:<%= express.options.port %>'
       },
       coverage: {
         path: function () {

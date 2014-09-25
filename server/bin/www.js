@@ -4,7 +4,7 @@
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.env.PORT = process.env.PORT || 9000;
-process.env.HOST = process.env.HOST || 'localhost';
+process.env.HOST = process.env.HOST || '127.0.0.1';
 
 // Options parameters
 var options = {};
@@ -62,6 +62,3 @@ server.listen(config.PORT, config.HOST, function () {
 });
 
 //});
-
-// Expose app
-exports = module.exports = app;

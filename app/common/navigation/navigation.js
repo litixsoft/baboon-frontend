@@ -1,6 +1,5 @@
 'use strict';
 
-//
 angular.module('navigation', [])
   .constant('NAVIGATION', {
 
