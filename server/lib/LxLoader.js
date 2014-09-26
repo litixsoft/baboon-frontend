@@ -1,6 +1,6 @@
 'use strict';
 
-var baboon = require('./index');
+var LxConfig = require('./LxConfig');
 var path = require('path');
 var _ = require('lodash');
 var async = require('async');
@@ -9,7 +9,7 @@ var async = require('async');
  * Load the application modules
  * @param rootPath
  */
-module.exports = function (baboon, rootPath, callback) {
+module.exports = function (rootPath, callback) {
 
   // Options for share between modules
   var options = {};
@@ -19,7 +19,7 @@ module.exports = function (baboon, rootPath, callback) {
   debug('Load configuration');
 
   // Config
-  var config = new baboon.LxConfig(rootPath);
+  var config = new LxConfig(rootPath);
   options.config = config;
 
   debug('Prepare boot sequence');
@@ -30,7 +30,7 @@ module.exports = function (baboon, rootPath, callback) {
     if (value) {
       debug('add module ' + key + ' to boot tasks');
       syncTasks.push(function (callback) {
-        require(path.join(config.BOOT_PATH, key))(baboon, options, callback);
+        require(path.join(config.BOOT_PATH, key))(options, callback);
       });
     }
   });

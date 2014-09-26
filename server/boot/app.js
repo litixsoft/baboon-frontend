@@ -9,10 +9,12 @@ var logger = require('morgan');
 var cors = require('cors');
 
 /**
+ * Express server application
  *
  * @param options
+ * @param next
  */
-module.exports = function (baboon, options, next) {
+module.exports = function (options, next) {
 
   var config = options.config;
 

@@ -8,8 +8,8 @@ process.env.PORT = process.env.PORT || 9000;
 process.env.HOST = process.env.HOST || '127.0.0.1';
 process.env.RELOAD = process.env.RELOAD || null;
 
-// Baboon Webtoolkit
 var baboon = require('../lib');
+
 var path = require('path');
 var rootPath = path.resolve(__dirname, '../../');
 var debug = require('debug')('baboon');
@@ -17,7 +17,7 @@ var debug = require('debug')('baboon');
 debug('Start baboon application config');
 
 // load application Modules
-baboon.LxLoader(baboon, rootPath, function (err, options) {
+baboon.LxLoader(rootPath, function (err, options) {
 
   // check errors and start server
   if (!err) {
@@ -33,8 +33,6 @@ baboon.LxLoader(baboon, rootPath, function (err, options) {
     });
 
   } else {
-
-    // Error
     throw new Error(err);
   }
 });

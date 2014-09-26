@@ -1,27 +1,8 @@
 'use strict';
 
-var SocketIO = require('socket.io');
-
 /**
- * ##!start:true
- *
- * @param options
- * @returns {SocketIO}
+ * SocketIo server
  */
-module.exports = function(baboon, options, next) {
 
-
-  // Check server parameter
-  if (!options.server) {
-    throw new Error('Parameter options.server required');
-  }
-
-  var debug = require('debug')('baboon:socket.io');
-
-  debug('Create socket.io server');
-
-  // Create socket.io server
-  options.socketIO = new SocketIO(options.server);
-
-  next();
-};
+var baboon = require('../lib');
+module.exports = baboon.boot.socketIo;
