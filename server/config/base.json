@@ -1,9 +1,15 @@
 {
-  "MONGODB":
-    [
-      {
-        "url": "mongodb://localhost:27017/baboon-backend-test", "name": "bbTest"
-      },
-      {}
-    ]
+  "BOOT_CONFIG": {
+    "app.js" : true,
+    "http.js": true
+  },
+  "LX_MONGODB": [
+    {
+      "url": "mongodb://localhost:27017/baboon-backend-test",
+      "name": "bbTest"
+    }
+  ],
+  "Test24": "Timo",
+  "Test25": "Timo Liebetrau",
+  "Test26": "Willy Liebetrau"
 }

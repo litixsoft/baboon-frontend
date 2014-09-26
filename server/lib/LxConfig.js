@@ -1,7 +1,7 @@
 'use strict';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var path = require('path');
+var _ = require('lodash');
 
 /**
  * Application configuration
@@ -11,21 +11,28 @@ var path = require('path');
  */
 var LxConfig = function (rootPath) {
 
-    var self = {};
+  var self = {};
+  var debug = require('debug')('baboon:LxConfig');
 
-    self.ROOT_PATH = rootPath;
-    self.API_PATH = path.join(rootPath, 'server', 'api');
-    self.LIB_PATH = path.join(rootPath, 'server', 'lib');
+  // Paths
+  self.ROOT_PATH = rootPath;
+  self.API_PATH = path.join(rootPath, 'server', 'api');
+  self.BOOT_PATH = path.join(rootPath, 'server', 'boot');
+  self.CONFIG_PATH = path.join(rootPath, 'server', 'config');
 
-    self.NODE_ENV = process.env.NODE_ENV;
-    self.PORT = process.env.PORT;
-    self.HOST = process.env.HOST;
+  // Environment
+  self.NODE_ENV = process.env.NODE_ENV;
+  self.PORT = process.env.PORT;
+  self.HOST = process.env.HOST;
+  self.RELOAD = process.env.RELOAD;
 
-    self.MONGODB = [
-        {url: 'mongodb://localhost:27017/baboon-backend-test', name: 'bbTest'}
-    ];
+  var baseConfig = require(path.join(self.CONFIG_PATH, 'base.json'));
+  var config = _.merge(baseConfig, require(path.join(self.CONFIG_PATH, self.NODE_ENV + '.json')) || {});
+  self = _.merge(config, self);
 
-    return self;
+  debug('Configuration loaded:', self);
+
+  return self;
 };
 
 module.exports = LxConfig;

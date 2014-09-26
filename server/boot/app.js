@@ -12,7 +12,7 @@ var cors = require('cors');
  *
  * @param options
  */
-module.exports = function (options) {
+module.exports = function (baboon, options, next) {
 
   var config = options.config;
 
@@ -78,5 +78,9 @@ module.exports = function (options) {
     }
   });
 
-  return app;
+  // export app to options
+  options.app = app;
+
+  // next callback
+  next();
 };

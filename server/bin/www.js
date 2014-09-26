@@ -2,63 +2,39 @@
 
 'use strict';
 
+// Environment default settings
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.env.PORT = process.env.PORT || 9000;
 process.env.HOST = process.env.HOST || '127.0.0.1';
+process.env.RELOAD = process.env.RELOAD || null;
 
-// Options parameters
-var options = {};
-
+// Baboon Webtoolkit
+var baboon = require('../lib');
 var path = require('path');
 var rootPath = path.resolve(__dirname, '../../');
-
-var lib = require('../lib');
 var debug = require('debug')('baboon');
 
-// Config
-var config = new lib.LxConfig(rootPath);
-options.config = config;
+debug('Start baboon application config');
 
-// Express application
-var app = require('../app.js') (options);
-options.app = app;
+// load application Modules
+baboon.LxLoader(baboon, rootPath, function (err, options) {
 
-// Http server
-var server = require('http').createServer(app);
-options.server = server;
+  // check errors and start server
+  if (!err) {
 
-// Socket.io
-//var io = require('../socket.io.js')(options);
-//io.on('connection', function (socket) {
-//  debug('Client connect to socket.io');
-//
-//  socket.on('echo', function (data, callback) {
-//
-//    return callback(null, {message: 'Antwort vom Server'} );
-//
-//  });
-//
-//});
-//var db = lib.lxMongoDb;
-//
-//// Connect to databases
-//db.connect(config.MONGODB);
-//
-//// Exit when databases connect error
-//db.on('connect_error', function (err) {
-//  throw err;
-//});
-//
-//// Init and start application after successfully connect
-//db.once('connect', function () {
-//
-//  // Init application
-//  var server = new Server(config, db);
-//
+    debug('application modules loaded');
+    debug('start server');
 
-// start server
-server.listen(config.PORT, config.HOST, function () {
-  debug('Express server listening on port ' + server.address().port);
+    // start server
+    var server = options.server;
+
+    server.listen(options.config.PORT, options.config.HOST, function () {
+      debug('Express server listening on port ' + server.address().port);
+    });
+
+  } else {
+
+    // Error
+    throw new Error(err);
+  }
 });
-
-//});
