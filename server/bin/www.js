@@ -14,7 +14,7 @@ var path = require('path');
 var rootPath = path.resolve(__dirname, '../../');
 var debug = require('debug')('baboon');
 
-debug('Start baboon application config');
+debug('Start project.sh application config');
 
 // load application Modules
 baboon.LxLoader(rootPath, function (err, options) {

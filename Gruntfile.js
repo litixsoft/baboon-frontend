@@ -369,7 +369,7 @@ module.exports = function (grunt) {
       },
       e2eDist : {
         NODE_ENV: 'production',
-        DEBUG: 'baboon*',
+        DEBUG: 'baboon.sh*',
         PORT: 9001
       }
     },

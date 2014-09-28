@@ -16,7 +16,7 @@ module.exports = function(baboon, options, next) {
     throw new Error('Parameter options.server required');
   }
 
-  var debug = require('debug')('baboon:socket.io');
+  var debug = require('debug')('baboon.sh:socket.io');
 
   debug('Create socket.io server');
 
