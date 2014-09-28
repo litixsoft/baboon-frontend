@@ -1,8 +1,8 @@
 {
-  "name": "baboon-frontend",
-  "version": "0.5.2",
-  "description": "Baboon singlepage reference application, based on Angular, backend independent.",
-  "homepage": "https://github.com/litixsoft/baboon-frontend",
+  "name": "baboon",
+  "version": "0.5.0",
+  "description": "Baboon Webtoolkit, based on ExpressJS AngularJS, backend independent.",
+  "homepage": "https://github.com/litixsoft/baboon",
   "author": {
     "name": "Litixsoft GmbH",
     "email": "development@litixsoft.de",
@@ -20,42 +20,45 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/litixsoft/baboon-frontend.git"
+    "url": "https://github.com/litixsoft/baboon.git"
   },
   "bugs": {
-    "url": "https://github.com/litixsoft/baboon-frontend/issues"
+    "url": "https://github.com/litixsoft/baboon/issues"
   },
   "license": "MIT",
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/litixsoft/baboon-frontend/blob/master/LICENSE"
+      "url": "https://github.com/litixsoft/baboon/blob/master/LICENSE"
     }
   ],
   "keywords": [
     "baboon",
     "spa",
-    "spa framework",
-    "MEAN stack frontend",
-    "single page",
-    "realtime",
-    "frontend",
+    "spa Webtoolkit",
+    "MEAN stack",
+    "single page application",
+    "realtime application",
     "angular frontend",
-    "stand alone angular frontend"
+    "stand alone angular frontend",
+    "nodeJS rest api server",
+    "nodejs socket.io api server"
   ],
   "dependencies": {
-    "colors": "^0.6.2",
-    "lodash": "^2.4.1"
-  },
-  "devDependencies": {
     "async": "^0.9.0",
+    "lodash": "^2.4.1",
     "body-parser": "^1.8.2",
-    "cliff": "^0.1.9",
     "compression": "^1.1.0",
-    "connect-livereload": "^0.4.0",
     "cors": "^2.4.2",
     "debug": "~2.0.0",
     "express": "~4.9.0",
+    "method-override": "^2.2.0",
+    "morgan": "~1.3.0",
+    "serve-favicon": "~2.1.3",
+    "socket.io": "^1.1.0"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.4.0",
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.8.1",
     "grunt-bg-shell": "^2.3.1",
@@ -90,12 +93,8 @@
     "karma-mocha-reporter": "*",
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^0.6.0",
-    "method-override": "^2.2.0",
-    "morgan": "~1.3.0",
     "open": "~0.0.4",
     "protractor": "^1.0.0",
-    "serve-favicon": "~2.1.3",
-    "socket.io": "^1.1.0",
     "time-grunt": "^0.4.0"
   },
   "engines": {
@@ -103,7 +102,6 @@
   },
   "scripts": {
     "test": "grunt test",
-    "start": "DEBUG=* node ./server/bin/www"
-  },
-  "private": true
+    "start": "./scripts/start.sh"
+  }
 }
