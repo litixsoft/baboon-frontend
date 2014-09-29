@@ -6,7 +6,7 @@ SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT && cd ..
 
 # Set environment
-export DEBUG=baboon
+export DEBUG=*
 export NODE_ENV=development
 export HOST=127.0.0.1
 export PORT=9000

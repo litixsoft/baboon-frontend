@@ -7,6 +7,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cors = require('cors');
+var router = express.Router();
 
 /**
  * Express server application
@@ -66,6 +67,9 @@ module.exports = function (options, next) {
     app.use(express.static(config.APP_PATH, {maxAge: '10d'}));
   }
 
+  // Routes
+  app.use('/api', router);
+
   // Just send the app-name.html or index.html to support HTML5Mode ..
   app.all('/:app*', function (req, res) {
 
@@ -80,8 +84,9 @@ module.exports = function (options, next) {
     }
   });
 
-  // export app to options
+  // export app and router to options
   options.app = app;
+  options.router = router;
 
   // next callback
   next();

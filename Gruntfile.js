@@ -360,12 +360,14 @@ module.exports = function (grunt) {
     env: {
       dev: {
         NODE_ENV: 'development',
-        DEBUG: 'baboon*',
-        RELOAD: true
+        DEBUG: '*',
+        RELOAD: true,
+        PORT: 9000
       },
       pro: {
         NODE_ENV: 'production',
-        DEBUG: 'baboon*'
+        DEBUG: 'baboon*',
+        PORT: 9000
       },
       e2eDist : {
         NODE_ENV: 'production',

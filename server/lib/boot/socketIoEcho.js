@@ -18,20 +18,20 @@ module.exports = function (options, next) {
 
     debug('Client connect to socket.io');
 
-    socket.on('echoCallback', function (data, callback) {
-      debug('echoCallback: receive message from client:' + socket.id);
+    socket.on('echo', function (data, callback) {
+
+      debug('echo: receive message from client:' + socket.id);
       debug(data);
 
-      // Return data with callback
-      return callback(null, data);
-    });
+      if (!callback) {
 
-    socket.on('echoEvent', function (data) {
-      debug('echoEvent: receive message from client:' + socket.id);
-      debug(data);
+        debug('echo: callback not available push answer to client');
+        socket.emit('echo', data);
+      } else {
 
-      // Return data with emit
-      return socket.emit('echoEvent', data);
+        debug('echo: callback present use callback for answer');
+        callback(null, data);
+      }
     });
   });
 

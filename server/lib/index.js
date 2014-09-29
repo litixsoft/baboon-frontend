@@ -9,8 +9,9 @@ exports.LxLoader = require('./LxLoader.js');
 // Boot modules
 exports.boot = {
   http: require('./boot/http'),
-  lxMongoDb: require('./boot/lxMongoDb'),
+  restEcho: require('./boot/restEcho'),
   socketIo: require('./boot/socketIo'),
-  socketIoEcho: require('./boot/socketIoEcho')
+  socketIoEcho: require('./boot/socketIoEcho'),
+  lxMongoDb: require('./boot/lxMongoDb')
 };
 
