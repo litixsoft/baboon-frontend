@@ -6,7 +6,6 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 process.env.PORT = process.env.PORT || 9000;
 process.env.HOST = process.env.HOST || '127.0.0.1';
-process.env.RELOAD = process.env.RELOAD || null;
 
 var baboon = require('../lib');
 

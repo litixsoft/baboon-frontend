@@ -8,7 +8,7 @@ var SocketIO = require('socket.io');
  * @param options
  * @returns {SocketIO}
  */
-module.exports = function(baboon, options, next) {
+module.exports = function(options, next) {
 
 
   // Check server parameter
@@ -16,7 +16,7 @@ module.exports = function(baboon, options, next) {
     throw new Error('Parameter options.server required');
   }
 
-  var debug = require('debug')('baboon.sh:socket.io');
+  var debug = require('debug')('baboon:socket.io');
 
   debug('Create socket.io server');
 
