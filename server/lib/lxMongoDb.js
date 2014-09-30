@@ -2,11 +2,11 @@
 
 var async = require('async');
 var debug = require('debug')('lxMongoDb');
-var lxHelpers = require('lx-helpers');
 var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var ObjectID = mongodb.ObjectID;
 var events = require('events');
+var _ = require('lodash');
 
 /**
  *
@@ -14,113 +14,114 @@ var events = require('events');
  */
 var lxMongoDb = function () {
 
-    var self = Object.create(events.EventEmitter.prototype);
-    var connections = {};
+  var self = Object.create(events.EventEmitter.prototype);
+  var connections = {};
 
-    /**
-     *
-     * @type {string}
-     */
-    self.connectedState = false;
+  /**
+   *
+   * @type {string}
+   */
+  self.connectedState = false;
 
-    /**
-     * Convert string id in mongo id
-     *
-     * @param id
-     * @returns {ObjectID}
-     */
-    self.convertToMongoId = function (id) {
-        return ObjectID.createFromHexString(id);
-    };
+  /**
+   * Convert string id in mongo id
+   *
 
-    /**
-     * Get db object with name
-     *
-     * @param dbName
-     * @returns {*}
-     */
-    self.connection = function (dbName) {
+   * @param id
+   * @returns {ObjectID}
+   */
+  self.convertToMongoId = function (id) {
+    return ObjectID.createFromHexString(id);
+  };
 
-        if (!lxHelpers.isString(dbName)) {
-            throw new TypeError('Parameter dbName must be a string.');
-        }
+  /**
+   * Get db object with name
+   *
+   * @param dbName
+   * @returns {*}
+   */
+  self.connection = function (dbName) {
 
-        if (!connections.hasOwnProperty(dbName)) {
-            throw new Error('Database: ' + dbName + ' not found in connections');
-        }
+    if (!_.isString(dbName)) {
+      throw new TypeError('Parameter dbName must be a string.');
+    }
 
-        return connections[dbName];
-    };
+    if (!connections.hasOwnProperty(dbName)) {
+      throw new Error('Database: ' + dbName + ' not found in connections');
+    }
 
-    /**
-     * Connect to databases
-     *
-     * @param config
-     */
-    self.connect = function (config) {
+    return connections[dbName];
+  };
 
-        // check config object
-        if (!lxHelpers.isArray(config)) {
-            throw new TypeError('Parameter config must be a array with objects.');
-        }
+  /**
+   * Connect to databases
+   *
+   * @param config
+   */
+  self.connect = function (config) {
 
-        var asyncTasks = [];
+    // check config object
+    if (!_.isArray(config)) {
+      throw new TypeError('Parameter config must be a array with objects.');
+    }
 
-        lxHelpers.arrayForEach(config, function (item) {
+    var asyncTasks = [];
 
-            if (!lxHelpers.isObject(item)) {
-                throw new TypeError('config item must be a abject.');
+    _(config).forEach(function (item) {
+
+      if (!_.isObject(item)) {
+        throw new TypeError('config item must be a abject.');
+      }
+
+      if (!item.hasOwnProperty('url')) {
+        throw new TypeError('config item must have a url property.');
+      }
+
+      if (!item.hasOwnProperty('name')) {
+        throw new TypeError('config item must have a name property.');
+      }
+
+      // check database exists in dbs
+      if (!connections.hasOwnProperty(item.name)) {
+
+        // Database not exists in storage push new connect to async tasks
+        asyncTasks.push(function (callback) {
+
+          MongoClient.connect(item.url, function (err, database) {
+            if (err || !database) {
+              return callback(err || new Error('Unknown error, no database returned.'));
             }
 
-            if (!item.hasOwnProperty('url')) {
-                throw new TypeError('config item must have a url property.');
-            }
+            debug('Successfully connected to MongoDb: %s saved as: %s in storage.', database.databaseName, item.name);
+            connections[item.name] = database;
 
-            if (!item.hasOwnProperty('name')) {
-                throw new TypeError('config item must have a name property.');
-            }
-
-            // check database exists in dbs
-            if (!connections.hasOwnProperty(item.name)) {
-
-                // Database not exists in storage push new connect to async tasks
-                asyncTasks.push(function(callback){
-
-                    MongoClient.connect(item.url, function (err, database) {
-                        if (err || !database) {
-                            return callback(err || new Error('Unknown error, no database returned.'));
-                        }
-
-                        debug('Successfully connected to MongoDb: %s saved as: %s in storage.', database.databaseName, item.name);
-                        connections[item.name] = database;
-
-                        return callback();
-                    });
-                });
-            }
-            else {
-                // Database exists in storage close db and push new connect to async tasks
-                debug('Database %s exists in storage, no new connect use existing instance.');
-            }
+            return callback();
+          });
         });
+      }
+      else {
+        // Database exists in storage close db and push new connect to async tasks
+        debug('Database %s exists in storage, no new connect use existing instance.');
+      }
+    });
 
-        // Parallel connect to databases
-        async.parallel(asyncTasks, function(err) {
+    // Parallel connect to databases
+    async.parallel(asyncTasks, function (err) {
 
-            if (err) {
-                debug('Error database connection: %j', JSON.stringify(err));
-                self.emit('connect_error');
+      if (err) {
+        debug('Error database connection: %j', JSON.stringify(err));
+        self.emit('connect_error');
 
-            }
-            else {
-                debug('All database connected.');
-                self.connectedState = true;
-                self.emit('connect');
-            }
-        });
-    };
+      }
+      else {
+        debug('All database connected.');
+        self.connectedState = true;
+        self.emit('connect');
+      }
+    });
+  };
 
-    return self;
+  return self;
 };
 
 module.exports = lxMongoDb();

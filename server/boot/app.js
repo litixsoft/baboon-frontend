@@ -28,7 +28,7 @@ module.exports = function (options, next) {
   var debug = require('debug')('baboon:app');
   var app = express();
   var env = app.get('env');
-  var RELOAD = process.env.RELOAD || null;
+  var RELOAD = process.env.RELOAD;
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
@@ -40,7 +40,7 @@ module.exports = function (options, next) {
   if ('development' === env) {
 
     // Check livereload
-    if (RELOAD) {
+    if (RELOAD === 'on') {
       app.use(require('connect-livereload')());
     }
 
@@ -68,7 +68,7 @@ module.exports = function (options, next) {
   }
 
   // Routes
-  app.use('/api', router);
+  //app.use('/api', router);
 
   // Just send the app-name.html or index.html to support HTML5Mode ..
   app.all('/:app*', function (req, res) {

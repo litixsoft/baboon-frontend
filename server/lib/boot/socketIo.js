@@ -8,7 +8,7 @@ var SocketIO = require('socket.io');
  * @param options
  * @returns {SocketIO}
  */
-module.exports = function(options, next) {
+module.exports = function (options, next) {
 
 
   // Check server parameter

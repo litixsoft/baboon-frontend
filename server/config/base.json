@@ -1,11 +1,11 @@
 {
   "BOOT_CONFIG": {
     "lxMongoDb": false,
-    "app.js" : true,
+    "app.js": true,
     "http.js": true,
     "restEcho": false,
-    "socketIo": true,
-    "socketIoEcho": true
+    "socketIo": false,
+    "socketIoEcho": false
   },
   "LX_MONGODB": [
     {

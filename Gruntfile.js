@@ -361,7 +361,7 @@ module.exports = function (grunt) {
       dev: {
         NODE_ENV: 'development',
         DEBUG: '*',
-        RELOAD: true,
+        RELOAD: 'on',
         PORT: 9000
       },
       pro: {
@@ -369,7 +369,7 @@ module.exports = function (grunt) {
         DEBUG: 'baboon*',
         PORT: 9000
       },
-      e2eDist : {
+      e2eDist: {
         NODE_ENV: 'production',
         DEBUG: 'baboon*',
         PORT: 9001
@@ -466,7 +466,7 @@ module.exports = function (grunt) {
   });
 
   // Register tasks.
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function() {
+  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
     this.async();
   });
 
