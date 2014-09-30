@@ -12,7 +12,7 @@ module.exports = function (config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine', 'detectBrowsers'],
+    frameworks: ['jasmine' /**,'detectBrowsers' **/],
 
     // list of files / patterns to load in the browser
     files: [
@@ -57,7 +57,7 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     // CLI --browsers Chrome,Firefox,Safari
-    browsers: [process.env.TRAVIS ? 'Firefox' : 'Chrome'],
+    browsers: [process.env.TRAVIS ? 'Firefox' : 'PhantomJS'],
 
     // If browser does not capture in given timeout [ms], kill it
     // CLI --capture-timeout 5000

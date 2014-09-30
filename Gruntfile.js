@@ -1,7 +1,8 @@
-// Generated on 2014-06-17 using generator-angular 0.9.0-1
 'use strict';
 
 var path = require('path');
+var fs = require('fs');
+var url = require('url');
 
 module.exports = function (grunt) {
 
@@ -26,6 +27,43 @@ module.exports = function (grunt) {
     return '';
   }
 
+  /**
+   * Connect rewrite middleware
+   * Send static html app file in html5mode with toplevel apps
+   *
+   * @param {!object} req The request object
+   * @param {!object} res The response object
+   * @param {!string} root The base path of documents
+   * @param {!function} next Callback for next function in stack
+   */
+  function connectRewrite(req, res, root, next) {
+
+    var appFile = 'index.html';
+    var urlPath = url.parse(req.url).pathname;
+    var arr = urlPath.split('/');
+
+    if (arr[1] !== 'main' || arr[1] !== '') {
+      appFile = arr[1] + '.html';
+    }
+
+    if (!fs.existsSync(path.join(root, appFile))) {
+      appFile = 'index.html';
+    }
+
+    fs.readFile(path.join(root, appFile), function (error, buffer) {
+      if (error) {
+        return next(error);
+      }
+
+      res.writeHead(200, {
+        'Content-Type': 'text/html',
+        'Content-Length': buffer.length
+      });
+
+      res.end(buffer);
+    });
+  }
+
   // Configurable paths for the application
   var appConfig = {
     app: 'app',
@@ -37,13 +75,6 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
-    banner: '/*!\n' +
-    ' * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
-    '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
-    ' *\n' +
-    ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
-    ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n' +
-    ' */\n\n',
 
     // Project settings
     yeoman: appConfig,
@@ -66,25 +97,79 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
         files: [
           '.tmp/css/**/*.css',
           '<%= yeoman.app %>/*.html',
           '<%= yeoman.app %>/{modules,common,assets}/**/*.html',
           '<%= yeoman.app %>/{common,modules,assets}/**/*.js',
           '<%= yeoman.app %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
+        ]
+      }
+    },
+
+    // The actual grunt server settings
+    connect: {
+      options: {
+        port: 9000,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost',
+        livereload: 35729
+      },
+      livereload: {
         options: {
-          livereload: true
+          open: true,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect.static(appConfig.app),
+              connect().use('/', function (req, res, next) {
+                connectRewrite(req, res, appConfig.app, next);
+              })
+            ];
+          }
         }
       },
-      express: {
-        files: [
-          'server/**/*.{js,json}'
-        ],
-        tasks: ['express:dev', 'wait'],
+      test: {
         options: {
-          livereload: true,
-          nospawn: true //Without this option specified express won't be reloaded
+          port: 9001,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect.static(appConfig.app),
+              connect().use('/', function (req, res, next) {
+                connectRewrite(req, res, appConfig.app, next);
+              })
+            ];
+          }
+        }
+      },
+      testDist: {
+        options: {
+          port: 9001,
+          middleware: function (connect) {
+            return [
+              connect.static(appConfig.dist),
+              connect().use('/', function (req, res, next) {
+                connectRewrite(req, res, appConfig.dist, next);
+              })
+            ];
+          }
+        }
+      },
+      dist: {
+        options: {
+          open: true,
+          middleware: function (connect) {
+            return [
+              connect.static(appConfig.dist),
+              connect().use('/', function (req, res, next) {
+                connectRewrite(req, res, appConfig.dist, next);
+              })
+            ];
+          }
         }
       }
     },
@@ -153,8 +238,7 @@ module.exports = function (grunt) {
       server: '.tmp',
       test: '<%= yeoman.reports %>/test',
       jslint: '<%= yeoman.reports %>/jslint',
-      coverage: '<%= yeoman.reports %>/coverage',
-      coverageE2E: '.tmp/instrumentedE2E'
+      coverage: '<%= yeoman.reports %>/coverage'
     },
 
     // Add vendor prefixed styles
@@ -357,60 +441,27 @@ module.exports = function (grunt) {
     },
 
     // Set environment
-    env: {
-      dev: {
-        NODE_ENV: 'development',
-        DEBUG: '*',
-        RELOAD: 'on',
-        PORT: 9000
-      },
-      pro: {
-        NODE_ENV: 'production',
-        DEBUG: 'baboon*',
-        PORT: 9000
-      },
-      e2eDist: {
-        NODE_ENV: 'production',
-        DEBUG: 'baboon*',
-        PORT: 9001
-      }
-    },
-
-    // Backend server for livereload
-    express: {
-      options: {
-        port: 9000,
-        host: '127.0.0.1'
-      },
-      dev: {
-        options: {
-          script: 'server/bin/www.js',
-          debug: true,
-          delay: 10
-        }
-      },
-      test: {
-        options: {
-          port: 9001,
-          script: 'server/bin/www.js',
-          debug: true,
-          delay: 10
-        }
-      },
-      pro: {
-        options: {
-          script: 'server/bin/www.js',
-          debug: false,
-          delay: 10
-        }
-      }
-    },
+    //env: {
+    //  dev: {
+    //    NODE_ENV: 'development',
+    //    DEBUG: '*',
+    //    RELOAD: 'on',
+    //    PORT: 9000
+    //  },
+    //  pro: {
+    //    NODE_ENV: 'production',
+    //    DEBUG: 'baboon*',
+    //    PORT: 9000
+    //  },
+    //  e2eDist: {
+    //    NODE_ENV: 'production',
+    //    DEBUG: 'baboon*',
+    //    PORT: 9001
+    //  }
+    //},
 
     // Open browser for livereload or coverage
     open: {
-      server: {
-        url: 'http://<%= express.options.host %>:<%= express.options.port %>'
-      },
       coverage: {
         path: function () {
           return path.join(__dirname, getCoverageReport('build/reports/coverage/'));
@@ -465,23 +516,6 @@ module.exports = function (grunt) {
     }
   });
 
-  // Register tasks.
-  grunt.registerTask('express-keepalive', 'Keep grunt running', function () {
-    this.async();
-  });
-
-  // Used for delaying livereload until after server has restarted
-  grunt.registerTask('wait', function () {
-    grunt.log.ok('Waiting for server reload...');
-
-    var done = this.async();
-
-    setTimeout(function () {
-      grunt.log.writeln('Done waiting!');
-      done();
-    }, 1500);
-  });
-
 
   grunt.registerTask('git:commitHook', 'Install git commit hook', function () {
     grunt.file.copy('validate-commit-msg.js', '.git/hooks/commit-msg');
@@ -491,15 +525,12 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'env:pro', 'express:pro', 'wait', 'open:server', 'express-keepalive']);
+      return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
     grunt.task.run([
       'build:dev',
-      'env:dev',
-      'express:dev',
-      'wait',
-      'open:server',
+      'connect:livereload',
       'watch'
     ]);
   });
@@ -508,15 +539,14 @@ module.exports = function (grunt) {
     'jshint:test',
     'jshint:all',
     'build:dev',
-    'express:test',
+    'connect:test',
     'karma:unit'
   ]);
 
   grunt.registerTask('e2e', [
     'bgShell:updateWebdriver',
     'build:dev',
-    'env:dev',
-    'express:test',
+    'connect:test',
     'bgShell:protractor'
   ]);
 
@@ -524,15 +554,14 @@ module.exports = function (grunt) {
   grunt.registerTask('e2e:dist', [
     'bgShell:updateWebdriver',
     'build',
-    'env:e2eDist',
-    'express:test',
+    'connect:testDist',
     'bgShell:protractor'
   ]);
 
   grunt.registerTask('cover', [
     'build:dev',
     'clean:coverage',
-    'express:test',
+    'connect:test',
     'karma:coverage',
     'open:coverage'
   ]);
@@ -544,7 +573,7 @@ module.exports = function (grunt) {
     'jshint:jslint',
     'jshint:checkstyle',
     'build:dev',
-    'express:test',
+    'connect:test',
     'karma:ci',
     'karma:coverage',
     'karma:cobertura'
