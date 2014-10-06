@@ -1,7 +1,7 @@
-//angular.module('common.transport', [])
+//angular.module('lx.transport', [])
 //    .factory('$trp', function($http) {
 //
-//    });
+//});
 
 //<!--<script>-->
 //<!--var socket = io.connect('http://localhost:9000');-->

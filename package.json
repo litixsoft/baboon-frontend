@@ -1,7 +1,7 @@
 {
   "name": "baboon",
   "version": "0.5.0",
-  "description": "Baboon Webtoolkit, based on ExpressJS AngularJS, backend independent.",
+  "description": "Baboon singlepage frontend, based AngularJS, backend independent.",
   "homepage": "https://github.com/litixsoft/baboon",
   "author": {
     "name": "Litixsoft GmbH",
@@ -86,7 +86,6 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "grunt test",
-    "start": "grunt serve"
+    "test": "grunt test"
   }
 }

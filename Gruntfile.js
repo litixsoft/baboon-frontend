@@ -440,26 +440,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Set environment
-    //env: {
-    //  dev: {
-    //    NODE_ENV: 'development',
-    //    DEBUG: '*',
-    //    RELOAD: 'on',
-    //    PORT: 9000
-    //  },
-    //  pro: {
-    //    NODE_ENV: 'production',
-    //    DEBUG: 'baboon*',
-    //    PORT: 9000
-    //  },
-    //  e2eDist: {
-    //    NODE_ENV: 'production',
-    //    DEBUG: 'baboon*',
-    //    PORT: 9001
-    //  }
-    //},
-
     // Open browser for livereload or coverage
     open: {
       coverage: {
