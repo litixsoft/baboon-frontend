@@ -4,7 +4,7 @@ angular.module('auth.register', [])
     .config(function ($stateProvider) {
         $stateProvider.state('register', { url: '/auth/register', templateUrl: '/modules/auth/register/register.html', controller: 'AuthRegisterCtrl' });
     })
-    .controller('AuthRegisterCtrl', function ($scope, $location, Auth) {
+    .controller('AuthRegisterCtrl', function ($scope, $location, Auth, lxUtils) {
         $scope.alerts = [];
 
         $scope.closeAlert = function(index) {
@@ -28,10 +28,7 @@ angular.module('auth.register', [])
                 .error(function(err) {
                     $scope.requesting = false;
                     if(err.status === 400 && err.data) {
-                        for (var i = 0; i < err.data.length; i++) {
-                            $scope.form[err.data[i].property].$setValidity('server', false);
-                            $scope.form[err.data[i].property].$error.serverMsg = err.data[i].message;
-                        }
+                        lxUtils.populateServerErrors(err.data, $scope.form);
                     }
                     else {
                         $scope.alerts.push({ msg: 'Es ist ein Fehler aufgetreten.' });

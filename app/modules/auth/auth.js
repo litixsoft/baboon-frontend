@@ -7,6 +7,7 @@ angular.module('auth', [
     'auth.services',
     'common.servererror',
     'common.equals',
+    'common.utils',
     'auth.login',
     'auth.register',
     'auth.password',
