@@ -4,7 +4,7 @@ angular.module('auth.confirmation', [])
     .config(function ($stateProvider) {
         $stateProvider.state('confirmation', { url: '/auth/confirmation/:id', templateUrl: '/modules/auth/confirmation/confirmation.html', controller: 'AuthConfirmationCtrl' });
     })
-    .controller('AuthConfirmationCtrl', function ($scope, $stateParams, BASE_URI, $location, Auth) {
+    .controller('AuthConfirmationCtrl', function ($scope, $stateParams, $location, Auth) {
         $scope.alerts = [];
 
         $scope.closeAlert = function(index) {
