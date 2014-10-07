@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <base href="/">
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Title -->
+  <title>Baboon Webtoolkit</title>
+  <!-- build:css(app) assets/css/auth_vendor.css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <!-- endbuild -->
+  <!-- build:css(.tmp) assets/css/auth.css -->
+  <link rel="stylesheet" href="css/auth/auth.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="auth">
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser.
+  Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<header data-ng-include="'assets/includes/header.html'"></header>
+<div class="container" ui-view=""></div>
+
+<!-- Socket.io -->
+<script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+
+<!-- build:js(app) app/auth/vendor.js -->
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-socket-io/socket.js"></script>
+<script src="lib/transport/transport.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) app/auth/app.js -->
+<script src="common/lx_server_error/lx_server_error.js"></script>
+<script src="common/lx_equals/lx_equals.js"></script>
+<script src="modules/auth/auth.js"></script>
+<script src="modules/auth/auth.services.js"></script>
+<script src="modules/auth/login/login.js"></script>
+<script src="modules/auth/register/register.js"></script>
+<script src="modules/auth/password/password.js"></script>
+<script src="modules/auth/confirmation/confirmation.js"></script>
+<!-- endbuild -->
+</body>
+</html>
