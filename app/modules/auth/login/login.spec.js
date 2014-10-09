@@ -128,33 +128,26 @@ describe('auth', function () {
     });
 
     describe('LogoutServiceTest', function () {
-        var service, $window, $location, rootScope;
+        var service, $window;
 
         beforeEach(function () {
-            inject(function ($injector, _$window_, _$location_, $rootScope) {
+            inject(function ($injector, _$window_) {
                 $window = _$window_;
-                $location = _$location_;
-                rootScope = $rootScope;
                 $window.sessionStorage.token = 'TestToken';
                 service = $injector.get('LogoutService');
             });
         });
 
-/*        describe('test route call', function() {
+        describe('test route call', function() {
             it('should logout the user', function() {
-                //$httpBackend.expectGET(baseUri + 'auth/account/logout').respond(200, '');
-                $location.path('/auth/logout');
-                //$httpBackend.flush();
-                rootScope.$digest();
+                inject(function ($state, $rootScope, _$location_) {
+                    $rootScope.$apply(function(){
+                        $state.go('logout');
+                    });
 
-                //expect($location.path()).toBe(baseUri + 'auth/account/login');
-            })
-        });*/
-
-        describe('has a function logout() which', function () {
-            it('should delete the session token', function () {
-                service.logout();
-                expect($window.sessionStorage.token).not.toBeDefined();
+                    expect(_$location_.path()).toBe('/auth/logout');
+                    expect($window.sessionStorage.token).not.toBeDefined();
+                });
             });
         });
     });
