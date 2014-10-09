@@ -3,7 +3,7 @@
 angular.module('auth.login', [])
     .config(function ($stateProvider) {
         $stateProvider.state('login', { url: '/auth/login', templateUrl: '/modules/auth/login/login.html', controller: 'AuthLoginCtrl' });
-        $stateProvider.state('logout', { url: '/auth/logout', resolve: { logout: 'LogoutService' } });
+        $stateProvider.state('logout', { url: '/auth/logout', resolve: { logout: function(LogoutService) { LogoutService.logout(); } } });
     })
     .controller('AuthLoginCtrl', function ($scope, $window, Auth, lxUtils) {
         $scope.alerts = [];
@@ -39,6 +39,10 @@ angular.module('auth.login', [])
         };
     })
     .factory('LogoutService', function(Auth, $location) {
-        Auth.logout();
-        $location.path('/auth/login');
+        return {
+            logout: function() {
+                Auth.logout();
+                $location.path('/auth/login');
+            }
+        };
     });
