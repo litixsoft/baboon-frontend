@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('main', [
-  'navigation',
+  'lx.navigation',
   'ui.router',
   'ui.bootstrap',
   'main.home',
@@ -9,14 +9,46 @@ angular.module('main', [
   'main.contact'
 ])
   .constant('ACTIVE_APP', 'main')
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
 
     // Routing and navigation
     $urlRouterProvider.otherwise('/main/home');
     $locationProvider.html5Mode(true);
-  })
-    .run(function($rootScope){
 
-        $rootScope.pathNav = 'common/lx_navigation/nav_list.html';
-        $rootScope.pathNavTree = 'common/lx_navigation/nav_tree_outside.html';
-    });
+        $lxNavigationProvider.set({
+            navigation: {
+                main: [
+                    {
+                        title: 'Home',
+                        state: 'mainHome',
+                        route: '/main/home',
+                        app: 'main'
+                    },
+                    {
+                        title: 'About',
+                        state: 'mainAbout',
+                        route: '/main/about',
+                        app: 'main'
+                    },
+                    {
+                        title: 'Contact',
+                        state: 'mainContact',
+                        route: '/main/contact',
+                        app: 'main'
+                    },
+                    {
+                        title: 'Examples',
+                        state: 'examplesHome',
+                        route: '/examples/home',
+                        app: 'examples'
+                    },
+                    {
+                        title: 'Admin',
+                        state: 'adminHome',
+                        route: '/admin/home',
+                        app: 'admin'
+                    }
+                ]
+            }
+        });
+  });

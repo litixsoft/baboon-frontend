@@ -1,75 +1,39 @@
 'use strict';
 
-angular.module('navigation', [])
-  .constant('NAVIGATION', {
+angular.module('lx.navigation', [])
+    .provider('$lxNavigation', function () {
+        var config = {};
 
-    main: [
-      {
-        title: 'Home',
-        state: 'mainHome',
-        route: '/main/home',
-        app: 'main'
-      },
-      {
-        title: 'About',
-        state: 'mainAbout',
-        route: '/main/about',
-        app: 'main'
-      },
-      {
-        title: 'Contact',
-        state: 'mainContact',
-        route: '/main/contact',
-        app: 'main'
-      },
-      {
-        title: 'Examples',
-        state: 'examplesHome',
-        route: '/examples/home',
-        app: 'examples'
-      },
-      {
-        title: 'Admin',
-        state: 'adminHome',
-        route: '/admin/home',
-        app: 'admin'
-      }
-    ],
-    standard: [
-      {
-        'title': 'Main',
-        'app': 'main',
-        'children': [
-          {
-            'title': 'Home',
-            'route': '/main/home',
-            'app': 'main'
-          },
-          {
-            'title': 'Navigation Examples',
-            'route': '/main/nav_example',
-            'app': 'main'
-          },
-          {
-            'title': 'About',
-            'route': '/main/about',
-            'app': 'main'
-          },
-          {
-            'title': 'Contact',
-            'route': '/main/contact',
-            'app': 'main'
-          }
-        ]
-      },
-      {
-        'title': 'Admin',
-        'route': '/admin/home',
-        'app': 'admin'
-      }
-    ]
-  })
-  .directive('lxComNav', function ($location, ACTIVE_APP, NAVIGATION,$http, $templateCache, $compile) {
+        this.set = function (options) {
+            options = options || {};
+
+            // default settings
+            config.navigation = options.navigation;
+
+        };
+
+        this.$get = function (){
+            var pub = {};
+
+            pub.getNavigation = function(name, callback){
+                if(config.navigation && config.navigation.hasOwnProperty(name)){
+                    callback(null,config.navigation[name]);
+                } else {
+                    if(!config.navigation){
+                        console.error('No Navigation defined. Please define a navigation with the help of the $lxTransportProvider in the config section of your app.');
+                    } else {
+                        console.error('Your defined nav-link-list "'+name+'" is not defined!');
+                    }
+
+                    callback('not existing');
+                }
+
+            };
+
+            return pub;
+        };
+    })
+  .directive('lxComNav', function ($location, ACTIVE_APP, $http, $templateCache, $compile,$lxNavigation) {
     return {
       restrict: 'E',
       replace: true,
@@ -110,7 +74,13 @@ angular.module('navigation', [])
         var orientation = scope.orientation || 'horizontal';
         element.toggleClass('nav-stacked', orientation === 'vertical');
 
-        scope.menu = NAVIGATION[scope.navLinklist || 'standard'];
+          $lxNavigation.getNavigation(scope.navLinklist,function(error,daten){
+              if(daten){
+                  scope.menu = daten;
+              } else {
+                  scope.menu = [];
+              }
+          });
 
         scope.isActiveApp = function (app) {
           return app === ACTIVE_APP;
@@ -122,7 +92,7 @@ angular.module('navigation', [])
       }
     };
   })
-  .directive('lxComNavTree', function ($location, $templateCache, ACTIVE_APP, NAVIGATION, $http, $compile) {
+  .directive('lxComNavTree', function ($location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation) {
     return {
       restrict: 'E',
       replace: true,
@@ -204,8 +174,14 @@ angular.module('navigation', [])
           return app === ACTIVE_APP;
         };
 
+          $lxNavigation.getNavigation(scope.navLinklist,function(error,daten){
+              if(daten){
+                  scope.navList = daten;
+              } else {
+                  scope.navList = [];
+              }
+          });
 
-        scope.navList = NAVIGATION[scope.navLinklist || 'standard'];
         if (scope.navList.length !== 0) {
           angular.forEach(scope.navList, function (value) {
             if (value.app === scope.app) {
