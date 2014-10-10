@@ -69,17 +69,35 @@ angular.module('navigation', [])
       }
     ]
   })
-  .directive('comNav', function ($location, ACTIVE_APP, NAVIGATION) {
+  .directive('lxComNav', function ($location, ACTIVE_APP, NAVIGATION,$http, $templateCache, $compile) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: 'common/navigation/nav_list.html',
-
       scope: {
         orientation: '@',
-        navLinklist: '@'
+        navLinklist: '@',
+        navTemplatePath: '='
       },
       link: function (scope, element) {
+
+          var tplContent =  '<ul class="nav navbar-nav">'+
+                                '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">'+
+                                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>'+
+                                    '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>'+
+                                '</li>'+
+                            '</ul>';
+
+          if(scope.navTemplatePath && scope.navTemplatePath.length > 3){
+              $http.get(scope.navTemplatePath , {cache: $templateCache})
+                  .success(function(tplGetContent){
+                    element.replaceWith($compile(tplGetContent)(scope));
+                  })
+                  .error(function(){
+                      element.replaceWith($compile(tplContent)(scope));
+                  });
+          } else {
+            element.replaceWith($compile(tplContent)(scope));
+          }
 
         var orientation = scope.orientation || 'horizontal';
         element.toggleClass('nav-stacked', orientation === 'vertical');
@@ -96,15 +114,43 @@ angular.module('navigation', [])
       }
     };
   })
-  .directive('comNavTree', function ($location, $templateCache, ACTIVE_APP, NAVIGATION) {
+  .directive('lxComNavTree', function ($location, $templateCache, ACTIVE_APP, NAVIGATION, $http, $compile) {
     return {
       restrict: 'E',
       replace: true,
-      templateUrl: 'common/navigation/nav_tree_outside.html',
       scope: {
-        navLinklist: '@'
+        navLinklist: '@',
+        navTemplatePath: '='
       },
-      link: function (scope) {
+      link: function (scope, element) {
+
+          var tplContent =  '<h1>Test</h1><ul class="navlist">'+
+                                '<li ng-repeat="data in navList" ng-include="\'lx_navigation/standard/nav_tree_inside\'">'+
+                                '</li>'+
+                            '</ul>';
+
+          $templateCache.put('lx_navigation/standard/nav_tree_inside', '<div class="list-item" ng-class="{active: isActive(data.route)}">'+
+              '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>'+
+                '<div class="nav-icon {{data.icon}}"></div>'+
+                '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>'+
+                '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>'+
+                '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>'+
+              '</div>'+
+              '<ul class="display {{data.hide}}" ng-if="data.children.length">'+
+                '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>'+
+              '</ul>');
+
+          if(scope.navTemplatePath && scope.navTemplatePath.length > 3){
+              $http.get(scope.navTemplatePath, {cache: $templateCache})
+                  .success(function(tplGetContent){
+                      element.replaceWith($compile(tplGetContent)(scope));
+                  })
+                  .error(function(){
+                      element.replaceWith($compile(tplContent)(scope));
+                  });
+          } else {
+              element.replaceWith($compile(tplContent)(scope));
+          }
 
         scope.app = ACTIVE_APP;
 

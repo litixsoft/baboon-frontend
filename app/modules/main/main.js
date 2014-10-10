@@ -14,4 +14,9 @@ angular.module('main', [
     // Routing and navigation
     $urlRouterProvider.otherwise('/main/home');
     $locationProvider.html5Mode(true);
-  });
+  })
+    .run(function($rootScope){
+
+        $rootScope.pathNav = 'common/navigation/nav_list.html';
+        $rootScope.pathNavTree = 'common/navigation/nav_tree_outside.html';
+    });
