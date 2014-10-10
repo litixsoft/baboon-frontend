@@ -138,10 +138,16 @@ describe('auth', function () {
             });
         });
 
+        describe('test route call', function() {
+            it('should logout the user', function() {
+                inject(function ($state, $rootScope, _$location_) {
+                    $rootScope.$apply(function(){
+                        $state.go('logout');
+                    });
 
-        describe('has a function closeAlert() which', function () {
-            it('should close an alert', function () {
-                expect($window.sessionStorage.token).not.toBeDefined();
+                    expect(_$location_.path()).toBe('/auth/logout');
+                    expect($window.sessionStorage.token).not.toBeDefined();
+                });
             });
         });
     });

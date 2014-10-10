@@ -91,7 +91,7 @@ angular.module('auth.services', [])
 
                 $http.post('auth/account/login', user, { type: 'application/json' })
                     .success(function (data) {
-                        $window.sessionStorage.token = data;
+                        $window.sessionStorage.token = data.token;
                         deferred.resolve();
                     })
                     .error(function (err, status) {
@@ -101,7 +101,7 @@ angular.module('auth.services', [])
                 promise.success = function(fn) {
                     promise.then(fn);
                     return promise;
-                };
+                };                                                                              3
 
                 promise.error = function(fn) {
                     promise.then(null, fn);

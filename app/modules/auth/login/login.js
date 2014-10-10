@@ -3,9 +3,9 @@
 angular.module('auth.login', [])
     .config(function ($stateProvider) {
         $stateProvider.state('login', { url: '/auth/login', templateUrl: '/modules/auth/login/login.html', controller: 'AuthLoginCtrl' });
-        $stateProvider.state('logout', { url: '/auth/logout', resolve: { logout: 'LogoutService' } });
+        $stateProvider.state('logout', { url: '/auth/logout', resolve: { logout: function(LogoutService) { LogoutService.logout(); } } });
     })
-    .controller('AuthLoginCtrl', function ($scope, $window, Auth) {
+    .controller('AuthLoginCtrl', function ($scope, $window, Auth, lxUtils) {
         $scope.alerts = [];
 
         $scope.login = function(model) {
@@ -23,10 +23,7 @@ angular.module('auth.login', [])
                 .error(function(err) {
                     $scope.requesting = false;
                     if(err.status === 400 && err.data) {
-                        for (var i = 0; i < err.data.length; i++) {
-                            $scope.form[err.data[i].property].$setValidity('server', false);
-                            $scope.form[err.data[i].property].$error.serverMsg = err.data[i].message;
-                        }
+                        lxUtils.populateServerErrors(err.data, $scope.form);
                     }
                     else if(err.status === 404 || err.status === 403) {
                         $scope.alerts.push({ msg: 'Die E-Mail oder das Passwort ist falsch.' });
@@ -42,6 +39,10 @@ angular.module('auth.login', [])
         };
     })
     .factory('LogoutService', function(Auth, $location) {
-        Auth.logout();
-        $location.path('/auth/login');
+        return {
+            logout: function() {
+                Auth.logout();
+                $location.path('/auth/login');
+            }
+        };
     });
