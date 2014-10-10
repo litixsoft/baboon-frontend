@@ -87,7 +87,7 @@ angular.module('examples', [
         });
   })
     .run(function($rootScope){
-        $rootScope.pathNav = 'common/lx_navigation/nav_list.html';
-        $rootScope.pathNavTree = 'common/lx_navigation/nav_tree_outside.html';
+        $rootScope.pathNav = 'assets/includes/nav_list.html';
+        $rootScope.pathNavTree = 'assets/includes/nav_tree_outside.html';
     });
 
