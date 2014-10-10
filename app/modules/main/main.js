@@ -17,6 +17,6 @@ angular.module('main', [
   })
     .run(function($rootScope){
 
-        $rootScope.pathNav = 'common/navigation/nav_list.html';
-        $rootScope.pathNavTree = 'common/navigation/nav_tree_outside.html';
+        $rootScope.pathNav = 'common/lx_navigation/nav_list.html';
+        $rootScope.pathNavTree = 'common/lx_navigation/nav_tree_outside.html';
     });

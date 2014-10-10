@@ -87,16 +87,24 @@ angular.module('navigation', [])
                                 '</li>'+
                             '</ul>';
 
+          function replaceWithStandard(template){
+              element.replaceWith($compile(template)(scope));
+          }
+
           if(scope.navTemplatePath && scope.navTemplatePath.length > 3){
-              $http.get(scope.navTemplatePath , {cache: $templateCache})
+              $http.get(scope.navTemplatePath, {cache: $templateCache})
                   .success(function(tplGetContent){
-                    element.replaceWith($compile(tplGetContent)(scope));
+                      if(tplGetContent.substr(0,5)!== '<!doc'){
+                          replaceWithStandard(tplGetContent);
+                      } else {
+                          replaceWithStandard(tplContent);
+                      }
                   })
                   .error(function(){
-                      element.replaceWith($compile(tplContent)(scope));
+                      replaceWithStandard(tplContent);
                   });
           } else {
-            element.replaceWith($compile(tplContent)(scope));
+              replaceWithStandard(tplContent);
           }
 
         var orientation = scope.orientation || 'horizontal';
@@ -124,7 +132,7 @@ angular.module('navigation', [])
       },
       link: function (scope, element) {
 
-          var tplContent =  '<h1>Test</h1><ul class="navlist">'+
+          var tplContent =  '<ul class="navlist">'+
                                 '<li ng-repeat="data in navList" ng-include="\'lx_navigation/standard/nav_tree_inside\'">'+
                                 '</li>'+
                             '</ul>';
@@ -140,17 +148,27 @@ angular.module('navigation', [])
                 '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>'+
               '</ul>');
 
+          function replaceWithStandard(template){
+              element.replaceWith($compile(template)(scope));
+          }
+
           if(scope.navTemplatePath && scope.navTemplatePath.length > 3){
               $http.get(scope.navTemplatePath, {cache: $templateCache})
                   .success(function(tplGetContent){
-                      element.replaceWith($compile(tplGetContent)(scope));
+                      if(tplGetContent.substr(0,5)!== '<!doc'){
+                          replaceWithStandard(tplGetContent);
+                      } else {
+                          replaceWithStandard(tplContent);
+                      }
                   })
                   .error(function(){
-                      element.replaceWith($compile(tplContent)(scope));
+                      replaceWithStandard(tplContent);
                   });
           } else {
-              element.replaceWith($compile(tplContent)(scope));
+              replaceWithStandard(tplContent);
           }
+
+
 
         scope.app = ACTIVE_APP;
 
