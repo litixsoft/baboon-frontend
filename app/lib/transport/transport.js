@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lx.transport', ['btford.socket-io'])
-  .provider('$socket', function () {
+  .provider('$lxSocket', function () {
 
     var _host;
     var _options = {};
@@ -75,8 +75,16 @@ angular.module('lx.transport', ['btford.socket-io'])
      */
     this.$get = function (socketFactory, $log) {
 
+      /**
+       *
+       * @returns {*}
+       */
       var factory = function () {
+
+        // Socket connection
         var connection = io.connect(_host, _options);
+
+        // Engine.io for upgrade event
         var engine = connection.io.engine;
         var socket;
 
@@ -104,14 +112,15 @@ angular.module('lx.transport', ['btford.socket-io'])
         });
 
         return socket;
+
       };
 
       return {
-        factory:factory
+        factory: factory
       }
     };
   })
-  .provider('$lxTransport', function ($socketProvider) {
+  .provider('$lxTransport', function ($lxSocketProvider) {
 
     var _options;
     var _host;
@@ -182,7 +191,7 @@ angular.module('lx.transport', ['btford.socket-io'])
 
       options.socketHost = options.socketHost || host;
       options.socketConnectOptions = options.socketConnectOptions || {};
-      options.socketEmitTimeout = options.socketEmitTimeout || 5000;
+      options.socketTimeout = options.socketTimeout || 5000;
 
       try {
 
@@ -207,11 +216,11 @@ angular.module('lx.transport', ['btford.socket-io'])
         }
 
         // Check socketEmitTimeout
-        if (typeof options.socketEmitTimeout !== 'number') {
+        if (typeof options.socketTimeout !== 'number') {
           throw new TypeError('Parameter options.socketEmitTimeout is not of type number.');
         }
       }
-      catch(e) {
+      catch (e) {
         e.message += ' (caused by $lxTransportProvider.set)';
         console.error(e.message);
         console.error(e.stack);
@@ -220,7 +229,7 @@ angular.module('lx.transport', ['btford.socket-io'])
 
       // Activate socket when option is set
       if (options.socketEnabled) {
-        $socketProvider.set(options.socketHost, options.socketConnectOptions);
+        $lxSocketProvider.set(options.socketHost, options.socketConnectOptions);
       }
 
       _options = options;
@@ -228,29 +237,45 @@ angular.module('lx.transport', ['btford.socket-io'])
     };
 
     /**
-     * Provider Transport get service
+     * Transport service
      * @param $http
-     * @param $socket
+     * @param $lxSocket
      * @param $log
      * @returns {{}}
      */
-    this.$get = function ($http, $socket, $log, $timeout, $q) {
+    this.$get = function ($rootScope, $http, $lxSocket, $log, $timeout, $q) {
 
       // Service return object
       var self = {};
       var socket;
 
+      // Options
+      var options = {
+        socketTimeout: _options.socketTimeout
+      };
+
+      // Helper
+      var helper = {
+        // Set method eventName an data to options
+        setMethod: function (restMethod, eventName, data) {
+
+          // Check eventName
+          if (typeof eventName !== 'string') {
+            throw new TypeError('Parameter eventName is missing or is not of type string.');
+          }
+
+          // Set data and eventName
+          options.data = data || {};
+          options.eventName = eventName;
+          options.restMethod = restMethod;
+        }
+      };
+
       if (_options.socketEnabled) {
-        socket = $socket.factory();
+        socket = $lxSocket.factory();
       }
 
-      /**
-       *
-       * @param {string} eventName - Name for socket event (route)
-       * @param {object} [data] -  Request data to server
-       * @returns {{object}}
-       */
-      self.emit = function (eventName, data) {
+      self.emit = function (eventName, restFallback, data) {
 
         // Check eventName
         if (!eventName || typeof eventName !== 'string') {
@@ -376,10 +401,147 @@ angular.module('lx.transport', ['btford.socket-io'])
         return self;
       };
 
+      /**
+       *
+       * @param eventName
+       * @param data
+       * @returns {{}}
+       */
+      self.get = function (eventName, data) {
+        helper.setMethod('GET', eventName, data);
+        return self;
+      };
+
+      /**
+       * @ngdoc method
+       * @name $lxTransport#timeout
+       * @methodOf $lxTransport
+       *
+       * @description
+       * Set a new timeout for socket emit.
+       * It is always used the default timeout. With this method you can change the behavior.
+       * If no number for timeout passed, the default socketTimeout is used.
+       * If 0 then no timeout is used.
+       *
+       * @example
+       * $lxTransport.emit(url, [data])
+       *   .timeout([number]) // 0 timeout off, no number use default timeout
+       *
+       * @param {number} [timeout=socketTimeout] - New timeout for emit
+       * @returns {object} $lxTransport - The fluent API emit object
+       */
+      self.timeout = function (timeout) {
+
+        // Check timeout
+        if (typeof timeout !== 'undefined') {
+
+          if (typeof timeout !== 'number') {
+            throw new TypeError('Parameter timeout is not of type number.');
+          }
+
+          // Set new timeout
+          options.socketTimeout = timeout;
+        }
+
+        return self;
+      };
+
+      /**
+       * @ngdoc method
+       * @name $lxTransport#success
+       * @methodOf $lxTransport
+       *
+       * @description
+       * Success callback function for emit
+       * This function start the emit functionality
+       *
+       * @param {function} fnSuccess - Success callback
+       * @returns {promise} promise - Promise object
+       */
+      self.success = function (fnSuccess) {
+
+        var deferred = $q.defer();
+        var promise = deferred.promise;
+
+        // Check success callback
+        if (!fnSuccess || typeof fnSuccess !== 'function') {
+          throw new TypeError('Parameter success  is missing or is not of type function.');
+        }
+
+        $rootScope.isLoading = true;
+
+        // Request to server
+        if (_options.socketEnabled && socket.connection.connected) {
+          // Use socket emit for request
+
+          var socketTimedOut = false;
+          var timeoutPromise;
+
+          // Set timeout for request
+          if (options.socketTimeout > 0) {
+
+            // Start timeout for socket emit
+            timeoutPromise = $timeout(function () {
+              socketTimedOut = true;
+              var err = new Error('Error: 504 Gateway Time-out');
+              $rootScope.isLoading = false;
+
+              // Call error callback
+              deferred.reject({data: err, status: 504});
+
+            }, options.socketTimeout);
+          }
+
+          // Start emit message to server
+          socket.emit(options.eventName, options.data, function (err, res) {
+
+            // When callback after timeout
+            if (socketTimedOut) {
+              socketTimedOut = false;
+              return;
+            }
+
+            // Cancel timeout if it is enabled
+            if (timeoutPromise) {
+              $timeout.cancel(timeoutPromise);
+            }
+
+            $rootScope.isLoading = false;
+
+            // Check if error and callback the results
+            if (err) {
+              $log.error('Failed to load resource: the server responded with a status of ' + err.status);
+              deferred.reject(err);
+            } else {
+              fnSuccess(res);
+            }
+          });
+        } else {
+          // Socket is not available
+          console.log('Socket is not available');
+        }
+
+        /**
+         * @ngdoc method
+         * @name $lxTransport.emit.success#error
+         * @methodOf $lxTransport.emit.success
+         * @description
+         * Error callback function for emit
+         *
+         * @param {function} fn - Error callback
+         * @returns {promise} promise - Promise object
+         */
+        promise.error = function (fn) {
+          promise.then(null, fn);
+          return promise;
+        };
+
+        return promise;
+      };
+
       return self;
     }
   });
-
 
 
 // Return object

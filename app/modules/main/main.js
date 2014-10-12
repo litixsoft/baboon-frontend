@@ -15,6 +15,6 @@ angular.module('main', [
     // Routing and navigation
     $urlRouterProvider.otherwise('/main/home');
     $locationProvider.html5Mode(true);
-    $lxTransportProvider.set('127.0.0.1:3000', {socketConnectOptions:{reconnection:true}});
+    $lxTransportProvider.set('http://127.0.0.1:3000');
   });
 
