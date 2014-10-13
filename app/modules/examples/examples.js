@@ -78,7 +78,7 @@ angular.module('examples', [
                         app: 'examples'
                     },
                     {
-                        title: 'Admin',
+                        title: 'Admin with a very long Title and ellipsis',
                         state: 'adminHome',
                         route: '/admin/home',
                         app: 'admin'
