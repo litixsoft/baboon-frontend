@@ -4,17 +4,17 @@ angular.module('main', [
   'navigation',
   'ui.router',
   'ui.bootstrap',
-  'lx.transport',
+  'lx.socket',
   'main.home',
   'main.about',
   'main.contact'
 ])
   .constant('ACTIVE_APP', 'main')
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxTransportProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxSocketProvider) {
 
     // Routing and navigation
     $urlRouterProvider.otherwise('/main/home');
     $locationProvider.html5Mode(true);
-    $lxTransportProvider.set('http://127.0.0.1:3000');
+    $lxSocketProvider.set('http://127.0.0.1:3000');
   });
 

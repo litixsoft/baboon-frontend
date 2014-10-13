@@ -6,26 +6,51 @@ angular.module('main.home', [])
       url: '/main/home', templateUrl: '/modules/main/home/home.html', controller: 'HomeCtrl'
     });
   })
-  .controller('HomeCtrl', function ($scope, $http, $lxTransport) {
+  .controller('HomeCtrl', function ($scope, $http, $lxSocket) {
     $scope.app = 'main';
     $scope.view = 'home';
     $scope.controller = 'HomeCtrl';
 
-
+    var sio = $lxSocket.getSocketIo();
 
     $scope.getData = function () {
       $scope.message = '';
 
-      $lxTransport.get('/users')
+      sio.emit('/users', {})
         .success(function (success) {
-          console.log('server response with status:', success.status);
+          console.log('status:', success.status);
           $scope.message = success.data;
         })
         .error(function (err) {
-          console.error(err.data.message, err.data.stack);
+          console.error('status:', err.status);
+          console.error(err.message, err.stack);
         });
 
+      //$lxTransport.get('/users', {message:'etwas stuff vom client'})
+      //  //.params({id:'53baeb8da234dc09d1000002'})
+      //  .success(function (success) {
+      //    console.log('server response with status:', success.status);
+      //    $scope.message = success.data;
+      //  })
+      //  .error(function (err) {
+      //    console.error(err.data.message, err.data.stack);
+      //  });
 
+      //$http.post('http://127.0.0.1:3000/users/53baeb8da234dc09d1000002', {message:'etwas stuff vom client'})
+      //  .success(function(data, status) {
+      //    console.log(data);
+      //  })
+      //  .error(function(data, status) {
+      //    console.error(data);
+      //  });
+
+      //$http.get('http://127.0.0.1:3000/users')
+      //  .success(function(data, status) {
+      //    console.log(data);
+      //  })
+      //  .error(function(data, status) {
+      //    console.error(data);
+      //  });
 
       //$lxTransport.rest()
       //  .get('/users/53baeb8da234dc09d1000002')
