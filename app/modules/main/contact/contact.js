@@ -12,4 +12,5 @@ angular.module('main.contact', [])
     $scope.app = 'main';
     $scope.view = 'contact';
     $scope.controller = 'ContactCtrl';
+
   });

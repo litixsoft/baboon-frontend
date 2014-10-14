@@ -1,7 +1,8 @@
 'use strict';
-
 angular.module('main', [
+  'common',
   'lx.navigation',
+  'lx.socket',
   'ui.router',
   'ui.bootstrap',
   'main.home',
@@ -52,3 +53,4 @@ angular.module('main', [
             }
         });
   });
+
