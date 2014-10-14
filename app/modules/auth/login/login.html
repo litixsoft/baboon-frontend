@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Login
+            <img src="assets/images/loader.gif" class="load-filter" alt="load..." ng-show="requesting" />
+        </div>
+        <div class="panel-body">
+            <alert ng-repeat="alert in alerts" type="danger" close="closeAlert($index)">{{ alert.msg }}</alert>
+            <form class="form-horizontal" ng-submit="login(user)" name="form" novalidate>
+                <div class="form-group">
+                    <div class="col-lg-12" ng-class="{'has-error': (form.email.$dirty && form.email.$invalid) || form.email.$error.server }">
+                        <input type="text" ng-model="user.email" name="email" placeholder="E-Mail..." class="form-control" required lx-server-error>
+                        <div class="error-messages" ng-messages="form.email.$error" ng-if="form.email.$dirty || form.$submitted">
+                            <div ng-message="required">Die E-Mail muss angegeben werden.</div>
+                            <div ng-message="server">{{ form.email.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (form.password.$dirty && form.password.$invalid) || form.password.$error.server}">
+                    <div class="col-lg-12">
+                        <input type="password" ng-model="user.password" name="password" placeholder="Passwort..." class="form-control" required lx-server-error>
+                        <div class="error-messages" ng-messages="form.password.$error" ng-if="form.password.$dirty || form.$submitted">
+                            <div ng-message="required">Das Passwort muss angegeben werden.</div>
+                            <div ng-message="server">{{ form.password.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <a ui-sref="register">Registrieren</a>
+                        <a ui-sref="password">Passwort vergessen</a>
+                        <input type="submit" class="btn btn-primary pull-right" value="Anmelden" name="login" ng-disabled="form.$invalid || requesting">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

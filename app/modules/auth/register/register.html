@@ -1,0 +1,66 @@
+<div class="row">
+   <div class="panel panel-default">
+        <div class="panel-heading">
+            Registrieren
+            <img src="assets/images/loader.gif" class="load-filter" alt="load..." ng-show="requesting" />
+        </div>
+        <div class="panel-body">
+            <alert ng-repeat="alert in alerts" type="danger" close="closeAlert($index)">{{ alert.msg }}</alert>
+            <form class="form-horizontal" ng-submit="register(user)" name="form" novalidate>
+                <div class="form-group" ng-class="{'has-error': (form.firstname.$dirty && form.firstname.$invalid) || form.firstname.$error.server}">
+                    <div class="col-lg-12">
+                        <input type="text" ng-model="user.firstName" name="firstname" placeholder="Vorname..." class="form-control" required lx-server-error>
+                        <div class="error-messages" ng-messages="form.firstname.$error" ng-if="form.firstname.$dirty || form.$submitted">
+                            <div ng-message="required">Der Vorname muss angegeben werden.</div>
+                            <div ng-message="server">{{ form.firstname.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (form.lastname.$dirty && form.lastname.$invalid) || form.lastname.$error.server}">
+                    <div class="col-lg-12">
+                        <input type="text" ng-model="user.lastName" name="lastname" placeholder="Nachname..." class="form-control" required lx-server-error>
+                        <div class="error-messages" ng-messages="form.lastname.$error" ng-if="form.lastname.$dirty || form.$submitted">
+                            <div ng-message="required">Der Nachname muss angegeben werden.</div>
+                            <div ng-message="server">{{ form.lastname.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (form.email.$dirty && form.email.$invalid) || form.email.$error.server}">
+                    <div class="col-lg-12">
+                        <input type="text" ng-model="user.email" id="email" name="email" placeholder="E-Mail..." class="form-control" required ng-pattern="/^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i" lx-server-error>
+                        <div class="error-messages" ng-messages="form.email.$error" ng-if="form.email.$dirty || form.$submitted">
+                            <div ng-message="required">Die E-Mail muss angegeben werden.</div>
+                            <div ng-message="pattern">Die E-Mail hat kein gültiges Format.</div>
+                            <div ng-message="server">{{ form.email.$error.serverMsg === 'duplicate' ? 'Die E-Mail ist bereits vergeben.' : form.email.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (form.password.$dirty && form.password.$invalid)}">
+                    <div class="col-lg-12">
+                        <input type="password" ng-model="user.password" id="password" name="password" placeholder="Passwort..." class="form-control" required lx-server-error>
+                        <div class="error-messages" ng-messages="form.password.$error" ng-if="form.password.$dirty || form.$submitted">
+                            <div ng-message="required">Das Passwort muss angegeben werden.</div>
+                            <div ng-message="server">{{ form.password.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-class="{'has-error': (form.password2.$dirty && form.password2.$invalid) || form.password2.$error.server}">
+                    <div class="col-lg-12">
+                        <input type="password" ng-model="user.password2" id="password2" name="password2" placeholder="Passwortwiederholung..." class="form-control" required lx-equals="user.password" lx-server-error>
+                        <div class="error-messages" ng-messages="form.password2.$error" ng-if="form.password2.$dirty || form.$submitted">
+                            <div ng-message="required">Die Passwortwiederholung muss angegeben werden.</div>
+                            <div ng-message="lxequals">Die Passwörter stimmen nicht überein.</div>
+                            <div ng-message="server">{{ form.password2.$error.serverMsg }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <a ui-sref="login">Anmeldung</a>
+                        <input type="submit" class="btn btn-primary pull-right" value="Registrieren"  name="register" ng-disabled="form.$invalid || requesting" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

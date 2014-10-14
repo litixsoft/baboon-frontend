@@ -3,23 +3,23 @@
 
 exports.config = {
 
-  // The address of a running selenium server.
+    // The address of a running selenium server.
 //  seleniumAddress: 'http://127.0.0.1:3003/',
 
-  // Capabilities to be passed to the webdriver instance.
-  capabilities: {
-    'browserName': 'chrome'
-  },
+    // Capabilities to be passed to the webdriver instance.
+    capabilities: {
+        'browserName': 'chrome'
+    },
 
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
-  specs: ['../e2e/*.spec.js'],
+    // Spec patterns are relative to the current working directly when
+    // protractor is called.
+    specs: ['../e2e/*.spec.js'],
 
-  baseUrl: 'http://localhost:9001',
+    baseUrl: 'http://localhost:9001',
 
-  // Options to be passed to Jasmine-node.
-  jasmineNodeOpts: {
-    showColors: true,
-    defaultTimeoutInterval: 30000
-  }
+    // Options to be passed to Jasmine-node.
+    jasmineNodeOpts: {
+        showColors: true,
+        defaultTimeoutInterval: 30000
+    }
 };
