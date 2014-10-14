@@ -1,4 +1,4 @@
-'user strict';
+'use strict';
 
 describe('auth', function () {
     var ctrl, scope, $httpBackend, baseUri;

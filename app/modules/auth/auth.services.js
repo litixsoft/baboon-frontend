@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('auth.services', [])
-    .factory('Auth', function($http, $q, $window) {
+    .factory('Auth', function ($http, $q, $window) {
 
         return {
-            confirmation: function(id) {
+            confirmation: function (id) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
@@ -16,52 +16,52 @@ angular.module('auth.services', [])
                         deferred.reject({ data: err, status: status });
                     });
 
-                promise.success = function(fn) {
+                promise.success = function (fn) {
                     promise.then(fn);
                     return promise;
                 };
 
-                promise.error = function(fn) {
+                promise.error = function (fn) {
                     promise.then(null, fn);
                     return promise;
                 };
 
                 return promise;
             },
-            renew: function(id, url) {
+            renew: function (id, url) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
                 $http({ method: 'POST', url: 'auth/account/renew', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    transformRequest: function(obj) {
+                    transformRequest: function (obj) {
                         var str = [];
-                        for(var p in obj) {
-                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        for (var p in obj) {
+                            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
                         }
-                        return str.join("&");
+                        return str.join('&');
                     },
                     data: { id: id, url: url }
                 })
-                .success(function () {
-                    deferred.resolve();
-                })
-                .error(function () {
-                    deferred.reject();
-                });
+                    .success(function () {
+                        deferred.resolve();
+                    })
+                    .error(function () {
+                        deferred.reject();
+                    });
 
-                promise.success = function(fn) {
+                promise.success = function (fn) {
                     promise.then(fn);
                     return promise;
                 };
 
-                promise.error = function(fn) {
+                promise.error = function (fn) {
                     promise.then(null, fn);
                     return promise;
                 };
 
                 return promise;
             },
-            register: function(user) {
+            register: function (user) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
@@ -73,19 +73,19 @@ angular.module('auth.services', [])
                         deferred.reject({ data: err, status: status });
                     });
 
-                promise.success = function(fn) {
+                promise.success = function (fn) {
                     promise.then(fn);
                     return promise;
                 };
 
-                promise.error = function(fn) {
+                promise.error = function (fn) {
                     promise.then(null, fn);
                     return promise;
                 };
 
                 return promise;
             },
-            login: function(user) {
+            login: function (user) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
@@ -98,22 +98,22 @@ angular.module('auth.services', [])
                         deferred.reject({ data: err, status: status });
                     });
 
-                promise.success = function(fn) {
+                promise.success = function (fn) {
                     promise.then(fn);
                     return promise;
-                };                                                                              3
+                };
 
-                promise.error = function(fn) {
+                promise.error = function (fn) {
                     promise.then(null, fn);
                     return promise;
                 };
 
                 return promise;
             },
-            logout: function() {
+            logout: function () {
                 delete $window.sessionStorage.token;
             },
-            password: function(user) {
+            password: function (user) {
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
@@ -125,12 +125,12 @@ angular.module('auth.services', [])
                         deferred.reject({ data: err, status: status });
                     });
 
-                promise.success = function(fn) {
+                promise.success = function (fn) {
                     promise.then(fn);
                     return promise;
                 };
 
-                promise.error = function(fn) {
+                promise.error = function (fn) {
                     promise.then(null, fn);
                     return promise;
                 };
