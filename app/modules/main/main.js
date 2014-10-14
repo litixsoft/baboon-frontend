@@ -1,20 +1,20 @@
 'use strict';
 angular.module('main', [
-  'common',
-  'lx.navigation',
-  'lx.socket',
-  'ui.router',
-  'ui.bootstrap',
-  'main.home',
-  'main.about',
-  'main.contact'
+    'common',
+    'lx.navigation',
+    'lx.socket',
+    'ui.router',
+    'ui.bootstrap',
+    'main.home',
+    'main.about',
+    'main.contact'
 ])
-  .constant('ACTIVE_APP', 'main')
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
+    .constant('ACTIVE_APP', 'main')
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
 
-    // Routing and navigation
-    $urlRouterProvider.otherwise('/main/home');
-    $locationProvider.html5Mode(true);
+        // Routing and navigation
+        $urlRouterProvider.otherwise('/main/home');
+        $locationProvider.html5Mode(true);
 
         $lxNavigationProvider.set({
             navigation: {
@@ -52,5 +52,5 @@ angular.module('main', [
                 ]
             }
         });
-  });
+    });
 
