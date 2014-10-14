@@ -279,7 +279,7 @@ angular.module('lx.socket', ['btford.socket-io'])
               } else {
                 loop(fn);
               }
-            }, 100)
+            }, 100);
           };
 
           // Start loop for connection
@@ -434,5 +434,5 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       // $get return object
       return self;
-    }
+    };
   });
