@@ -1,4 +1,5 @@
 'use strict';
+/*global io */
 
 /**
  * @ngdoc overview
