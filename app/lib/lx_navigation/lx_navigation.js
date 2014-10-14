@@ -1,9 +1,29 @@
 'use strict';
 
 angular.module('lx.navigation', [])
+/**
+ * @ngdoc object
+ * @name lx.navigation.$lxNavigation
+ *
+ * @description
+ * Service for navigation. Gets or sets the navigation.
+ *
+ * For more information look at the [guide](/lx_navigation).
+ *
+ */
     .provider('$lxNavigation', function () {
         var config = {};
 
+        /**
+         * @ngdoc method
+         * @name lx.navigation.$lxNavigation#set
+         * @methodOf lx.navigation.$lxNavigation
+         *
+         * @description
+         * Setup the navigation configuration
+         *
+         * @param {object} options The options for config
+         */
         this.set = function (options) {
             options = options || {};
 
@@ -14,7 +34,17 @@ angular.module('lx.navigation', [])
 
         this.$get = function (){
             var pub = {};
-
+            /**
+             * @ngdoc method
+             * @name lx.navigation.$lxNavigation#getNavigation
+             * @methodOf lx.navigation.$lxNavigation
+             *
+             * @description
+             * ...
+             *
+             * @param {string} name - The name of the navigation for example standard.
+             * @param {function(error, data) } callback - The callback.
+             */
             pub.getNavigation = function(name, callback){
                 if(config.navigation && config.navigation.hasOwnProperty(name)){
                     callback(null,config.navigation[name]);
@@ -33,6 +63,21 @@ angular.module('lx.navigation', [])
             return pub;
         };
     })
+/**
+ * @ngdoc directive
+ * @name lx.navigation.directive:lxComNav
+ * @restrict E
+ *
+ * @description
+ * Creates the navigation in a flat list.
+ *
+ * For more information look at the [guide](/lxComNav).
+ *
+ * @param {string=} orientation The orientation of the list, horizontal or vertical.
+ * @param {string} navLinklist The list with all navigation links.
+ * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
+ *
+ */
   .directive('lxComNav', function ($location, ACTIVE_APP, $http, $templateCache, $compile,$lxNavigation) {
     return {
       restrict: 'E',
@@ -92,6 +137,20 @@ angular.module('lx.navigation', [])
       }
     };
   })
+/**
+ * @ngdoc directive
+ * @name lx.navigation.directive:lxComNavTree
+ * @restrict E
+ *
+ * @description
+ * Creates the navigation in a tree list.
+ *
+ * For more information look at the [guide](/lxComNavTree).
+ *
+ * @param {string} navLinklist The list with all navigation links.
+ * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
+ *
+ */
   .directive('lxComNavTree', function ($location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation) {
     return {
       restrict: 'E',
