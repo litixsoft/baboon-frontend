@@ -92,11 +92,11 @@ angular.module('lx.socket', ['btford.socket-io'])
      * @description
      * Mapper for btford.socket-io with extended functionality.
      *
-     * @param {object} $rootScope - The $rootScope
-     * @param {function} socketFactory - The btford.socket-io factory
-     * @param {function} $log - Angular $log service
-     * @param {function} $timeout - Angular timeout service
-     * @returns {object} $lxSocket - The $lxSocket object
+     * @param {object} $rootScope The $rootScope
+     * @param {function} socketFactory The btford.socket-io factory
+     * @param {function} $log Angular $log service
+     * @param {function} $timeout Angular timeout service
+     * @returns {object} $lxSocket The $lxSocket object
      */
     this.$get = function ($rootScope, socketFactory, $log, $timeout) {
 
@@ -313,8 +313,8 @@ angular.module('lx.socket', ['btford.socket-io'])
        * @description
        * Forwards an socket event to a scope
        *
-       * @param {string} event - The event to listen to
-       * @param {object} scope - The scope to forward the events to
+       * @param {string} event The event to listen to
+       * @param {object=} scope The scope to forward the events to
        * @throws {TypeError} Error when wrong type by event or callback
        */
       self.forward = function (event, scope) {
@@ -340,10 +340,10 @@ angular.module('lx.socket', ['btford.socket-io'])
        * @description
        * Register an event on the socket
        *
-       * @param {string} event - The event to listen to
-       * @param {function(data)} [callback] - Callback function
-       * @param {function} [callback.data] - Data callback function
-       * @param {function} [callback] - Callback function
+       * @param {string} event The event to listen to
+       * @param {function(data)=} callback Callback function
+       * @param {function=} callback.data Data callback function
+       * @param {function=} callback Callback function
        * @throws {TypeError} Error when wrong type by event or callback
        */
       self.on = function (event, callback) {

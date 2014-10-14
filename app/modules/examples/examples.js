@@ -96,7 +96,6 @@ angular.module('examples', [
         $rootScope.lxToastBoxService = lxToastBoxService;
 
         $rootScope.openToastAnimated = function(){
-            console.log("Open Animated");
             $rootScope.lxToastBoxService.show('Hier steht eine kleine Nachricht mit dem was gerade passiert ist.','danger');
             $rootScope.lxToastBoxAnimated = true;
         };
@@ -108,8 +107,8 @@ angular.module('examples', [
         $rootScope.openMsgAnimated = function(){
             $rootScope.lxMessageBoxAnimated = true;
             $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash','Delete Item','Soll das ausgewählte Item wirklich gelöscht werden?',[ 'ja','nein','vielleicht'],function(err,res){
-                console.log("Error: ",err);
-                console.log("Result: ",res);
+                console.log('Error: ',err);
+                console.log('Result: ',res);
                 if(res==='ja'){
                     $rootScope.lxToastBoxAnimated = true;
                     $rootScope.lxToastBoxService.show('Item wurde erfolgreich gelöscht.','success');
@@ -119,8 +118,8 @@ angular.module('examples', [
         $rootScope.openMsg = function(){
             $rootScope.lxMessageBoxAnimated = false;
             $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash','Delete Item','Soll das ausgewählte Item wirklich gelöscht werden?',[ 'ja','nein','vielleicht'],function(err,res){
-                console.log("Error: ",err);
-                console.log("Result:",res);
+                console.log('Error: ',err);
+                console.log('Result: ',res);
             });
         };
 
