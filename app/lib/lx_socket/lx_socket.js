@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc overview
- * @name $lxSocket
+ * @name lx.socket
  */
 angular.module('lx.socket', ['btford.socket-io'])
   .provider('$lxSocket', function () {
@@ -11,21 +11,21 @@ angular.module('lx.socket', ['btford.socket-io'])
 
     /**
      * @ngdoc service
-     * @name $lxSocketProvider#set
-     * @methodOf $lxSocketProvider
+     * @name lx.socket.$lxSocket#set
+     * @methodOf lx.socket.$lxSocket
      *
      * @description
      * Set the host and connection options for socket
      *
-     * @param {string} host - The host for socket
-     * @param {object} [options] - The options for socket connect
-     * @param {boolean} [options.reconnection = true] - Whether to reconnect automatically
-     * @param {number} [options.reconnectionDelay = 1000] - How long to wait before attempting a new reconnection
-     * @param {number} [options.reconnectionDelayMax = 20000] - Maximum amount of time to wait between reconnections.
+     * @param {string} host The host for socket
+     * @param {object=} options The options for socket connect
+     * @param {boolean=} options.reconnection = true - Whether to reconnect automatically
+     * @param {number=} options.reconnectionDelay = 1000 - How long to wait before attempting a new reconnection
+     * @param {number=} options.reconnectionDelayMax = 20000 - Maximum amount of time to wait between reconnections.
      * Each attempt increases the reconnection by the amount specified by reconnectionDelay
-     * @param {number} [options.timeout = 5000] - Connection timeout before a connect_error and
+     * @param {number=} options.timeout = 5000 - Connection timeout before a connect_error and
      * connect_timeout events are emitted
-     * @param {number} [options.reconnectionAttempts = 100] - Maximum number of reconnection attempts
+     * @param {number=} options.reconnectionAttempts = 100 - Maximum number of reconnection attempts
      * @throws {TypeError} Error when wrong type by options
      */
     this.set = function (host, options) {
@@ -86,7 +86,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
     /**
      * @ngdoc service
-     * @name $lxSocket
+     * @name lx.socket.$lxSocket
      * @requires btford.socket-io
      *
      * @description
@@ -154,13 +154,13 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket#isConnected
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket#isConnected
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Checks whether the socket is connected and supplies true or false
        *
-       * @returns {boolean}
+       * @returns {boolean} socket.connection.connected
        */
       self.isConnected = function () {
         return socket.connection.connected;
@@ -168,8 +168,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket#transport
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket#transport
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Displays the current transport of socket.
@@ -182,33 +182,35 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket.#emit
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket.#emit
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Send event with or without callback to socket server.
        *
-       * @param {string} eventName - Name of server event
-       * @param {object} [data] - Data for server
-       * @param {function(err, success)} [callback] - Callback function
-       * @param {function} [callback.err] - Error callback function
-       * @param {function} [callback.success] - Success callback function
+       * @param {string} eventName Name of server event
+       * @param {object=} data Data for server
+       * @param {function(err, success)=} callback Callback function
+       * @param {function=} callback.err Error callback function
+       * @param {function=} callback.success Success callback function
        * @throws {TypeError} Error when wrong type by eventName
        * @throws {Error} Error when socket not connected with status 405.
        *
        * @example
-       * With callback:
-       *    $lxSocket.emit('name', function (err, success) {
-       *      if (err) {
-       *        console.log(err.status, err.message, err.stack);
-       *      } else {
-       *        console.log(success.status, success.data)
-       *      }
-       *    });
-       * Without callback:
-       *    $lxSocket.emit('name');
-       *
-       * @returns {*}
+        With callback:
+           <pre>
+               $lxSocket.emit('name', function (err, success) {
+                 if (err) {
+                   console.log(err.status, err.message, err.stack);
+                 } else {
+                   console.log(success.status, success.data)
+                 }
+               });
+           </pre>
+        Without callback:
+           <pre>
+               $lxSocket.emit('name');
+           </pre>
        */
       self.emit = function (eventName, data, callback) {
 
@@ -305,8 +307,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket#forward
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket#forward
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Forwards an socket event to a scope
@@ -332,8 +334,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name lxSocket#on
-       * @methodOf lxSocket
+       * @name lx.socket.$lxSocket#on
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Register an event on the socket
@@ -361,16 +363,16 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket#addListener
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket#addListener
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Adds a listener on the socket
        * The same as on.
        *
        * @param {string} event The event to listen to
-       * @param {function(data)} [callback] - Callback function
-       * @param {function} [callback.data] - Data callback function to be called after the event is raised
+       * @param {function(data)=} callback Callback function
+       * @param {function=} callback.data Data callback function to be called after the event is raised
        * @throws {TypeError} Error when wrong type by event or callback
        */
       self.addListener = function (event, callback) {
@@ -390,16 +392,16 @@ angular.module('lx.socket', ['btford.socket-io'])
 
       /**
        * @ngdoc method
-       * @name $lxSocket#removeListener
-       * @methodOf $lxSocket
+       * @name lx.socket.$lxSocket#removeListener
+       * @methodOf lx.socket.$lxSocket
        *
        * @description
        * Removes a listener from the socket
        * The same as on.
        *
        * @param {string} event The event to listen to
-       * @param {function(data)} [callback] - Callback function
-       * @param {function} [callback.data] - Data callback function to be called after event is removed from socket
+       * @param {function(data)=} callback Callback function
+       * @param {function=} callback.data Data callback function to be called after event is removed from socket
        * @throws {TypeError} Error when wrong type by event or callback
        */
       self.removeListener = function (event, callback) {
