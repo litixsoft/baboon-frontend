@@ -1,4 +1,5 @@
 'use strict';
+/* global io */
 
 angular.module('bbc.transport', ['btford.socket-io'])
 /**

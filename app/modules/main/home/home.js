@@ -6,7 +6,7 @@ angular.module('main.home', [])
       url: '/main/home', templateUrl: '/modules/main/home/home.html', controller: 'HomeCtrl'
     });
   })
-  .controller('HomeCtrl', function ($scope, $http) {
+  .controller('HomeCtrl', function ($scope) {
     $scope.app = 'main';
     $scope.view = 'home';
     $scope.controller = 'HomeCtrl';

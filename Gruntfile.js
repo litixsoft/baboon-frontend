@@ -189,11 +189,7 @@ module.exports = function (grunt) {
                 reporter: require('jshint-stylish')
             },
             all: {
-                src: [
-                    'Gruntfile.js',
-                    '<%= yeoman.app %>/app/**/*.js',
-                    '<%= yeoman.app %>/common/**/*.js'
-                ]
+                src: '<%= yeoman.lint %>'
             },
             test: {
                 src: [
@@ -551,11 +547,18 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jshint:test',
         'jshint:all',
         'build:dev',
-        'connect:test',
         'karma:unit'
+    ]);
+
+    grunt.registerTask('test:dist', [
+        'jshint:all',
+        'build',
+        'karma:unit',
+        'bgShell:updateWebdriver',
+        'connect:testDist',
+        'bgShell:protractor'
     ]);
 
     grunt.registerTask('e2e', [
