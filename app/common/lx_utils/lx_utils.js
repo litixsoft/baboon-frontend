@@ -6,8 +6,9 @@ angular.module('common.utils', [])
 
             pub.populateServerErrors = function (array, form) {
                 for (var i = 0; i < array.length; i++) {
-                    form[array[i].property].$setValidity('server', false);
-                    form[array[i].property].$error.serverMsg = array[i].message;
+                    var prop = array[i].property.toLowerCase();
+                    form[prop].$setValidity('server', false);
+                    form[prop].$error.serverMsg = array[i].message;
                 }
             };
 
