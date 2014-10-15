@@ -265,6 +265,7 @@ module.exports = function (grunt) {
                 ]
             },
             server: '.tmp',
+            lib: 'app/lib/**/*.annotated.js',
             test: '<%= yeoman.reports %>/test',
             jslint: '<%= yeoman.reports %>/jslint',
             coverage: '<%= yeoman.reports %>/coverage'
@@ -373,6 +374,25 @@ module.exports = function (grunt) {
             }
         },
 
+        uglify: {
+            release: {
+                options: {
+                    sourceMap: true
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'app/lib',
+                        src: '**/*annotated.js',
+                        dest: 'app/lib',
+                        rename: function (dest, src) {
+                            return dest + '/' + src.replace('annotated', 'min');
+                        }
+                    }
+                ]
+            }
+        },
+
         // ngAnnotate tries to make the code safe for minification automatically by
         // using the Angular long form for dependency injection. It doesn't work on
         // things like resolve or inject so those have to be done manually.
@@ -387,6 +407,17 @@ module.exports = function (grunt) {
                         cwd: '.tmp/concat',
                         src: '**/*.js',
                         dest: '.tmp/concat'
+                    }
+                ]
+            },
+            release: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'app/lib',
+                        src: '**/*.js',
+                        ext: '.annotated.js',
+                        dest: 'app/lib'
                     }
                 ]
             }
@@ -609,17 +640,25 @@ module.exports = function (grunt) {
         'concurrent:dist',
         'autoprefixer',
         'concat',
-        'ngAnnotate',
+        'ngAnnotate:dist',
         'copy:dist',
         'cssmin',
-        'uglify',
+        'uglify:generated',
         'filerev',
         'usemin',
         'htmlmin'
     ]);
 
+    grunt.registerTask('build:release', [
+        'clean:lib',
+        'ngAnnotate:release',
+        'uglify:release',
+        'clean:lib'
+    ]);
+
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
         grunt.task.run([
+            'build:release',
                 'bump:' + (version || 'patch') + ':bump-only',
             'changelog',
             'bump-commit'

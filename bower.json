@@ -38,6 +38,7 @@
         ".*",
         "app/**",
         "!app/lib/**/*.js",
+        "!app/lib/**/*.map",
         "app/lib/**/*.spec.js",
         "build",
         "config",
