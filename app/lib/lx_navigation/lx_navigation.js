@@ -46,7 +46,8 @@ angular.module('lx.navigation', [])
 
           var tplContent =  '<ul class="nav navbar-nav">'+
                                 '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">'+
-                                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>'+
+                                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>'+
+                                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app) && !item.state">{{item.title}}</a>'+
                                     '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>'+
                                 '</li>'+
                             '</ul>';

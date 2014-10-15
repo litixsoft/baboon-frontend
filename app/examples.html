@@ -11,7 +11,7 @@
   <!-- Title -->
   <title>Baboon Webtoolkit - Admin</title>
   <!-- build:css(app) assets/css/examples_vendor.css -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <!-- endbuild -->
   <!-- build:css(.tmp) assets/css/examples.css -->
   <link rel="stylesheet" href="css/examples/examples.css">
@@ -19,20 +19,20 @@
 </head>
 <body ng-app="examples">
 <!--[if lt IE 10]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser.
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser.
   Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <header data-ng-include="'assets/includes/header.html'"></header>
-<div class="container" ui-view=""></div>
+<div class="container" ng-view=""></div>
 
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 
 <!-- build:js(app) app/examples/vendor.js -->
-<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="lib/lx_navigation/lx_navigation.js"></script>
 <!-- endbuild -->
 

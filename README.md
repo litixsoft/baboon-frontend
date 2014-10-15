@@ -1,6 +1,13 @@
-[![Build Status](https://travis-ci.org/litixsoft/baboon-frontend.svg?branch=master)](https://travis-ci.org/litixsoft/baboon-frontend) [![david-dm](https://david-dm.org/litixsoft/baboon-frontend.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-frontend/) [![david-dm](https://david-dm.org/litixsoft/baboon-frontend/dev-status.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-frontend#info=devDependencies&view=table)
-# baboon-frontend
-Baboon SPA frontend reference application, based on Angular, backend independent.
+[![baboon-fontend](app/assets/images/logo.png)](http://baboon.litixsoft.de/products-baboon)
+
+# baboon-fontend
+> Baboon SPA frontend reference application, based on Angular, backend independent.
+
+> [![Bower version](https://badge.fury.io/bo/baboon-fontend.svg)](http://badge.fury.io/bo/baboon-fontend)
+[![Build Status](https://secure.travis-ci.org/litixsoft/baboon-fontend.svg?branch=master)](https://travis-ci.org/litixsoft/baboon-fontend)
+[![david-dm](https://david-dm.org/litixsoft/baboon-fontend.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-fontend/)
+[![david-dm](https://david-dm.org/litixsoft/baboon-fontend/dev-status.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-fontend#info=devDependencies&view=table)
+
 
 ## Documentation
 
