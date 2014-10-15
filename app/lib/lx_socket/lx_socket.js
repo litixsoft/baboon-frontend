@@ -103,14 +103,11 @@ angular.module('lx.socket', ['btford.socket-io'])
       // $get return object
       var self = {};
 
-      // First use flag for emit loop
-      var isFirstUse = true;
-
       // Factory creates a socket.io instance
       var socketIoFactory = function socketIoFactory() {
 
         // Socket connection
-        var connection = io.connect(_host, _options);
+        var connection = io.connect(_host, _options); // jshint ignore:line
 
         // Engine.io for upgrade event
         var engine = connection.io.engine;
@@ -256,14 +253,6 @@ angular.module('lx.socket', ['btford.socket-io'])
             err.status = 405;
             throw err;
           };
-
-          // When not first use return error
-          if (!isFirstUse) {
-            return error();
-          }
-
-          // Set first use flag to false
-          isFirstUse = false;
 
           // Wait connect timeout
           var condition = false;
