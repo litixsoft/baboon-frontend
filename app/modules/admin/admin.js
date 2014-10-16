@@ -1,17 +1,16 @@
 'use strict';
 
 angular.module('admin', [
-  'lx.navigation',
-  'ui.router',
-  'ui.bootstrap',
-  'admin.home'
+    'lx.navigation',
+    'ui.router',
+    'admin.home'
 ])
-  .constant('ACTIVE_APP', 'admin')
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
+    .constant('ACTIVE_APP', 'admin')
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
 
-    // Routing and navigation
-    $urlRouterProvider.otherwise('/admin/home');
-    $locationProvider.html5Mode(true);
+        // Routing and navigation
+        $urlRouterProvider.otherwise('/admin/home');
+        $locationProvider.html5Mode(true);
 
         $lxNavigationProvider.set({
             navigation: {
@@ -37,5 +36,5 @@ angular.module('admin', [
                 ]
             }
         });
-  });
+    });
 

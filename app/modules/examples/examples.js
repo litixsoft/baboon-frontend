@@ -1,53 +1,48 @@
 'use strict';
 
 angular.module('examples', [
-  'lx.navigation',
-  'lx.layout',
-  'ui.router',
-  'ui.bootstrap',
-  'examples.home'
+    'ngRoute',
+    'ui.bootstrap',
+    'lx.navigation',
+    'lx.layout',
+    'examples.home'
 ])
-  .constant('ACTIVE_APP', 'examples')
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
+    .constant('ACTIVE_APP', 'examples')
+    .config(function ($routeProvider, $locationProvider, $lxNavigationProvider) {
+        // routing
+        $locationProvider.html5Mode(true);
+        $routeProvider.otherwise({redirectTo: '/examples/home'});
 
-    // Routing and navigation
-    $urlRouterProvider.otherwise('/examples/home');
-    $locationProvider.html5Mode(true);
-
+        // navigation
         $lxNavigationProvider.set({
             navigation: {
                 main: [
                     {
                         title: 'Home',
-                        state: 'mainHome',
                         roles: ['User'],
                         route: '/main/home',
                         app: 'main'
                     },
                     {
                         title: 'About',
-                        state: 'mainAbout',
                         roles: ['User'],
                         route: '/main/about',
                         app: 'main'
                     },
                     {
                         title: 'Contact',
-                        state: 'mainContact',
                         roles: ['User'],
                         route: '/main/contact',
                         app: 'main'
                     },
                     {
                         title: 'Examples',
-                        state: 'examplesHome',
                         roles: ['User'],
                         route: '/examples/home',
                         app: 'examples'
                     },
                     {
                         title: 'Admin',
-                        state: 'adminHome',
                         roles: ['Admin'],
                         route: '/admin/home',
                         app: 'admin'
@@ -61,21 +56,18 @@ angular.module('examples', [
                         children: [
                             {
                                 title: 'Home',
-                                state: 'mainHome',
                                 route: '/main/home',
                                 roles: ['User'],
                                 app: 'main'
                             },
                             {
                                 title: 'About',
-                                state: 'mainAbout',
                                 route: '/main/about',
                                 roles: ['User'],
                                 app: 'main'
                             },
                             {
                                 title: 'Contact',
-                                state: 'mainContact',
                                 route: '/main/contact',
                                 roles: ['User'],
                                 app: 'main'
@@ -84,15 +76,12 @@ angular.module('examples', [
                     },
                     {
                         title: 'Examples',
-                        state: 'examplesHome',
                         roles: ['User'],
                         route: '/examples/home',
-
                         app: 'examples'
                     },
                     {
                         title: 'Admin with a very long Title and ellipsis',
-                        state: 'adminHome',
                         roles: ['Admin'],
                         route: '/admin/home',
                         app: 'admin'

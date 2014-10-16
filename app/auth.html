@@ -24,18 +24,12 @@
 <![endif]-->
 
 <header data-ng-include="'assets/includes/header.html'"></header>
-<div class="container" ui-view=""></div>
-
-<!-- Socket.io -->
-<script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
+<div class="container" ng-view=""></div>
 
 <!-- build:js(app) app/auth/vendor.js -->
-<script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components/angular-messages/angular-messages.min.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/angular-socket-io/socket.js"></script>
-<script src="lib/transport/transport.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) app/auth/app.js -->
