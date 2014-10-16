@@ -20,30 +20,35 @@ angular.module('examples', [
                     {
                         title: 'Home',
                         state: 'mainHome',
+                        roles: ['User'],
                         route: '/main/home',
                         app: 'main'
                     },
                     {
                         title: 'About',
                         state: 'mainAbout',
+                        roles: ['User'],
                         route: '/main/about',
                         app: 'main'
                     },
                     {
                         title: 'Contact',
                         state: 'mainContact',
+                        roles: ['User'],
                         route: '/main/contact',
                         app: 'main'
                     },
                     {
                         title: 'Examples',
                         state: 'examplesHome',
+                        roles: ['User'],
                         route: '/examples/home',
                         app: 'examples'
                     },
                     {
                         title: 'Admin',
                         state: 'adminHome',
+                        roles: ['Admin'],
                         route: '/admin/home',
                         app: 'admin'
                     }
@@ -52,21 +57,27 @@ angular.module('examples', [
                     {
                         title: 'Main',
                         app: 'main',
+                        roles: ['User'],
                         children: [
                             {
                                 title: 'Home',
                                 state: 'mainHome',
                                 route: '/main/home',
+                                roles: ['User'],
                                 app: 'main'
                             },
                             {
                                 title: 'About',
+                                state: 'mainAbout',
                                 route: '/main/about',
+                                roles: ['User'],
                                 app: 'main'
                             },
                             {
                                 title: 'Contact',
+                                state: 'mainContact',
                                 route: '/main/contact',
+                                roles: ['User'],
                                 app: 'main'
                             }
                         ]
@@ -74,12 +85,15 @@ angular.module('examples', [
                     {
                         title: 'Examples',
                         state: 'examplesHome',
+                        roles: ['User'],
                         route: '/examples/home',
+
                         app: 'examples'
                     },
                     {
                         title: 'Admin with a very long Title and ellipsis',
                         state: 'adminHome',
+                        roles: ['Admin'],
                         route: '/admin/home',
                         app: 'admin'
                     }
@@ -88,6 +102,26 @@ angular.module('examples', [
         });
   })
     .run(function($rootScope, lxMessageBoxService, lxToastBoxService) {
+
+        $rootScope.testAclUser = {
+            username: 'horst',
+            acl: {
+                '/examples/home': true,
+                '/admin/home':false,
+                '/main/home':true
+            },
+            rolesAsObjects: [
+                    { _id: '5419771e2e14156910000002', name: 'User' }
+                ]
+            };
+
+        $rootScope.testAclAdmin = {
+            username: 'sysadmin',
+            rolesAsObjects: [
+                { _id: '5419771e2e14156910000002', name: 'User' },
+                { _id: '5419771e2e14156910000003', name: 'Admin' }
+            ]
+        };
 
         $rootScope.pathNav = 'assets/includes/nav_list.html';
         $rootScope.pathNavTree = 'assets/includes/nav_tree_outside.html';
