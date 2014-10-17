@@ -556,8 +556,28 @@ module.exports = function (grunt) {
                 commitMessage: 'chore: release v%VERSION%',
                 push: false
             }
+        },
+        ngdocs: {
+            options: {
+                dest: 'docs',
+                scripts: ['angular.js', '../src.js'],
+                html5Mode: false
+            },
+//          tutorial: {
+//              src: ['content/tutorial/*.ngdoc'],
+//              title: 'Tutorial'
+//          },
+            api: {
+                src: ['app/lib/**/*.js', '!app/lib/**/*.spec.js'],
+                title: 'API Documentation'
+            }
         }
     });
+
+
+    grunt.loadNpmTasks('grunt-ngdocs');
+
+    grunt.registerTask('docs', ['ngdocs']);
 
     grunt.registerTask('git:commitHook', 'Install git commit hook', function () {
         grunt.file.copy('validate-commit-msg.js', '.git/hooks/commit-msg');
