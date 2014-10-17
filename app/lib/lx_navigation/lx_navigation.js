@@ -13,7 +13,6 @@ angular.module('lx.navigation', [])
  */
     .provider('$lxNavigation', function () {
         var config = {};
-        var rightsEnabled = true;//config.rights.enabled;
 
         var addNavObj = function (value) {
             return {
@@ -40,8 +39,8 @@ angular.module('lx.navigation', [])
                 }
                 return false;
             } else {
-                for (var x = 0; x < nav.resources.length; x++) {
-                    if(user.acl[nav.resources[x]]){
+                for (var z = 0; z < nav.resources.length; z++) {
+                    if(user.acl[nav.resources[z]]){
                         return true;
                     }
                 }
