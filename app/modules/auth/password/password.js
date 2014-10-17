@@ -23,8 +23,8 @@ angular.module('auth.password', [])
                 })
                 .error(function (err) {
                     $scope.requesting = false;
-                    if(err.status === 400 && err.data) {
-                        lxUtils.populateServerErrors(err.data, $scope.form);
+                    if(err.status === 422 && err.data) {
+                        lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
                     }
                     else if(err.status === 404) {
                         $scope.alerts.push({ type: 'danger', msg: 'Die E-Mail ist nicht vorhanden.' });
