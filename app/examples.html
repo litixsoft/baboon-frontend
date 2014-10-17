@@ -12,33 +12,69 @@
   <title>Baboon Webtoolkit - Admin</title>
   <!-- build:css(app) assets/css/examples_vendor.css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css"/>
   <!-- endbuild -->
   <!-- build:css(.tmp) assets/css/examples.css -->
   <link rel="stylesheet" href="css/examples/examples.css">
   <!-- endbuild -->
 </head>
-<body ng-app="examples">
+<body ng-app="examples"  class="lx-fixed-header lx-fixed-left-bar" lx-mobile-resize>
 <!--[if lt IE 10]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser.
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser.
   Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<header data-ng-include="'assets/includes/header.html'"></header>
-<div class="container" ui-view=""></div>
+<!-- header with logo, navigation and user area -->
+<header id="lx-header" data-ng-include="'assets/includes/header_example.html'"></header>
+
+<!-- panel on the left side -->
+<aside id="lx-panel-left"><span data-ng-include="'assets/includes/left_panel.html'"></span></aside>
+
+
+<!-- main content section hold ui-view -->
+<section id="main" role="main">
+    <div id="lx-breadcrumps"><span>Your are here: <span><a href="#">Test</a> <i class="fa fa-angle-right"></i> <a href="#">Sub</a> <i class="fa fa-angle-right"></i> <a href="#">SubSub</a></span></span></div>
+    <div ng-view=""></div>
+</section>
+
+<!-- panel on the right side -->
+<aside id="lx-panel-right"><span data-ng-include="'assets/includes/right_panel.html'"></span></aside>
+
+<!-- footer area -->
+<footer id="lx-footer" class="page-footer">
+    <div data-ng-include="'assets/includes/footer.html'"></div>
+</footer>
+
+<!-- backgrounds for panels left and right -->
+<div id="lx-panel-left-background"></div>
+<div id="lx-panel-right-background"></div>
+
+<!-- Metrolike menu, black stripe on top with colored tiles -->
+<section id="lx-shortcut"><span data-ng-include="'assets/includes/shortcut.html'"></span></section>
+
+<!-- short desktop message, called toast -->
+<!-- if lx-toast-box-sound===true a short sound is played if toast is show -->
+<lx-toast-box obj="lxToastBoxService" lx-toast-box-animated="lxToastBoxAnimated" lx-toast-box-sound="true" class="top right"></lx-toast-box>
+
+<!-- yes / no message box -->
+<lx-message-box obj="lxMessageBoxService" lx-message-box-animated="lxMessageBoxAnimated"></lx-message-box>
+
 
 <!-- Socket.io -->
 <script src="https://cdn.socket.io/socket.io-1.1.0.js"></script>
 
 <!-- build:js(app) app/examples/vendor.js -->
-<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="lib/lx_navigation/lx_navigation.js"></script>
+<script src="common/lx_layout/lx_layout.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) app/examples/app.js -->
 <script src="modules/examples/examples.js"></script>
 <script src="modules/examples/home/home.js"></script>
+<script src="modules/examples/about/about.js"></script>
 <!-- endbuild -->
 </body>
 </html>

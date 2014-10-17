@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('auth.password', [])
-    .config(function ($stateProvider) {
-        $stateProvider.state('password', { url: '/auth/password', templateUrl: '/modules/auth/password/password.html', controller: 'AuthPasswordCtrl' });
+    .config(function ($routeProvider) {
+        $routeProvider.when('/auth/password', {templateUrl: '/modules/auth/password/password.html', controller: 'AuthPasswordCtrl'});
     })
     .controller('AuthPasswordCtrl', function ($scope, Auth, lxUtils) {
         $scope.alerts = [];
 
-        $scope.send = function(model) {
+        $scope.send = function (model) {
             $scope.alerts.length = 0;
 
-            if($scope.form.$invalid) {
+            if ($scope.form.$invalid) {
                 return;
             }
 
@@ -26,7 +26,7 @@ angular.module('auth.password', [])
                     if(err.status === 422 && err.data) {
                         lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
                     }
-                    else if(err.status === 404) {
+                    else if (err.status === 404) {
                         $scope.alerts.push({ type: 'danger', msg: 'Die E-Mail ist nicht vorhanden.' });
                     }
                     else {
@@ -35,7 +35,7 @@ angular.module('auth.password', [])
                 });
         };
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
     });

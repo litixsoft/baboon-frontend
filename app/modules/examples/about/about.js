@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('main.about', [])
+angular.module('examples.about', [])
     .config(function ($routeProvider) {
-        $routeProvider.when('/main/about', {templateUrl: '/modules/main/about/about.html', controller: 'AboutCtrl'});
+        $routeProvider.when('/examples/about', {templateUrl: '/modules/examples/about/about.html', controller: 'AboutCtrl'});
     })
     .controller('AboutCtrl', function ($scope) {
         $scope.app = 'main';

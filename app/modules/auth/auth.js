@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('auth', [
+    'ngRoute',
     'ngMessages',
-    'ui.router',
-    'ui.bootstrap',
-    'auth.services',
     'common.servererror',
     'common.equals',
     'common.utils',
+    'auth.services',
     'auth.login',
     'auth.register',
     'auth.password',
@@ -15,17 +14,17 @@ angular.module('auth', [
 ])
     .constant('ACTIVE_APP', 'auth')
     .constant('BASE_URI', 'http://localhost:8081/')
-    .config(function ($urlRouterProvider, $locationProvider, $httpProvider) {
+    .config(function ($routeProvider, $locationProvider, $httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
 
-        // Routing and navigation
-        $urlRouterProvider.otherwise('/auth/login');
+        // routing
         $locationProvider.html5Mode(true);
+        $routeProvider.otherwise({redirectTo: '/auth/login'});
     })
-    .factory('authInterceptor', function($q, $location, BASE_URI) {
+    .factory('authInterceptor', function ($q, $location, BASE_URI) {
         return {
             request: function (config) {
-                if(config.url.indexOf('auth/') === 0) {
+                if (config.url.indexOf('auth/') === 0) {
                     config.url = BASE_URI + config.url;
                 }
                 return config;

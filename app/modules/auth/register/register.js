@@ -1,20 +1,20 @@
 'use strict';
 
 angular.module('auth.register', [])
-    .config(function ($stateProvider) {
-        $stateProvider.state('register', { url: '/auth/register', templateUrl: '/modules/auth/register/register.html', controller: 'AuthRegisterCtrl' });
+    .config(function ($routeProvider) {
+        $routeProvider.when('/auth/register', {templateUrl: '/modules/auth/register/register.html', controller: 'AuthRegisterCtrl'});
     })
     .controller('AuthRegisterCtrl', function ($scope, $location, Auth, lxUtils) {
         $scope.alerts = [];
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
 
-        $scope.register = function(user) {
+        $scope.register = function (user) {
             $scope.alerts.length = 0;
 
-            if($scope.form.$invalid) {
+            if ($scope.form.$invalid) {
                 return;
             }
 
@@ -22,10 +22,10 @@ angular.module('auth.register', [])
             $scope.requesting = true;
 
             Auth.register(user)
-                .success(function() {
+                .success(function () {
                     $location.path('/auth/login');
                 })
-                .error(function(err) {
+                .error(function (err) {
                     $scope.requesting = false;
                     if(err.status === 422 && err.data) {
                         lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);

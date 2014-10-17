@@ -1,17 +1,17 @@
 'use strict';
 
 angular.module('auth.confirmation', [])
-    .config(function ($stateProvider) {
-        $stateProvider.state('confirmation', { url: '/auth/confirmation/:id', templateUrl: '/modules/auth/confirmation/confirmation.html', controller: 'AuthConfirmationCtrl' });
+    .config(function ($routeProvider) {
+        $routeProvider.when('/auth/confirmation/:id', {templateUrl: '/modules/auth/confirmation/confirmation.html', controller: 'AuthConfirmationCtrl'});
     })
     .controller('AuthConfirmationCtrl', function ($scope, $stateParams, $location, Auth) {
         $scope.alerts = [];
 
-        $scope.closeAlert = function(index) {
+        $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
 
-        var confirm = function() {
+        var confirm = function () {
             $scope.alerts.length = 0;
 
             Auth.confirmation($stateParams.id)
@@ -20,10 +20,10 @@ angular.module('auth.confirmation', [])
                     $scope.success = true;
                 }).
                 error(function (err) {
-                    if(err.status === 404) {
+                    if (err.status === 404) {
                         $scope.alerts.push({ type: 'danger', msg: 'Es wurden keine Daten gefunden.' });
                     }
-                    else if(err.status === 409) {
+                    else if (err.status === 409) {
                         $scope.alerts.push({ type: 'danger', msg: 'Der Zeitraum der Bestätigung ist abgelaufen.' });
                         $scope.isExpired = true;
                     }
@@ -33,7 +33,7 @@ angular.module('auth.confirmation', [])
                 });
         };
 
-        $scope.renew = function() {
+        $scope.renew = function () {
             $scope.alerts.length = 0;
             $scope.isExpired = false;
 
