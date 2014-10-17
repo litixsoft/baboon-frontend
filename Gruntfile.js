@@ -568,14 +568,11 @@ module.exports = function (grunt) {
 //              title: 'Tutorial'
 //          },
             api: {
-                src: ['app/lib/**/*.js', '!app/lib/**/*.spec.js'],
+                src: ['app/lib/**/*.js', '!app/lib/**/*.spec.js', '!app/lib/**/*.min.js'],
                 title: 'API Documentation'
             }
         }
     });
-
-
-    grunt.loadNpmTasks('grunt-ngdocs');
 
     grunt.registerTask('docs', ['ngdocs']);
 

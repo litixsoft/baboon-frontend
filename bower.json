@@ -42,6 +42,7 @@
     "app/lib/**/*.spec.js",
     "build",
     "config",
+    "docs",
     "e2e",
     "node_modules",
     "scripts",
