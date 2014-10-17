@@ -26,18 +26,25 @@ angular.module('lx.navigation', [])
             };
         };
 
-        var checkAcl = function (aclRoles, roles) {
-            if (!roles || !rightsEnabled) {
+        var checkAcl = function (user, nav) {
+
+            if(!nav.roles && !nav.resources){
                 return true;
-            } else {
-                for (var x = 0; x < roles.length; x++) {
-                    for (var y = 0; y < aclRoles.length; y++) {
-                        if (roles[x] === aclRoles[y].name) {
+            } else if(nav.roles && !nav.resources){
+                for (var x = 0; x < nav.roles.length; x++) {
+                    for (var y = 0; y < user.rolesAsObjects.length; y++) {
+                        if (nav.roles[x] === user.rolesAsObjects[y].name) {
                             return true;
                         }
                     }
                 }
                 return false;
+            } else {
+                for (var x = 0; x < nav.resources.length; x++) {
+                    if(user.acl[nav.resources[x]]){
+                        return true;
+                    }
+                }
             }
         };
 
@@ -55,11 +62,11 @@ angular.module('lx.navigation', [])
                     var val = addNavObj(value);
                     val.children = childList;
 
-                    if (checkAcl(user.rolesAsObjects, val.roles)) { // if(checkAcl(user.acl,val.route)){
+                    if (checkAcl(user, val)) {
                         navTestList.push(val);
                     }
                 } else {
-                    if (checkAcl(user.rolesAsObjects, value.roles)) {
+                    if (checkAcl(user, value)) {
                         navTestList.push(addNavObj(value));
                     }
                 }
@@ -108,8 +115,8 @@ angular.module('lx.navigation', [])
                     var tmpNav = config.navigation[data.navName];
                     var treeList = [];
 
-                    if(data.acl){
-                        treeList = checkRights(tmpNav, current, null, -1, data.acl);
+                    if(data.user){
+                        treeList = checkRights(tmpNav, current, null, -1, data.user);
                     } else {
                         treeList = tmpNav;
                     }
@@ -124,7 +131,6 @@ angular.module('lx.navigation', [])
                     callback('not existing');
                 }
             };
-
 
             return pub;
         };
@@ -156,11 +162,12 @@ angular.module('lx.navigation', [])
             },
             link: function (scope, element) {
 
-                var tplContent = '<ul class="nav navbar-nav">' +
-                    '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
-                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
-                    '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
-                    '</li>' +
+                var tplContent =  '<ul class="nav navbar-nav">'+
+                    '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">'+
+                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>'+
+                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app) && !item.state">{{item.title}}</a>'+
+                    '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>'+
+                    '</li>'+
                     '</ul>';
 
                 function replaceWithStandard(template) {
@@ -186,7 +193,7 @@ angular.module('lx.navigation', [])
                 var orientation = scope.orientation || 'horizontal';
                 element.toggleClass('nav-stacked', orientation === 'vertical');
 
-                $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, acl: scope.navAcl}, function (error, result) {
+                $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, user: scope.navAcl}, function (error, result) {
                     if (!error) {
                         scope.menu = result;
                     } else {
@@ -218,7 +225,7 @@ angular.module('lx.navigation', [])
  * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
  *
  */
-    .directive('lxComNavTree', function ($location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation) {
+    .directive('lxComNavTree', function ($route, $location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation) {
         return {
             restrict: 'E',
             replace: true,
@@ -300,7 +307,7 @@ angular.module('lx.navigation', [])
                     return app === ACTIVE_APP;
                 };
 
-                $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, acl: scope.navAcl}, function (error, result) {
+                $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, user: scope.navAcl}, function (error, result) {
                     if (!error) {
                         scope.navList = result;
                     } else {

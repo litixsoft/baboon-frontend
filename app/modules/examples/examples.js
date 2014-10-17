@@ -5,7 +5,8 @@ angular.module('examples', [
     'ui.bootstrap',
     'lx.navigation',
     'lx.layout',
-    'examples.home'
+    'examples.home',
+    'examples.about'
 ])
     .constant('ACTIVE_APP', 'examples')
     .config(function ($routeProvider, $locationProvider, $lxNavigationProvider) {
@@ -27,6 +28,7 @@ angular.module('examples', [
                         title: 'About',
                         roles: ['User'],
                         route: '/main/about',
+                        resources: ['/main/about'],
                         app: 'main'
                     },
                     {
@@ -58,18 +60,21 @@ angular.module('examples', [
                                 title: 'Home',
                                 route: '/main/home',
                                 roles: ['User'],
+                                resources: ['/main/home'],
                                 app: 'main'
                             },
                             {
                                 title: 'About',
                                 route: '/main/about',
                                 roles: ['User'],
+                                resources: ['/main/about'],
                                 app: 'main'
                             },
                             {
                                 title: 'Contact',
                                 route: '/main/contact',
                                 roles: ['User'],
+                                resources: ['/main/contact'],
                                 app: 'main'
                             }
                         ]
@@ -86,6 +91,7 @@ angular.module('examples', [
                         route: '/admin/home',
                         app: 'admin'
                     }
+
                 ]
             }
         });
@@ -97,6 +103,7 @@ angular.module('examples', [
             acl: {
                 '/examples/home': true,
                 '/admin/home':false,
+                '/main/about':true,
                 '/main/home':true
             },
             rolesAsObjects: [
@@ -106,6 +113,12 @@ angular.module('examples', [
 
         $rootScope.testAclAdmin = {
             username: 'sysadmin',
+            acl: {
+                '/examples/home': true,
+                '/admin/home':true,
+                '/main/home':true,
+                '/main/about':false
+            },
             rolesAsObjects: [
                 { _id: '5419771e2e14156910000002', name: 'User' },
                 { _id: '5419771e2e14156910000003', name: 'Admin' }
