@@ -16,10 +16,21 @@
                 <div ng-message="integer">You did not enter a valid integer</div>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">myFloat</label>
+            <div class="col-sm-10">
+                <input name="myFloat" type="text" class="form-control" id="myFloat" ng-model="data.myFloat" placeholder="Only floats allowed" lx-float minlength="2">
+            </div>
+            <div ng-messages="myForm.myFloat.$error">
+                <div ng-message="minlength">To short</div>
+                <div ng-message="float">You did not enter a valid float</div>
+            </div>
+        </div>
     </form>
 
     <pre>{{ data | json }}</pre>
-    <pre>{{ myForm.myInteger | json }}</pre>
+    <pre>{{ myForm.myFloat | json }}</pre>
 
 </div>
 
