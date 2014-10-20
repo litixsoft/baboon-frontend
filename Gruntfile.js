@@ -112,7 +112,7 @@ module.exports = function (grunt) {
                     '.tmp/css/**/*.css',
                     '<%= yeoman.app %>/*.html',
                     '<%= yeoman.app %>/{modules,common,assets}/**/*.html',
-                    '<%= yeoman.app %>/{common,modules,assets}/**/*.js',
+                    '<%= yeoman.app %>/{common,modules,assets,lib}/**/*.js',
                     '<%= yeoman.app %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             }
@@ -590,7 +590,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'build:dev',
             'connect:livereload',
-            'watch'
+            'watch:livereload'
         ]);
     });
 

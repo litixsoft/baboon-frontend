@@ -6,7 +6,8 @@ angular.module('examples', [
     'lx.navigation',
     'lx.layout',
     'examples.home',
-    'examples.about'
+    'examples.about',
+    'examples.lib'
 ])
     .constant('ACTIVE_APP', 'examples')
     .config(function ($routeProvider, $locationProvider, $lxNavigationProvider) {
@@ -82,8 +83,26 @@ angular.module('examples', [
                     {
                         title: 'Examples',
                         roles: ['User'],
-                        route: '/examples/home',
-                        app: 'examples'
+                        app: 'examples',
+                        children: [
+                            {
+                                title: 'Home',
+                                route: '/examples/home',
+                                roles: ['User'],
+                                resources: ['/examples/home'],
+                                app: 'examples'
+                            },
+                            {
+                                title: 'About',
+                                route: '/examples/about',
+                                app: 'examples'
+                            },
+                            {
+                                title: 'Lib',
+                                route: '/examples/lib',
+                                app: 'examples'
+                            }
+                        ]
                     },
                     {
                         title: 'Admin with a very long Title and ellipsis',

@@ -16,7 +16,7 @@ describe('Module: examples.about', function () {
   }));
 
   it('should attach a vars to the scope', function () {
-    expect(scope.app).toBe('main');
+    expect(scope.app).toBe('examples');
     expect(scope.view).toBe('about');
     expect(scope.controller).toBe('AboutCtrl');
   });
