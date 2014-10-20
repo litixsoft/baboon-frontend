@@ -11,7 +11,7 @@ describe('auth', function () {
         beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, BASE_URI, _$location_) {
             scope = $rootScope.$new();
             $location = _$location_;
-            ctrl = $controller('AuthConfirmationCtrl', { $scope: scope, $stateParams: { id: '1' }, $location: $location });
+            ctrl = $controller('AuthConfirmationCtrl', { $scope: scope, $routeParams: { id: '1' }, $location: $location });
             $httpBackend = _$httpBackend_;
             baseUri = BASE_URI;
             //$httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
