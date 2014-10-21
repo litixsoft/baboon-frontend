@@ -15,7 +15,7 @@ angular.module('auth', [
     'auth.confirmation'
 ])
     .constant('ACTIVE_APP', 'auth')
-    .config(function ($routeProvider, $locationProvider, $httpProvider) {
+    .config(function ($routeProvider, $httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
         $routeProvider.otherwise({redirectTo: '/auth/login'});
     })
