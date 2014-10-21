@@ -3,15 +3,13 @@
 angular.module('admin', [
     'lx.navigation',
     'ui.router',
+    'common',
     'admin.home'
 ])
     .constant('ACTIVE_APP', 'admin')
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
-
         // Routing and navigation
         $urlRouterProvider.otherwise('/admin/home');
-        $locationProvider.html5Mode(true);
-
         $lxNavigationProvider.set({
             navigation: {
                 main: [

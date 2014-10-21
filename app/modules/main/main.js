@@ -10,8 +10,6 @@ angular.module('main', [
 ])
     .constant('ACTIVE_APP', 'main')
     .config(function ($routeProvider, $locationProvider, $lxNavigationProvider) {
-        // routing
-        $locationProvider.html5Mode(true);
         $routeProvider.otherwise({redirectTo: '/'});
 
         // navigation
