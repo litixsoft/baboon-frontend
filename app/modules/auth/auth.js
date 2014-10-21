@@ -19,7 +19,7 @@ angular.module('auth', [
         $httpProvider.interceptors.push('authInterceptor');
         $routeProvider.otherwise({redirectTo: '/auth/login'});
     })
-    .factory('authInterceptor', function ($q, $location, BASE_URI) {
+    .factory('authInterceptor', function (BASE_URI) {
         return {
             request: function (config) {
                 if (config.url.indexOf('auth/') === 0) {
