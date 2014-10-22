@@ -129,7 +129,6 @@ angular.module('examples', [
             };
         } else {
             $rootScope.testAclUser = {};
-            $rootScope.testAclAdmin = {};
         }
 
         $rootScope.pathNav = 'assets/includes/nav_list.html';
