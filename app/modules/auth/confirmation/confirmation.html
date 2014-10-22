@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Bestätigung</div>
         <div class="panel-body">
-            <alert ng-repeat="alert in alerts" type="{{ alert.type }}" close="closeAlert($index)">{{ alert.msg }}</alert>
+            <alert ng-repeat="a in alerts" type="{{ ::a.type }}" close="closeAlert($index)">{{ ::a.msg }}</alert>
             <a ng-if="success" href="/auth/login">Anmeldung</a>
             <a ng-if="isExpired" href="javascript:void(0)" ng-click="renew()">Bestätigungsmail erneut anfordern</a>
         </div>
