@@ -46,8 +46,8 @@ angular.module('lx.float', [])
                     }
                 });
 
-                ngModel.$validators.float = function (value) {
-                    return value === null ? true : FLOAT_REGEXP.test(value);
+                ngModel.$validators.lxfloat = function (value) {
+                    return (value === null || value === undefined) ? true : FLOAT_REGEXP.test(value);
                 };
 
                 ngModel.$parsers.push(function (viewValue) {
@@ -60,53 +60,14 @@ angular.module('lx.float', [])
                     } else {
                         return NaN;
                     }
-
-
-
-
-//
-//                    if (!viewValue) {
-//                        // reset validation
-//                        ngModel.$setValidity('float', true);
-//                        return null;
-//                    }
-//
-//                    if (FLOAT_REGEXP.test(viewValue)) {
-//                        // it is valid
-//                        ngModel.$setValidity('float', true);
-//
-//                        return typeof viewValue === 'number' ? roundToDecimal(viewValue, numberOfDigits) : roundToDecimal(parseFloat(viewValue.replace(',', '.')), numberOfDigits);
-//                    } else {
-//                        // it is invalid, return undefined (no model update)
-//                        ngModel.$setValidity('float', false);
-//
-//                        return undefined;
-//                    }
                 });
 
                 ngModel.$formatters.unshift(function (modelValue) {
                     if (!isNaN(modelValue) && modelValue !== null) {
-                        modelValue = parseInt(modelValue, 10).toString();
+                        modelValue = parseFloat(modelValue).toFixed(numberOfDigits).replace('.', ',');
                     }
 
                     return modelValue;
-
-
-
-
-
-//                    if (modelValue === undefined || modelValue === null) {
-//                        ctrl.$setValidity('float', true);
-//                        return modelValue;
-//                    }
-//
-//                    ctrl.$setValidity('float', !isNaN(modelValue));
-//
-//                    if (!isNaN(modelValue)) {
-//                        modelValue = parseFloat(modelValue).toFixed(numberOfDigits).replace('.', ',');
-//                    }
-//
-//                    return modelValue;
                 });
             }
         };

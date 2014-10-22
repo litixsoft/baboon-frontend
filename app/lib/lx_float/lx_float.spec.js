@@ -67,10 +67,10 @@ describe('lxFloat', function () {
             expect(form.val.$valid).toBe(false);
         });
 
-        it('should not pass with undefined', function() {
+        it('should pass with undefined', function() {
             form.val.$setViewValue(undefined);
             expect(scope.model.val).toBeUndefined();
-            expect(form.val.$valid).toBe(false);
+            expect(form.val.$valid).toBe(true);
         });
 
         it('should pass with null', function() {

@@ -5,6 +5,7 @@ angular.module('examples', [
     'ui.bootstrap',
     'lx.navigation',
     'lx.layout',
+    'lx.form',
     'examples.home',
     'examples.about',
     'examples.lib'

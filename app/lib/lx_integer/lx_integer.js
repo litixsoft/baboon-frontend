@@ -13,14 +13,14 @@ angular.module('lx.integer', [])
  * For more information look at the [guide](/integer).
  */
     .directive('lxInteger', function () {
-        var INTEGER_REGEXP = /^\-?\d*$/;
+        var INTEGER_REGEXP = /^\-?\d+$/;
 
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, elm, attrs, ngModel) {
-                ngModel.$validators.integer = function (value) {
-                    return value === null ? true : INTEGER_REGEXP.test(value);
+                ngModel.$validators.lxinteger = function (value) {
+                   return (value === null || value === undefined) ? true : INTEGER_REGEXP.test(value);
                 };
 
                 ngModel.$parsers.push(function (viewValue) {
@@ -37,7 +37,7 @@ angular.module('lx.integer', [])
 
                 ngModel.$formatters.unshift(function (modelValue) {
                     if (!isNaN(modelValue) && modelValue !== null) {
-                        modelValue = parseInt(modelValue, 10).toString();
+                        modelValue = INTEGER_REGEXP.test(modelValue) ? parseInt(modelValue, 10).toString() : modelValue;
                     }
 
                     return modelValue;

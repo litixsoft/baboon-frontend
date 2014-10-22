@@ -7,29 +7,51 @@
     <form name="myForm" class="form-horizontal" role="form">
 
         <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input name="name" type="text" class="form-control" id="name" ng-model="lxForm.model.name" minlength="2" required>
+            </div>
+            <div ng-messages="myForm.name.$error">
+                <div ng-message="minlength">To short</div>
+                <div ng-message="server">{{ ::myForm.name.$error.serverMsg }}</div>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-sm-2 control-label">myInteger</label>
             <div class="col-sm-10">
-                <input name="myInteger" type="text" class="form-control" id="myInteger" ng-model="data.myInteger" placeholder="Only integers allowed" lx-integer minlength="2">
+                <input name="myInteger" type="text" class="form-control" id="myInteger" ng-model="lxForm.model.myInteger" placeholder="Only integers allowed" lx-integer minlength="2">
             </div>
             <div ng-messages="myForm.myInteger.$error">
                 <div ng-message="minlength">To short</div>
-                <div ng-message="integer">You did not enter a valid integer</div>
+                <div ng-message="lxinteger">You did not enter a valid integer</div>
+                <div ng-message="server">{{ ::myForm.myInteger.$error.serverMsg }}</div>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">myFloat</label>
             <div class="col-sm-10">
-                <input name="myFloat" type="text" class="form-control" id="myFloat" ng-model="data.myFloat" placeholder="Only floats allowed" lx-float minlength="2">
+                <input name="myFloat" type="text" class="form-control" id="myFloat" ng-model="lxForm.model.myFloat" placeholder="Only floats allowed" lx-float minlength="2">
             </div>
             <div ng-messages="myForm.myFloat.$error">
                 <div ng-message="minlength">To short</div>
-                <div ng-message="float">You did not enter a valid float</div>
+                <div ng-message="lxfloat">You did not enter a valid float</div>
+                <div ng-message="server">{{ ::myForm.myFloat.$error.serverMsg }}</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button class="btn btn-warning" ng-click="lxForm.reset(myForm)">Reset</button>
+                <button class="btn btn-danger" ng-click="simulateServerErrors()">Simulate Server Errors</button>
+                <button class="btn btn-primary" ng-click="simulateSuccessfullSave()" ng-disabled="myForm.$invalid || lxForm.isUnchanged()">Save</button>
             </div>
         </div>
     </form>
 
-    <pre>{{ data | json }}</pre>
-    <pre>{{ myForm.myFloat | json }}</pre>
+    <pre>model: {{ lxForm.model | json }}</pre>
+    <pre>cache: {{ lxCache | json }}</pre>
+    <pre>form: {{ myForm | json }}</pre>
 </div>
 

@@ -69,7 +69,7 @@
         "grunt-eslint": "^1.1.0",
         "grunt-filerev": "^2.1.0",
         "grunt-karma": "^0.9.0",
-        "grunt-newer": "^0.7.0",
+        "grunt-newer": "^0.8.0",
         "grunt-ng-annotate": "^0.4.0",
         "grunt-open": "~0.2.3",
         "grunt-svgmin": "^1.0.0",
