@@ -8,15 +8,17 @@
     </div>
 
     <div id="lx-top-nav" lx-collapse-nav>
-        <lx-com-nav orientation="horizontal" nav-linklist="main" nav-acl="testAclAdmin"></lx-com-nav>
+        <lx-com-nav orientation="horizontal" nav-linklist="main" nav-acl="testAclUser"></lx-com-nav>
     </div>
     <!--<lx-com-nav orientation="horizontal" nav-linklist="main" nav-template-path="'assets/includes/nav_list.html'"></lx-com-nav>-->
     <!--<lx-com-nav orientation="horizontal" nav-linklist="main" nav-template-path="pathNav"></lx-com-nav>-->
 
-    <div id="lx-login-area" lx-shortcut-button="">
-        <span>administrator</span>
+    <div id="lx-login-area" lx-shortcut-button="" ng-if="isLoggedIn">
+        <span>{{testAclUser.username || 'username'}}</span>
         <img src="assets/images/male.png"/>
     </div>
-
+    <div id="lx-login-area" lx-shortcut-button="" ng-if="!isLoggedIn">
+        <a href="/auth/logout" class="btn btn-small btn-success pull-right" target="_self" style="padding:3px 10px;">login</a>
+    </div>
 </div>
 
