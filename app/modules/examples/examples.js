@@ -22,26 +22,23 @@ angular.module('examples', [
                 main: [
                     {
                         title: 'Home',
-                        roles: ['User'],
                         route: '/main/home',
                         app: 'main'
                     },
                     {
                         title: 'About',
-                        roles: ['User'],
+                        roles: ['Guest'],
                         route: '/main/about',
-                        resources: ['/main/about'],
                         app: 'main'
                     },
                     {
                         title: 'Contact',
-                        roles: ['User'],
                         route: '/main/contact',
+                        resources: ['/awesomeThings'],
                         app: 'main'
                     },
                     {
                         title: 'Examples',
-                        roles: ['User'],
                         route: '/examples/home',
                         app: 'examples'
                     },
@@ -56,41 +53,33 @@ angular.module('examples', [
                     {
                         title: 'Main',
                         app: 'main',
-                        roles: ['User'],
                         children: [
                             {
                                 title: 'Home',
                                 route: '/main/home',
-                                roles: ['User'],
-                                resources: ['/main/home'],
                                 app: 'main'
                             },
                             {
                                 title: 'About',
                                 route: '/main/about',
-                                roles: ['User'],
-                                resources: ['/main/about'],
+                                roles: ['Guest'],
                                 app: 'main'
                             },
                             {
                                 title: 'Contact',
                                 route: '/main/contact',
-                                roles: ['User'],
-                                resources: ['/main/contact'],
+                                resources: ['/awesomeThings'],
                                 app: 'main'
                             }
                         ]
                     },
                     {
                         title: 'Examples',
-                        roles: ['User'],
                         app: 'examples',
                         children: [
                             {
                                 title: 'Home',
                                 route: '/examples/home',
-                                roles: ['User'],
-                                resources: ['/examples/home'],
                                 app: 'examples'
                             },
                             {
@@ -107,43 +96,41 @@ angular.module('examples', [
                     },
                     {
                         title: 'Admin with a very long Title and ellipsis',
-                        roles: ['Admin'],
+                        roles: ['Guest'],
                         route: '/admin/home',
                         app: 'admin'
                     }
-
                 ]
             }
         });
   })
-    .run(function($rootScope, lxMessageBoxService, lxToastBoxService) {
+    .run(function($rootScope, lxMessageBoxService, lxToastBoxService, $window) {
 
-        $rootScope.testAclUser = {
-            username: 'horst',
-            acl: {
-                '/examples/home': true,
-                '/admin/home':false,
-                '/main/about':true,
-                '/main/home':true
-            },
-            rolesAsObjects: [
-                    { _id: '5419771e2e14156910000002', name: 'User' }
-                ]
+        if($window.sessionStorage.token){
+            $rootScope.isLoggedIn = true;
+        } else {
+            $rootScope.isLoggedIn = false;
+        }
+
+        if($window.sessionStorage.acl){
+
+            var aclTemp = JSON.parse($window.sessionStorage.acl);
+            var acl,roles = [];
+
+            if(aclTemp.hasOwnProperty('acl')){
+                acl=aclTemp.acl;
+            }
+            if(aclTemp.hasOwnProperty('roles')){
+                roles=aclTemp.roles;
+            }
+            $rootScope.testAclUser = {
+                username: 'horschde',
+                acl: acl,
+                rolesAsObjects: roles
             };
-
-        $rootScope.testAclAdmin = {
-            username: 'sysadmin',
-            acl: {
-                '/examples/home': true,
-                '/admin/home':true,
-                '/main/home':true,
-                '/main/about':false
-            },
-            rolesAsObjects: [
-                { _id: '5419771e2e14156910000002', name: 'User' },
-                { _id: '5419771e2e14156910000003', name: 'Admin' }
-            ]
-        };
+        } else {
+            $rootScope.testAclUser = {};
+        }
 
         $rootScope.pathNav = 'assets/includes/nav_list.html';
         $rootScope.pathNavTree = 'assets/includes/nav_tree_outside.html';

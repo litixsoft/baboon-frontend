@@ -92,6 +92,8 @@ angular.module('auth.services', [])
                 $http.post('auth/account/login', user, { type: 'application/json' })
                     .success(function (data) {
                         $window.sessionStorage.token = data.token;
+                        $window.sessionStorage.acl = JSON.stringify(data.userAcl || {});
+
                         deferred.resolve();
                     })
                     .error(function (err, status) {
@@ -112,6 +114,7 @@ angular.module('auth.services', [])
             },
             logout: function () {
                 delete $window.sessionStorage.token;
+                delete $window.sessionStorage.acl;
             },
             password: function (user) {
                 var deferred = $q.defer();
