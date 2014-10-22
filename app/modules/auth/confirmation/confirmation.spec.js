@@ -1,7 +1,7 @@
-'use strict' ;
+'use strict';
 
 describe('auth', function () {
-    var ctrl, scope, $httpBackend, baseUri, $location;
+    var scope, $httpBackend, baseUri, $location;
 
     beforeEach(module('auth'));
     beforeEach(module('auth.services'));
@@ -11,7 +11,7 @@ describe('auth', function () {
         beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, BASE_URI, _$location_) {
             scope = $rootScope.$new();
             $location = _$location_;
-            ctrl = $controller('AuthConfirmationCtrl', { $scope: scope, $routeParams: { id: '1' }, $location: $location });
+            $controller('AuthConfirmationCtrl', {$scope: scope, $routeParams: {id: '1'}, $location: $location});
             $httpBackend = _$httpBackend_;
             baseUri = BASE_URI;
             //$httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
@@ -26,14 +26,14 @@ describe('auth', function () {
         describe('has a function closeAlert() which', function () {
             it('should close an alert', function () {
                 scope.alerts = [
-                    { type: 'danger', msg: 'error' }
+                    {type: 'danger', msg: 'error'}
                 ];
                 scope.closeAlert(0);
                 expect(scope.alerts.length).toBe(0);
             });
         });
 
-        describe('has function for initial load', function() {
+        describe('has function for initial load', function () {
             it('should show success message', function () {
                 $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
                 $httpBackend.flush();

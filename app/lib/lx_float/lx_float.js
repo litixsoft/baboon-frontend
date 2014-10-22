@@ -19,12 +19,12 @@ angular.module('lx.float', [])
         var FLOAT_REGEXP = /^\-?\d+((\.|,)?(\d+)?)?$/;
 
         function roundToDecimal (number, decimal) {
-            var zeros = (1.0).toFixed(decimal);
+            var zeros = 1.0.toFixed(decimal);
             zeros = zeros.substr(2);
             var mul_div = parseInt('1' + zeros, 10);
             var increment = parseFloat('.' + zeros + '01');
 
-            if (( (number * (mul_div * 10)) % 10) >= 5) {
+            if (number * (mul_div * 10) % 10 >= 5) {
                 number += increment;
             }
 
@@ -47,7 +47,7 @@ angular.module('lx.float', [])
                 });
 
                 ngModel.$validators.lxfloat = function (value) {
-                    return (value === null || value === undefined) ? true : FLOAT_REGEXP.test(value);
+                    return value === null || value === undefined ? true : FLOAT_REGEXP.test(value);
                 };
 
                 ngModel.$parsers.push(function (viewValue) {
@@ -57,9 +57,9 @@ angular.module('lx.float', [])
 
                     if (FLOAT_REGEXP.test(viewValue)) {
                         return typeof viewValue === 'number' ? roundToDecimal(viewValue, numberOfDigits) : roundToDecimal(parseFloat(viewValue.replace(',', '.')), numberOfDigits);
-                    } else {
-                        return NaN;
                     }
+
+                    return NaN;
                 });
 
                 ngModel.$formatters.unshift(function (modelValue) {

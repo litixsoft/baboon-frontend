@@ -253,7 +253,7 @@ describe('lx form service', function () {
 
                 inject(function ($injector) {
                     var cache = $injector.get('lxCache');
-                    expect(cache['undefined']).not.toEqual({id: 1, name: 'wayne', age: 99});
+                    expect(cache.undefined).not.toEqual({id: 1, name: 'wayne', age: 99});
                 });
             });
         });

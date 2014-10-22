@@ -103,26 +103,27 @@ angular.module('examples', [
                 ]
             }
         });
-  })
-    .run(function($rootScope, lxMessageBoxService, lxToastBoxService, $window) {
+    })
+    .run(function ($rootScope, lxMessageBoxService, lxToastBoxService, $window) {
 
-        if($window.sessionStorage.token){
+        if ($window.sessionStorage.token) {
             $rootScope.isLoggedIn = true;
         } else {
             $rootScope.isLoggedIn = false;
         }
 
-        if($window.sessionStorage.acl){
-
+        if ($window.sessionStorage.acl) {
             var aclTemp = JSON.parse($window.sessionStorage.acl);
-            var acl,roles = [];
+            var acl, roles = [];
 
-            if(aclTemp.hasOwnProperty('acl')){
-                acl=aclTemp.acl;
+            if (aclTemp.hasOwnProperty('acl')) {
+                acl = aclTemp.acl;
             }
-            if(aclTemp.hasOwnProperty('roles')){
-                roles=aclTemp.roles;
+
+            if (aclTemp.hasOwnProperty('roles')) {
+                roles = aclTemp.roles;
             }
+
             $rootScope.testAclUser = {
                 username: 'horschde',
                 acl: acl,
@@ -138,31 +139,33 @@ angular.module('examples', [
         $rootScope.lxMessageBoxService = lxMessageBoxService;
         $rootScope.lxToastBoxService = lxToastBoxService;
 
-        $rootScope.openToastAnimated = function(){
-            $rootScope.lxToastBoxService.show('Hier steht eine kleine Nachricht mit dem was gerade passiert ist.','danger');
+        $rootScope.openToastAnimated = function () {
+            $rootScope.lxToastBoxService.show('Hier steht eine kleine Nachricht mit dem was gerade passiert ist.', 'danger');
             $rootScope.lxToastBoxAnimated = true;
         };
-        $rootScope.openToast = function(){
-            $rootScope.lxToastBoxService.show('Hier steht eine kleine Nachricht mit dem was gerade passiert ist.','success');
+
+        $rootScope.openToast = function () {
+            $rootScope.lxToastBoxService.show('Hier steht eine kleine Nachricht mit dem was gerade passiert ist.', 'success');
             $rootScope.lxToastBoxAnimated = false;
         };
 
-        $rootScope.openMsgAnimated = function(){
+        $rootScope.openMsgAnimated = function () {
             $rootScope.lxMessageBoxAnimated = true;
-            $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash','Delete Item','Soll das ausgewählte Item wirklich gelöscht werden?',[ 'ja','nein','vielleicht'],function(err,res){
-                console.log('Error: ',err);
-                console.log('Result: ',res);
-                if(res==='ja'){
+            $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash', 'Delete Item', 'Soll das ausgewählte Item wirklich gelöscht werden?', ['ja', 'nein', 'vielleicht'], function (err, res) {
+                console.log('Error: ', err);
+                console.log('Result: ', res);
+                if (res === 'ja') {
                     $rootScope.lxToastBoxAnimated = true;
-                    $rootScope.lxToastBoxService.show('Item wurde erfolgreich gelöscht.','success');
+                    $rootScope.lxToastBoxService.show('Item wurde erfolgreich gelöscht.', 'success');
                 }
             });
         };
-        $rootScope.openMsg = function(){
+
+        $rootScope.openMsg = function () {
             $rootScope.lxMessageBoxAnimated = false;
-            $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash','Delete Item','Soll das ausgewählte Item wirklich gelöscht werden?',[ 'ja','nein','vielleicht'],function(err,res){
-                console.log('Error: ',err);
-                console.log('Result: ',res);
+            $rootScope.lxMessageBoxService.show('glyphicon glyphicon-trash', 'Delete Item', 'Soll das ausgewählte Item wirklich gelöscht werden?', ['ja', 'nein', 'vielleicht'], function (err, res) {
+                console.log('Error: ', err);
+                console.log('Result: ', res);
             });
         };
 

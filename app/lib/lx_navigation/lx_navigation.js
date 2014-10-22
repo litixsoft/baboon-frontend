@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-else-return:0 */
 
 angular.module('lx.navigation', [])
 /**
@@ -14,7 +15,7 @@ angular.module('lx.navigation', [])
     .provider('$lxNavigation', function () {
         var config = {};
 
-        var addNavObj = function (value) {
+        function addNavObj (value) {
             return {
                 title: value.title,
                 route: value.route,
@@ -23,13 +24,13 @@ angular.module('lx.navigation', [])
                 state: value.state,
                 roles: value.roles
             };
-        };
+        }
 
-        var checkAcl = function (user, nav) {
-            if(!nav.roles && !nav.resources || !user){
+        function checkAcl (user, nav) {
+            if (!nav.roles && !nav.resources || !user) {
                 return true;
-            } else if(nav.roles && !nav.resources){
-                if(user.hasOwnProperty('rolesAsObjects')){
+            } else if (nav.roles && !nav.resources) {
+                if (user.hasOwnProperty('rolesAsObjects')) {
                     for (var x = 0; x < nav.roles.length; x++) {
                         for (var y = 0; y < user.rolesAsObjects.length; y++) {
                             if (nav.roles[x] === user.rolesAsObjects[y]) {
@@ -40,7 +41,7 @@ angular.module('lx.navigation', [])
                 }
                 return false;
             } else {
-                if(user.hasOwnProperty('acl')){
+                if (user.hasOwnProperty('acl')) {
                     for (var z = 0; z < nav.resources.length; z++) {
                         for (var w = 0; w < user.acl.length; w++) {
                             if (nav.resources[z] === user.acl[w]) {
@@ -51,9 +52,9 @@ angular.module('lx.navigation', [])
                 }
                 return false;
             }
-        };
+        }
 
-        var checkRights = function (tmpNav, current, type, level, user) {
+        function checkRights (tmpNav, current, type, level, user) {
 
             var navTestList = [];
             level += 1;
@@ -70,20 +71,18 @@ angular.module('lx.navigation', [])
                     if (checkAcl(user, val)) {
                         navTestList.push(val);
                     }
-                } else {
-                    if (checkAcl(user, value)) {
-                        navTestList.push(addNavObj(value));
-                    }
+                } else if (checkAcl(user, value)) {
+                    navTestList.push(addNavObj(value));
                 }
+
             });
 
             return navTestList;
-        };
-
+        }
 
         /**
          * @ngdoc method
-         * @name lx.navigation.$lxNavigation#set
+         * @name lx.navigation.$lxNavigation.set
          * @methodOf lx.navigation.$lxNavigation
          *
          * @description
@@ -103,14 +102,14 @@ angular.module('lx.navigation', [])
 
             /**
              * @ngdoc method
-             * @name lx.navigation.$lxNavigation#getNavigation
+             * @name lx.navigation.$lxNavigation.getNavigation
              * @methodOf lx.navigation.$lxNavigation
              *
              * @description
              * ...
              *
              * @param {object} data The name of the navigation object, the user acl, the current app
-             * @param {function(error, data) } callback - The callback.
+             * @returns {Array} The navigation
              */
             pub.getNavigation = function (data) {
 
@@ -162,15 +161,15 @@ angular.module('lx.navigation', [])
             },
             link: function (scope, element) {
 
-                var tplContent =  '<ul class="nav navbar-nav">'+
-                    '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">'+
-                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>'+
-                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app) && !item.state">{{item.title}}</a>'+
-                    '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>'+
-                    '</li>'+
+                var tplContent = '<ul class="nav navbar-nav">' +
+                    '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
+                    '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>' +
+                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app) && !item.state">{{item.title}}</a>' +
+                    '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
+                    '</li>' +
                     '</ul>';
 
-                function replaceWithStandard(template) {
+                function replaceWithStandard (template) {
                     element.replaceWith($compile(template)(scope));
                 }
 
@@ -193,7 +192,11 @@ angular.module('lx.navigation', [])
                 var orientation = scope.orientation || 'horizontal';
                 element.toggleClass('nav-stacked', orientation === 'vertical');
 
-                scope.menu = $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, user: scope.navAcl});
+                scope.menu = $lxNavigation.getNavigation({
+                    current: ACTIVE_APP,
+                    navName: scope.navLinklist,
+                    user: scope.navAcl
+                });
 
                 scope.isActiveApp = function (app) {
                     return app === ACTIVE_APP;
@@ -236,17 +239,17 @@ angular.module('lx.navigation', [])
                     '</ul>';
 
                 $templateCache.put('lx_navigation/standard/nav_tree_inside', '<div class="list-item" ng-class="{active: isActive(data.route)}">' +
-                    '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
-                    '<div class="nav-icon {{data.icon}}"></div>' +
-                    '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
-                    '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
-                    '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
-                    '</div>' +
-                    '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
-                    '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
-                    '</ul>');
+                '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                '<div class="nav-icon {{data.icon}}"></div>' +
+                '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
+                '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
+                '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
+                '</div>' +
+                '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
+                '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
+                '</ul>');
 
-                function replaceWithStandard(template) {
+                function replaceWithStandard (template) {
                     element.replaceWith($compile(template)(scope));
                 }
 
@@ -265,7 +268,6 @@ angular.module('lx.navigation', [])
                 } else {
                     replaceWithStandard(tplContent);
                 }
-
 
                 scope.app = ACTIVE_APP;
 
@@ -301,7 +303,11 @@ angular.module('lx.navigation', [])
                     return app === ACTIVE_APP;
                 };
 
-                scope.navList = $lxNavigation.getNavigation({current: ACTIVE_APP, navName: scope.navLinklist, user: scope.navAcl});
+                scope.navList = $lxNavigation.getNavigation({
+                    current: ACTIVE_APP,
+                    navName: scope.navLinklist,
+                    user: scope.navAcl
+                });
 
                 if (scope.navList.length !== 0) {
                     angular.forEach(scope.navList, function (value) {

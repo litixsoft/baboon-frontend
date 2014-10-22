@@ -24,7 +24,7 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#reset
+             * @name lx.form.lxForm.reset
              * @methodOf lx.form.lxForm
              *
              * @description
@@ -59,7 +59,7 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#isUnchanged
+             * @name lx.form.lxForm.isUnchanged
              * @methodOf lx.form.lxForm
              *
              * @description
@@ -73,7 +73,7 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#hasLoadedModelFromCache
+             * @name lx.form.lxForm.hasLoadedModelFromCache
              * @methodOf lx.form.lxForm
              *
              * @description
@@ -110,7 +110,7 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#setModel
+             * @name lx.form.lxForm.setModel
              * @methodOf lx.form.lxForm
              *
              * @description
@@ -142,14 +142,14 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#populateServerValidation
+             * @name lx.form.lxForm.populateServerValidation
              * @methodOf lx.form.lxForm
              *
              * @description
              * Add server validation to form.
              *
              * @param {object} form The angularjs form controller.
-             * @param {Array<{property: string, message: string}>} errors The validation errors.
+             * @param {Array<object>} errors The validation errors.
              */
             pub.populateServerValidation = function (form, errors) {
                 if (errors) {

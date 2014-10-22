@@ -1,7 +1,7 @@
 'use strict';
 
 describe('auth', function () {
-    var ctrl, scope, $httpBackend, baseUri, $window;
+    var scope, $httpBackend, baseUri, $window;
 
     beforeEach(module('auth'));
     beforeEach(module('auth.services'));
@@ -18,7 +18,7 @@ describe('auth', function () {
             };
 
             scope = $rootScope.$new();
-            ctrl = $controller('AuthLoginCtrl', {$scope: scope, $window: $window});
+            $controller('AuthLoginCtrl', {$scope: scope, $window: $window});
             $httpBackend = _$httpBackend_;
             baseUri = BASE_URI;
         }));
@@ -40,10 +40,10 @@ describe('auth', function () {
         });
 
         describe('has a function login() which', function () {
-            var testData = { email: 'foo@bar.com', password: 'passwword' };
+            var testData = {email: 'foo@bar.com', password: 'passwword'};
 
             it('should return if form is invalid', function () {
-                scope.form = { $invalid: true };
+                scope.form = {$invalid: true};
                 scope.alerts = [
                     {type: 'danger', msg: 'error'}
                 ];
@@ -55,7 +55,7 @@ describe('auth', function () {
 
             it('should show success message', function () {
                 $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(200, 'TestToken');
-                scope.form = { $invalid: false };
+                scope.form = {$invalid: false};
 
                 scope.login(testData);
                 $httpBackend.flush();
@@ -70,7 +70,7 @@ describe('auth', function () {
                 var $setValidityValid = null;
 
                 $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(422, [
-                    { property: 'email', message: 'Error message from test'}
+                    {property: 'email', message: 'Error message from test'}
                 ]);
                 scope.form = {
                     $invalid: false,
@@ -94,7 +94,7 @@ describe('auth', function () {
 
             it('should show 404 message', function () {
                 $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(404, '');
-                scope.form = { $invalid: false };
+                scope.form = {$invalid: false};
 
                 scope.login(testData);
                 $httpBackend.flush();
@@ -105,7 +105,7 @@ describe('auth', function () {
 
             it('should show 403 message', function () {
                 $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(403, '');
-                scope.form = { $invalid: false };
+                scope.form = {$invalid: false};
 
                 scope.login(testData);
                 $httpBackend.flush();
@@ -116,7 +116,7 @@ describe('auth', function () {
 
             it('should show an generic error for all errors except 400 and 401', function () {
                 $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(500, '');
-                scope.form = { $invalid: false };
+                scope.form = {$invalid: false};
 
                 scope.login(testData);
                 $httpBackend.flush();

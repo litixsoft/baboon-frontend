@@ -2,7 +2,10 @@
 
 angular.module('auth.register', [])
     .config(function ($routeProvider) {
-        $routeProvider.when('/auth/register', {templateUrl: '/modules/auth/register/register.html', controller: 'AuthRegisterCtrl'});
+        $routeProvider.when('/auth/register', {
+            templateUrl: '/modules/auth/register/register.html',
+            controller: 'AuthRegisterCtrl'
+        });
     })
     .controller('AuthRegisterCtrl', function ($scope, $location, Auth, lxUtils) {
         $scope.alerts = [];
@@ -27,11 +30,11 @@ angular.module('auth.register', [])
                 })
                 .error(function (err) {
                     $scope.requesting = false;
-                    if(err.status === 422 && err.data) {
+
+                    if (err.status === 422 && err.data) {
                         lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
-                    }
-                    else {
-                        $scope.alerts.push({ msg: 'Es ist ein Fehler aufgetreten.' });
+                    } else {
+                        $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});
                     }
                 });
         };

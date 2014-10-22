@@ -20,7 +20,7 @@ angular.module('lx.integer', [])
             require: 'ngModel',
             link: function (scope, elm, attrs, ngModel) {
                 ngModel.$validators.lxinteger = function (value) {
-                   return (value === null || value === undefined) ? true : INTEGER_REGEXP.test(value);
+                   return value === null || value === undefined ? true : INTEGER_REGEXP.test(value);
                 };
 
                 ngModel.$parsers.push(function (viewValue) {
@@ -28,11 +28,12 @@ angular.module('lx.integer', [])
                         return null;
                     }
 
-                    if (INTEGER_REGEXP.test(viewValue)) {
-                        return parseInt(viewValue, 10);
-                    } else {
-                        return NaN;
-                    }
+                    return INTEGER_REGEXP.test(viewValue) ? parseInt(viewValue, 10) : NaN;
+                    //if (INTEGER_REGEXP.test(viewValue)) {
+                    //    return parseInt(viewValue, 10);
+                    //} else {
+                    //    return NaN;
+                    //}
                 });
 
                 ngModel.$formatters.unshift(function (modelValue) {

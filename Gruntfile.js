@@ -16,6 +16,7 @@ module.exports = function (grunt) {
      * Gets the index.html file from the code coverage folder.
      *
      * @param {!string} folder The path to the code coverage folder.
+     * @returns {string} The path to the index.html file
      */
     function getCoverageReport (folder) {
         var reports = grunt.file.expand(folder + '*/index.html');
@@ -91,11 +92,11 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: ['<%= yeoman.app %>/modules/**/*.js', '<%= yeoman.app %>/common/**/*.js'],
-                tasks: ['jshint:all']
+                tasks: ['eslint:all']
             },
             jsTest: {
                 files: ['<%= yeoman.app %>/modules/**/*.spec.js', '<%= yeoman.app %>/common/**/*.spec.js'],
-                tasks: ['jshint:test', 'karma:unit']
+                tasks: ['eslint:test', 'karma:unit']
             },
             styles: {
                 files: ['<%= yeoman.app %>/**/*.less'],
@@ -229,6 +230,12 @@ module.exports = function (grunt) {
         eslint: {
             all: {
                 src: '<%= yeoman.lint %>'
+            },
+            test: {
+                src: [
+                    '<%= yeoman.app %>/app/**/*.spec.js',
+                    '<%= yeoman.app %>/common/**/*.spec.js'
+                ]
             },
             jslint: {
                 options: {
@@ -595,13 +602,13 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('test', [
-        'jshint:all',
+        'eslint:all',
         'build:dev',
         'karma:unit'
     ]);
 
     grunt.registerTask('test:dist', [
-        'jshint:all',
+        'eslint:all',
         'build',
         'karma:unit',
         'bgShell:updateWebdriver',
@@ -636,8 +643,8 @@ module.exports = function (grunt) {
         'clean:test',
         'clean:coverage',
         'clean:jslint',
-        'jshint:jslint',
-        'jshint:checkstyle',
+        'eslint:jslint',
+        'eslint:checkstyle',
         'build:dev',
         'connect:test',
         'karma:ci',

@@ -2,8 +2,17 @@
 
 angular.module('auth.login', [])
     .config(function ($routeProvider) {
-        $routeProvider.when('/auth/login', {templateUrl: '/modules/auth/login/login.html', controller: 'AuthLoginCtrl'});
-        $routeProvider.when('/auth/logout', { resolve: { logout: function (LogoutService) { LogoutService.logout(); } }});
+        $routeProvider.when('/auth/login', {
+            templateUrl: '/modules/auth/login/login.html',
+            controller: 'AuthLoginCtrl'
+        });
+        $routeProvider.when('/auth/logout', {
+            resolve: {
+                logout: function (LogoutService) {
+                    LogoutService.logout();
+                }
+            }
+        });
     })
     .controller('AuthLoginCtrl', function ($scope, $window, Auth, lxUtils) {
         $scope.alerts = [];
@@ -22,14 +31,13 @@ angular.module('auth.login', [])
                 })
                 .error(function (err) {
                     $scope.requesting = false;
-                    if(err.status === 422 && err.data) {
+
+                    if (err.status === 422 && err.data) {
                         lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
-                    }
-                    else if (err.status === 404 || err.status === 403) {
-                        $scope.alerts.push({ msg: 'Die E-Mail oder das Passwort ist falsch.' });
-                    }
-                    else {
-                        $scope.alerts.push({ msg: 'Es ist ein Fehler aufgetreten.' });
+                    } else if (err.status === 404 || err.status === 403) {
+                        $scope.alerts.push({msg: 'Die E-Mail oder das Passwort ist falsch.'});
+                    } else {
+                        $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});
                     }
                 });
         };

@@ -1,5 +1,6 @@
 {
     "env": {
+        "node": true,
         "browser": true
     },
     "rules": {
@@ -21,8 +22,8 @@
         "no-lonely-if": 2,
         "no-self-compare": 2,
         "no-trailing-spaces": 2,
-        "no-undefined": 2,
         "no-underscore-dangle": 0,
+        "no-undefined": 0,
         "quotes": [2, "single"],
         "radix": 2,
         "space-after-keywords": 2,

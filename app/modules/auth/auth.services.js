@@ -13,7 +13,7 @@ angular.module('auth.services', [])
                         deferred.resolve();
                     }).
                     error(function (err, status) {
-                        deferred.reject({ data: err, status: status });
+                        deferred.reject({data: err, status: status});
                     });
 
                 promise.success = function (fn) {
@@ -32,15 +32,21 @@ angular.module('auth.services', [])
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
-                $http({ method: 'POST', url: 'auth/account/renew', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                $http({
+                    method: 'POST',
+                    url: 'auth/account/renew',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     transformRequest: function (obj) {
                         var str = [];
-                        for (var p in obj) {
-                            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-                        }
+                        angular.forEach(obj, function (value, key) {
+                            str.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+                        });
+                        //for (var p in obj) {
+                        //    str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+                        //}
                         return str.join('&');
                     },
-                    data: { id: id, url: url }
+                    data: {id: id, url: url}
                 })
                     .success(function () {
                         deferred.resolve();
@@ -65,12 +71,12 @@ angular.module('auth.services', [])
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
-                $http.post('auth/account/register', user, { type: 'application/json' })
+                $http.post('auth/account/register', user, {type: 'application/json'})
                     .success(function () {
                         deferred.resolve();
                     })
                     .error(function (err, status) {
-                        deferred.reject({ data: err, status: status });
+                        deferred.reject({data: err, status: status});
                     });
 
                 promise.success = function (fn) {
@@ -89,7 +95,7 @@ angular.module('auth.services', [])
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
-                $http.post('auth/account/login', user, { type: 'application/json' })
+                $http.post('auth/account/login', user, {type: 'application/json'})
                     .success(function (data) {
                         $window.sessionStorage.token = data.token;
                         $window.sessionStorage.acl = JSON.stringify(data.userAcl || {});
@@ -97,7 +103,7 @@ angular.module('auth.services', [])
                         deferred.resolve();
                     })
                     .error(function (err, status) {
-                        deferred.reject({ data: err, status: status });
+                        deferred.reject({data: err, status: status});
                     });
 
                 promise.success = function (fn) {
@@ -120,12 +126,12 @@ angular.module('auth.services', [])
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
-                $http.post('auth/account/password', user, { type: 'application/json' })
+                $http.post('auth/account/password', user, {type: 'application/json'})
                     .success(function () {
                         deferred.resolve();
                     }).
                     error(function (err, status) {
-                        deferred.reject({ data: err, status: status });
+                        deferred.reject({data: err, status: status});
                     });
 
                 promise.success = function (fn) {
