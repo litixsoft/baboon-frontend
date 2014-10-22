@@ -11,3 +11,4 @@ angular.module('examples.lib', [
     .controller('LibCtrl', function ($scope) {
         $scope.data = {};
     });
+
