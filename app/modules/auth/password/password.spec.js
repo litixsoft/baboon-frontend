@@ -57,7 +57,7 @@ describe('auth', function () {
                 var $setValidityName = '';
                 var $setValidityValid = null;
 
-                $httpBackend.expectPOST(baseUri + 'auth/account/password', { email: 'foo@bar.com' }).respond(400, [{property: 'email', message: 'Error message from test'}]);
+                $httpBackend.expectPOST(baseUri + 'auth/account/password', { email: 'foo@bar.com' }).respond(422, [{property: 'email', message: 'Error message from test'}]);
                 scope.form = {
                     $invalid: false,
                     email: {

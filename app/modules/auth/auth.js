@@ -3,6 +3,8 @@
 angular.module('auth', [
     'ngRoute',
     'ngMessages',
+    'ui.bootstrap',
+    'common',
     'common.servererror',
     'common.equals',
     'common.utils',
@@ -13,15 +15,11 @@ angular.module('auth', [
     'auth.confirmation'
 ])
     .constant('ACTIVE_APP', 'auth')
-    .constant('BASE_URI', 'http://localhost:8081/')
-    .config(function ($routeProvider, $locationProvider, $httpProvider) {
+    .config(function ($routeProvider, $httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
-
-        // routing
-        $locationProvider.html5Mode(true);
         $routeProvider.otherwise({redirectTo: '/auth/login'});
     })
-    .factory('authInterceptor', function ($q, $location, BASE_URI) {
+    .factory('authInterceptor', function (BASE_URI) {
         return {
             request: function (config) {
                 if (config.url.indexOf('auth/') === 0) {
