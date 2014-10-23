@@ -28,7 +28,7 @@
         "radix": 2,
         "space-after-keywords": 2,
         "space-unary-word-ops": 2,
-        "valid-jsdoc": [2, {
+        "valid-jsdoc": [0, {
             "requireReturn": false
         }],
         "wrap-iife": 2

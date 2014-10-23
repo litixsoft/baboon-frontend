@@ -82,7 +82,7 @@ angular.module('lx.navigation', [])
 
         /**
          * @ngdoc method
-         * @name lx.navigation.$lxNavigation.set
+         * @name lx.navigation.$lxNavigation#set
          * @methodOf lx.navigation.$lxNavigation
          *
          * @description
@@ -102,7 +102,7 @@ angular.module('lx.navigation', [])
 
             /**
              * @ngdoc method
-             * @name lx.navigation.$lxNavigation.getNavigation
+             * @name lx.navigation.$lxNavigation#getNavigation
              * @methodOf lx.navigation.$lxNavigation
              *
              * @description

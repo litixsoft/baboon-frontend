@@ -13,7 +13,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
         /**
          * @ngdoc service
-         * @name lx.socket.$lxSocket.set
+         * @name lx.socket.$lxSocket#set
          *
          * @description Set the host and connection options for socket
          *
@@ -86,7 +86,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
         /**
          * @ngdoc service
-         * @name lx.socket.$lxSocket.$get
+         * @name lx.socket.$lxSocket
          * @requires btford.socketIO
          *
          * @description Mapper for btford.socket-io with extended functionality.
@@ -149,7 +149,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.isConnected
+             * @name lx.socket.$lxSocket#isConnected
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Checks whether the socket is connected and supplies true or false
@@ -162,7 +163,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.transport
+             * @name lx.socket.$lxSocket#transport
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Displays the current transport of socket.
@@ -175,7 +177,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.emit
+             * @name lx.socket.$lxSocket#emit
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Send event with or without callback to socket server.
@@ -295,7 +298,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.forward
+             * @name lx.socket.$lxSocket#forward
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Forwards an socket event to a scope
@@ -321,7 +325,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.on
+             * @name lx.socket.$lxSocket#on
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Register an event on the socket
@@ -348,7 +353,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.addListener
+             * @name lx.socket.$lxSocket#addListener
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Adds a listener on the socket
@@ -376,7 +382,8 @@ angular.module('lx.socket', ['btford.socket-io'])
 
             /**
              * @ngdoc method
-             * @name lx.socket.$lxSocket.removeListener
+             * @name lx.socket.$lxSocket#removeListener
+             * @methodOf lx.socket.$lxSocket
              *
              * @description
              * Removes a listener from the socket
