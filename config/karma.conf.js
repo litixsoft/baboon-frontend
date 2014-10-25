@@ -29,7 +29,9 @@ module.exports = function (config) {
         ],
 
         // list of files / patterns to exclude
-        exclude: [],
+        exclude: [
+            'app/lib/**/*.min.js'
+        ],
 
         // use dots reporter, as travis terminal does not support escaping sequences
         // possible values: 'dots', 'progress'
