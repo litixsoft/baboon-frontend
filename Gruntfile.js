@@ -422,7 +422,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'app/lib',
-                        src: '**/*.js',
+                        src: ['**/*.js', '!**/*.spec.js', '!**/*.min.js'],
                         ext: '.annotated.js',
                         dest: 'app/lib'
                     }
@@ -488,6 +488,10 @@ module.exports = function (grunt) {
         karma: {
             unit: {
                 configFile: 'config/karma.conf.js',
+                singleRun: true
+            },
+            dist: {
+                configFile: 'config/karma.dist.conf.js',
                 singleRun: true
             },
             coverage: {
@@ -610,7 +614,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:dist', [
         'eslint:all',
         'build',
-        'karma:unit',
+        'karma:dist',
         'bgShell:updateWebdriver',
         'connect:testDist',
         'bgShell:protractor'
