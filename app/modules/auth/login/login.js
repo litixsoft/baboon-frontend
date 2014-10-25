@@ -29,12 +29,12 @@ angular.module('auth.login', [])
                 .success(function () {
                     $window.location.href = '/main/home';
                 })
-                .error(function (err) {
+                .error(function (error, status) {
                     $scope.requesting = false;
 
-                    if (err.status === 422 && err.data) {
-                        lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
-                    } else if (err.status === 404 || err.status === 403) {
+                    if (status === 422 && error) {
+                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
+                    } else if (status === 404 || status === 403) {
                         $scope.alerts.push({msg: 'Die E-Mail oder das Passwort ist falsch.'});
                     } else {
                         $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});

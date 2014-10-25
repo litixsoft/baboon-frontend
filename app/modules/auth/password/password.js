@@ -27,12 +27,12 @@ angular.module('auth.password', [])
                     });
                     $scope.requesting = false;
                 })
-                .error(function (err) {
+                .error(function (error, status) {
                     $scope.requesting = false;
 
-                    if (err.status === 422 && err.data) {
-                        lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
-                    } else if (err.status === 404) {
+                    if (status === 422 && error) {
+                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
+                    } else if (status === 404) {
                         $scope.alerts.push({type: 'danger', msg: 'Die E-Mail ist nicht vorhanden.'});
                     } else {
                         $scope.alerts.push({type: 'danger', msg: 'Es ist ein Fehler aufgetreten.'});

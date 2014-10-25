@@ -25,10 +25,10 @@ angular.module('auth.confirmation', [])
                     });
                     $scope.success = true;
                 })
-                .error(function (err) {
-                    if (err.status === 404) {
+                .error(function (error, status) {
+                    if (status === 404) {
                         $scope.alerts.push({type: 'danger', msg: 'Es wurden keine Daten gefunden.'});
-                    } else if (err.status === 409) {
+                    } else if (status === 409) {
                         $scope.alerts.push({type: 'danger', msg: 'Der Zeitraum der Bestätigung ist abgelaufen.'});
                         $scope.isExpired = true;
                     } else {

@@ -8,11 +8,11 @@ angular.module('auth.services', [])
                 var deferred = $q.defer();
                 var promise = deferred.promise;
 
-                $http.get('auth/account/confirmation/' + id).
-                    success(function () {
+                $http.get('auth/account/confirmation/' + id)
+                    .success(function () {
                         deferred.resolve();
-                    }).
-                    error(function (err, status) {
+                    })
+                    .error(function (err, status) {
                         deferred.reject({data: err, status: status});
                     });
 
@@ -22,7 +22,9 @@ angular.module('auth.services', [])
                 };
 
                 promise.error = function (fn) {
-                    promise.then(null, fn);
+                    promise.then(null, function (response) {
+                        fn(response.data, response.status);
+                    });
                     return promise;
                 };
 
@@ -41,9 +43,6 @@ angular.module('auth.services', [])
                         angular.forEach(obj, function (value, key) {
                             str.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
                         });
-                        //for (var p in obj) {
-                        //    str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-                        //}
                         return str.join('&');
                     },
                     data: {id: id, url: url}
@@ -85,7 +84,9 @@ angular.module('auth.services', [])
                 };
 
                 promise.error = function (fn) {
-                    promise.then(null, fn);
+                    promise.then(null, function (response) {
+                        fn(response.data, response.status);
+                    });
                     return promise;
                 };
 
@@ -112,7 +113,9 @@ angular.module('auth.services', [])
                 };
 
                 promise.error = function (fn) {
-                    promise.then(null, fn);
+                    promise.then(null, function (response) {
+                        fn(response.data, response.status);
+                    });
                     return promise;
                 };
 
@@ -129,8 +132,8 @@ angular.module('auth.services', [])
                 $http.post('auth/account/password', user, {type: 'application/json'})
                     .success(function () {
                         deferred.resolve();
-                    }).
-                    error(function (err, status) {
+                    })
+                    .error(function (err, status) {
                         deferred.reject({data: err, status: status});
                     });
 
@@ -140,7 +143,9 @@ angular.module('auth.services', [])
                 };
 
                 promise.error = function (fn) {
-                    promise.then(null, fn);
+                    promise.then(null, function (response) {
+                        fn(response.data, response.status);
+                    });
                     return promise;
                 };
 

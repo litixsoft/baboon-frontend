@@ -28,11 +28,11 @@ angular.module('auth.register', [])
                 .success(function () {
                     $location.path('/auth/login');
                 })
-                .error(function (err) {
+                .error(function (error, status) {
                     $scope.requesting = false;
 
-                    if (err.status === 422 && err.data) {
-                        lxUtils.populateServerErrors(err.data.errors || err.data, $scope.form);
+                    if (status === 422 && error) {
+                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
                     } else {
                         $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});
                     }
