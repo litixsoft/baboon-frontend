@@ -3,7 +3,8 @@
 angular.module('examples.lib', [
     'ngMessages',
     'lx.integer',
-    'lx.float'
+    'lx.float',
+    'lx.confirm'
 ])
     .config(function ($routeProvider) {
         $routeProvider.when('/examples/lib', {templateUrl: '/modules/examples/lib/lib.html', controller: 'LibCtrl'});
@@ -25,6 +26,10 @@ angular.module('examples.lib', [
             $scope.lxForm.setModel($scope.lxForm.model);
 
             $scope.lxForm.reset($scope.myForm);
+        };
+
+        $scope.delete = function () {
+
         };
     });
 
