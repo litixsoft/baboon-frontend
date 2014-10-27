@@ -14,6 +14,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "lx.confirm.directive:lxConfirm",
+      "shortName": "lxConfirm",
+      "type": "object",
+      "moduleName": "lx.confirm",
+      "shortDescription": "Directive which encapsulates a modal confirm window.",
+      "keywords": "api confirm directive encapsulates lx modal object window"
+    },
+    {
+      "section": "api",
       "id": "lx.float.directive:lxFloat",
       "shortName": "lxFloat",
       "type": "directive",
