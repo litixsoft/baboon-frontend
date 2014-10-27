@@ -15,69 +15,66 @@ angular.module('lx.navigation', [])
     .provider('$lxNavigation', function () {
         var config = {};
 
-        function addNavObj (value) {
+        function cloneNavObject (value) {
             return {
                 title: value.title,
                 route: value.route,
-                level: value.level,
                 app: value.app,
                 state: value.state,
                 roles: value.roles
             };
         }
 
-        function checkAcl (user, nav) {
-            if (!nav.roles && !nav.resources || !user) {
+        function userHasAccess (user, navItem) {
+            if (!navItem.roles && !navItem.resources || !user) {
                 return true;
-            } else if (nav.roles && !nav.resources) {
-                if (user.hasOwnProperty('rolesAsObjects')) {
-                    for (var x = 0; x < nav.roles.length; x++) {
-                        for (var y = 0; y < user.rolesAsObjects.length; y++) {
-                            if (nav.roles[x] === user.rolesAsObjects[y]) {
+            }
+
+            if (navItem.roles && !navItem.resources) {
+                if (user.roles) {
+                    for (var x = 0; x < navItem.roles.length; x++) {
+                        for (var y = 0; y < user.roles.length; y++) {
+                            if (navItem.roles[x] === user.roles[y]) {
                                 return true;
                             }
                         }
                     }
                 }
+
                 return false;
             } else {
-                if (user.hasOwnProperty('acl')) {
-                    for (var z = 0; z < nav.resources.length; z++) {
+                if (user.acl) {
+                    for (var z = 0; z < navItem.resources.length; z++) {
                         for (var w = 0; w < user.acl.length; w++) {
-                            if (nav.resources[z] === user.acl[w]) {
+                            if (navItem.resources[z] === user.acl[w]) {
                                 return true;
                             }
                         }
                     }
                 }
+
                 return false;
             }
         }
 
-        function checkRights (tmpNav, current, type, level, user) {
+        function getUserNavigation (navigation, currentApp, user) {
+            var result = [];
 
-            var navTestList = [];
-            level += 1;
-
-            angular.forEach(tmpNav, function (value) {
-
-                value.level = level;
-
-                if (value.children) {
-                    var childList = checkRights(value.children, current, type, level, user);
-                    var val = addNavObj(value);
+            angular.forEach(navigation, function (navItem) {
+                if (navItem.children) {
+                    var childList = getUserNavigation(navItem.children, currentApp, user);
+                    var val = cloneNavObject(navItem);
                     val.children = childList;
 
-                    if (checkAcl(user, val)) {
-                        navTestList.push(val);
+                    if (userHasAccess(user, val)) {
+                        result.push(val);
                     }
-                } else if (checkAcl(user, value)) {
-                    navTestList.push(addNavObj(value));
+                } else if (userHasAccess(user, navItem)) {
+                    result.push(cloneNavObject(navItem));
                 }
-
             });
 
-            return navTestList;
+            return result;
         }
 
         /**
@@ -97,7 +94,7 @@ angular.module('lx.navigation', [])
             config.navigation = options.navigation;
         };
 
-        this.$get = function () {
+        this.$get = function ($log) {
             var pub = {};
 
             /**
@@ -112,19 +109,15 @@ angular.module('lx.navigation', [])
              * @returns {Array} The navigation
              */
             pub.getNavigation = function (data) {
+                var currentApp = data.currentApp || 'main';
 
-                var current = data.current || 'main';
-
-                if (config.navigation && config.navigation.hasOwnProperty(data.navName)) {
-                    var tmpNav = config.navigation[data.navName];
-                    var treeList = checkRights(tmpNav, current, null, -1, data.user);
-
-                    return treeList;
+                if (config.navigation && config.navigation[data.navName]) {
+                    return getUserNavigation(config.navigation[data.navName], currentApp, data.user);
                 } else {
                     if (!config.navigation) {
-                        console.info('No Navigation defined. Please define a navigation with the help of the $lxTransportProvider in the config section of your app.');
+                        $log.info('No Navigation defined. Please define a navigation with the help of the $lxTransportProvider in the config section of your app.');
                     } else {
-                        console.error('Your defined nav-link-list "' + name + '" is not defined!');
+                        $log.error('Your defined nav-link-list "' + data.navName + '" is not defined!');
                     }
 
                     return [];
@@ -155,9 +148,9 @@ angular.module('lx.navigation', [])
             replace: true,
             scope: {
                 orientation: '@',
-                navLinklist: '@',
+                navName: '@',
                 navTemplatePath: '=',
-                navAcl: '='
+                navUser: '='
             },
             link: function (scope, element) {
 
@@ -193,9 +186,9 @@ angular.module('lx.navigation', [])
                 element.toggleClass('nav-stacked', orientation === 'vertical');
 
                 scope.menu = $lxNavigation.getNavigation({
-                    current: ACTIVE_APP,
-                    navName: scope.navLinklist,
-                    user: scope.navAcl
+                    currentApp: ACTIVE_APP,
+                    navName: scope.navName,
+                    user: scope.navUser
                 });
 
                 scope.isActiveApp = function (app) {
@@ -227,9 +220,9 @@ angular.module('lx.navigation', [])
             restrict: 'E',
             replace: true,
             scope: {
-                navLinklist: '@',
+                navName: '@',
                 navTemplatePath: '=',
-                navAcl: '='
+                navUser: '='
             },
             link: function (scope, element) {
 
@@ -304,9 +297,9 @@ angular.module('lx.navigation', [])
                 };
 
                 scope.navList = $lxNavigation.getNavigation({
-                    current: ACTIVE_APP,
-                    navName: scope.navLinklist,
-                    user: scope.navAcl
+                    currentApp: ACTIVE_APP,
+                    navName: scope.navName,
+                    user: scope.navUser
                 });
 
                 if (scope.navList.length !== 0) {

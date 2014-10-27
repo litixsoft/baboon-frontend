@@ -14,17 +14,11 @@ angular.module('lx.layout', [])
                 var body = angular.element(bodyTemp[0]);
 
                 elem.bind('click', function () {
-//                    console.log("btn: ",scope.lxMenuButton);
                     if (!body.hasClass(scope.lxMenuButton)) {
                         body.addClass(scope.lxMenuButton);
                     } else {
                         body.removeClass(scope.lxMenuButton);
                     }
-//                    if (!body.hasClass('lx-menu-open')) {
-//                        body.addClass('lx-menu-open');
-//                    } else {
-//                        body.removeClass('lx-menu-open');
-//                    }
                 });
             }
         };
@@ -268,8 +262,7 @@ angular.module('lx.layout', [])
                         if (tempUsed > 5) {
                             used = tempUsed;
                         }
-                        console.log(used);
-                        console.log(used);
+
                         if (used < space && used > 0) {
                             elem.removeClass('resize');
                         } else {
