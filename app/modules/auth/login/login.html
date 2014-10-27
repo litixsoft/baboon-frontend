@@ -9,7 +9,7 @@
             <form class="form-horizontal" ng-submit="login(user)" name="form" novalidate>
                 <div class="form-group">
                     <div class="col-lg-12" ng-class="{'has-error': (form.email.$dirty && form.email.$invalid) || form.email.$error.server }">
-                        <input type="text" ng-model="user.email" name="email" placeholder="E-Mail..." class="form-control" required lx-server-error>
+                        <input type="text" ng-model="user.email" name="email" placeholder="E-Mail..." class="form-control" required lx-server-error lx-focus="true">
                         <div class="error-messages" ng-messages="form.email.$error" ng-if="form.email.$dirty || form.$submitted">
                             <div ng-message="required">Die E-Mail muss angegeben werden.</div>
                             <div ng-message="server">{{ form.email.$error.serverMsg }}</div>

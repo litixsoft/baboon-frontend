@@ -9,7 +9,7 @@
             <form class="form-horizontal" ng-submit="register(user)" name="form" novalidate>
                 <div class="form-group" ng-class="{'has-error': (form.firstname.$dirty && form.firstname.$invalid) || form.firstname.$error.server}">
                     <div class="col-lg-12">
-                        <input type="text" ng-model="user.firstName" name="firstname" placeholder="Vorname..." class="form-control" required lx-server-error>
+                        <input type="text" ng-model="user.firstName" name="firstname" placeholder="Vorname..." class="form-control" required lx-server-error lx-focus="true">
                         <div class="error-messages" ng-messages="form.firstname.$error" ng-if="form.firstname.$dirty || form.$submitted">
                             <div ng-message="required">Der Vorname muss angegeben werden.</div>
                             <div ng-message="server">{{ form.firstname.$error.serverMsg }}</div>
