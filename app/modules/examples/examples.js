@@ -6,6 +6,7 @@ angular.module('examples', [
     'lx.navigation',
     'lx.layout',
     'lx.form',
+    'common.auth',
     'examples.home',
     'examples.about',
     'examples.lib'
@@ -104,34 +105,14 @@ angular.module('examples', [
             }
         });
     })
-    .run(function ($rootScope, lxMessageBoxService, lxToastBoxService, $window) {
+    .run(function ($rootScope, lxMessageBoxService, lxToastBoxService, $window, Auth) {
+        $rootScope.isLoggedIn = Auth.userIsLoggedIn();
 
-        if ($window.sessionStorage.token) {
-            $rootScope.isLoggedIn = true;
-        } else {
-            $rootScope.isLoggedIn = false;
-        }
-
-        if ($window.sessionStorage.acl) {
-            var aclTemp = JSON.parse($window.sessionStorage.acl);
-            var acl, roles = [];
-
-            if (aclTemp.hasOwnProperty('acl')) {
-                acl = aclTemp.acl;
-            }
-
-            if (aclTemp.hasOwnProperty('roles')) {
-                roles = aclTemp.roles;
-            }
-
-            $rootScope.testAclUser = {
-                username: 'horschde',
-                acl: acl,
-                rolesAsObjects: roles
-            };
-        } else {
-            $rootScope.testAclUser = {};
-        }
+        $rootScope.testAclUser = {
+            username: Auth.getUser().name,
+            acl: Auth.getAcl(),
+            roles: Auth.getRoles()
+        };
 
         $rootScope.pathNav = 'assets/includes/nav_list.html';
         $rootScope.pathNavTree = 'assets/includes/nav_tree_outside.html';

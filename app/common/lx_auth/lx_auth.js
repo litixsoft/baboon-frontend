@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('auth.services', [])
+angular.module('common.auth', [])
     .factory('Auth', function ($http, $q, $window) {
+        var user;
 
         return {
             confirmation: function (id) {
@@ -98,10 +99,12 @@ angular.module('auth.services', [])
 
                 $http.post('auth/account/login', user, {type: 'application/json'})
                     .success(function (data) {
-                        $window.sessionStorage.token = data.token;
-                        $window.sessionStorage.acl = JSON.stringify(data.userAcl || {});
-
-                        deferred.resolve();
+                        try {
+                            $window.sessionStorage.user = JSON.stringify(data || {});
+                            deferred.resolve();
+                        } catch (error) {
+                            deferred.reject({data: new Error('Error parsing data from server'), status: 400});
+                        }
                     })
                     .error(function (err, status) {
                         deferred.reject({data: err, status: status});
@@ -122,8 +125,7 @@ angular.module('auth.services', [])
                 return promise;
             },
             logout: function () {
-                delete $window.sessionStorage.token;
-                delete $window.sessionStorage.acl;
+                delete $window.sessionStorage.user;
             },
             password: function (user) {
                 var deferred = $q.defer();
@@ -150,6 +152,36 @@ angular.module('auth.services', [])
                 };
 
                 return promise;
+            },
+            getUser: function () {
+                if (user) {
+                    return user;
+                }
+
+                try {
+                    user = JSON.parse($window.sessionStorage.user || {});
+                    return user;
+                } catch (error) {
+                    return {};
+                }
+            },
+            userIsLoggedIn: function () {
+                return !!this.getUser().token;
+            },
+            rightsEnabled: function () {
+                return !!this.getUser().acl;
+            },
+            getAcl: function () {
+                return this.getUser().acl;
+            },
+            getRoles: function () {
+                return this.getUser().roles;
+            },
+            userIsInRole: function (role) {
+                return angular.isString(role) && (this.getRoles() || []).indexOf(role) > -1;
+            },
+            userHasAccess: function (right) {
+                return angular.isString(right) && (this.getAcl() || []).indexOf(right) > -1;
             }
         };
     });

@@ -3,8 +3,8 @@
 describe('auth', function () {
     var scope, $httpBackend, baseUri, $location;
 
+    beforeEach(module('common.auth'));
     beforeEach(module('auth'));
-    beforeEach(module('auth.services'));
     beforeEach(module('auth.confirmation'));
 
     describe('AuthConfirmationCtrlTest', function () {
