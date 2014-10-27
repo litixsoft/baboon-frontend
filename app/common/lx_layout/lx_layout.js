@@ -91,8 +91,8 @@ angular.module('lx.layout', [])
         return {
             restrict: 'E',
             replace: true,
-            template: '<div id="lx-toast" class="{{obj.type}} animated" ng-class="{\'bounceInRight\': obj.visible && lxToastBoxAnimated && right,\'fadeOutRight\': !obj.visible && lxToastBoxAnimated && right,\'bounceInLeft\': obj.visible && lxToastBoxAnimated && !right,\'fadeOutLeft\': !obj.visible && lxToastBoxAnimated && !right}">' +
-            '<span>{{obj.msg}}</span>' +
+            template: '<div id="lx-toast" class="{{::obj.type}} animated" ng-class="{\'bounceInRight\': obj.visible && lxToastBoxAnimated && right,\'fadeOutRight\': !obj.visible && lxToastBoxAnimated && right,\'bounceInLeft\': obj.visible && lxToastBoxAnimated && !right,\'fadeOutLeft\': !obj.visible && lxToastBoxAnimated && !right}">' +
+            '<span>{{::obj.msg}}</span>' +
             '<button class="btn btn-link pull-right" ng-click="obj.close()">close</button>' +
             '<audio id="lx-toast-box-sound">' +
 //                                '<source src="sound/bigbox.mp3">'+
@@ -164,10 +164,10 @@ angular.module('lx.layout', [])
             template: '<section id="lx-message-box">' + // ng-show="obj.visible">' +
             '<div class="blackBar animated" ng-class="{\'bounceInDown\': obj.visible && lxMessageBoxAnimated,\'fadeOutUp\': !obj.visible && lxMessageBoxAnimated}">' +
             '<div class="innerContainer">' +
-            '<h1><i class="{{obj.icon}}" ng-if="obj.icon.length>0"></i> {{obj.title}}</h1>' +
-            '<p>{{obj.msg}}</p>' +
-            '<div style="text-align:right;">' +
-            '<button ng-repeat="btns in obj.btn" class="btn btn-primary" ng-click="obj.close(btns)">{{btns}}</button>' +
+            '<h1><i ng-class="obj.icon" ng-if="obj.icon.length>0"></i> {{::obj.title}}</h1>' +
+            '<p>{{::obj.msg}}</p>' +
+            '<div class="text-right">' +
+            '<button ng-repeat="b in obj.btn" class="btn btn-primary" ng-click="obj.close(b)">{{::b}}</button>' +
             '</div>' +
             '</div>' +
             '</div>' +
