@@ -686,6 +686,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
         grunt.task.run([
+            'docs',
             'build:release',
                 'bump:' + (version || 'patch') + ':bump-only',
             'changelog',
