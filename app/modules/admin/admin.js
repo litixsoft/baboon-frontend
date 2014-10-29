@@ -7,7 +7,7 @@ angular.module('admin', [
     'admin.home'
 ])
     .constant('ACTIVE_APP', 'admin')
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $lxNavigationProvider) {
+    .config(function ($urlRouterProvider, $lxNavigationProvider) {
         // Routing and navigation
         $urlRouterProvider.otherwise('/admin/home');
         $lxNavigationProvider.set({
@@ -15,20 +15,17 @@ angular.module('admin', [
                 main: [
                     {
                         title: 'Home',
-                        state: 'mainHome',
                         route: '/main/home',
                         app: 'main'
                     },
                     {
                         title: 'Examples',
-                        state: 'examplesHome',
                         route: '/examples/home',
                         app: 'examples'
                     },
                     {
                         title: 'Admin',
                         state: 'adminHome',
-                        route: '/admin/home',
                         app: 'admin'
                     }
                 ]
