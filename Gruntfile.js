@@ -112,10 +112,12 @@ module.exports = function (grunt) {
                 files: [
                     '.tmp/css/**/*.css',
                     '<%= yeoman.app %>/*.html',
+                    '<%= yeoman.app %>/**/*.less',
                     '<%= yeoman.app %>/{modules,common,assets}/**/*.html',
                     '<%= yeoman.app %>/{common,modules,assets,lib}/**/*.js',
                     '<%= yeoman.app %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
+                ],
+                tasks: ['less', 'autoprefixer']
             }
         },
 

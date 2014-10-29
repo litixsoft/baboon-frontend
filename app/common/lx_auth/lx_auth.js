@@ -10,9 +10,7 @@ angular.module('common.auth', [])
                 var promise = deferred.promise;
 
                 $http.get('auth/account/confirmation/' + id)
-                    .success(function () {
-                        deferred.resolve();
-                    })
+                    .success(deferred.resolve)
                     .error(function (err, status) {
                         deferred.reject({data: err, status: status});
                     });
@@ -48,12 +46,8 @@ angular.module('common.auth', [])
                     },
                     data: {id: id, url: url}
                 })
-                    .success(function () {
-                        deferred.resolve();
-                    })
-                    .error(function () {
-                        deferred.reject();
-                    });
+                    .success(deferred.resolve)
+                    .error(deferred.reject);
 
                 promise.success = function (fn) {
                     promise.then(fn);
@@ -72,9 +66,7 @@ angular.module('common.auth', [])
                 var promise = deferred.promise;
 
                 $http.post('auth/account/register', user, {type: 'application/json'})
-                    .success(function () {
-                        deferred.resolve();
-                    })
+                    .success(deferred.resolve)
                     .error(function (err, status) {
                         deferred.reject({data: err, status: status});
                     });
@@ -132,9 +124,7 @@ angular.module('common.auth', [])
                 var promise = deferred.promise;
 
                 $http.post('auth/account/password', user, {type: 'application/json'})
-                    .success(function () {
-                        deferred.resolve();
-                    })
+                    .success(deferred.resolve)
                     .error(function (err, status) {
                         deferred.reject({data: err, status: status});
                     });
@@ -160,7 +150,7 @@ angular.module('common.auth', [])
 
                 try {
                     user = JSON.parse($window.sessionStorage.user || {});
-                    return user;
+                    return user || {};
                 } catch (error) {
                     return {};
                 }
