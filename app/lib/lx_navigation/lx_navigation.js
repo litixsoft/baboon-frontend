@@ -155,9 +155,11 @@ angular.module('lx.navigation', [])
             link: function (scope, element) {
 
                 var tplContent = '<ul class="nav navbar-nav">' +
-                    '<li ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
+                    '<li ng-if="item.state" ng-repeat="item in menu" ui-sref-active="active">' +
                     '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>' +
-                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app) && !item.state">{{item.title}}</a>' +
+                    '</li>' +
+                    '<li ng-if="!item.state" ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
+                    '<a href="{{item.route}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
                     '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
                     '</li>' +
                     '</ul>';
@@ -231,16 +233,26 @@ angular.module('lx.navigation', [])
                     '</li>' +
                     '</ul>';
 
-                $templateCache.put('lx_navigation/standard/nav_tree_inside', '<div class="list-item" ng-class="{active: isActive(data.route)}">' +
-                '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
-                '<div class="nav-icon {{data.icon}}"></div>' +
-                '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
-                '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
-                '<a ng-if="!data.route" ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
-                '</div>' +
-                '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
-                '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
-                '</ul>');
+                $templateCache.put('lx_navigation/standard/nav_tree_inside',
+                        '<div ng-if="!data.state && data.route" class="list-item" ng-class="{active: isActive(data.route)}">' +
+                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                        '<div class="nav-icon {{data.icon}}"></div>' +
+                        '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
+                        '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
+                        '</div>' +
+                        '<div ng-if="data.state && !data.route" class="list-item"  ui-sref-active="active">' +
+                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                        '<div class="nav-icon {{data.icon}}"></div>' +
+                        '<a ui-sref="{{data.state}}" ng-if="isActiveApp(data.app) && data.state"><span>{{data.title}}</span></a>' +
+                        '</div>' +
+                        '<div ng-if="!data.state && !data.route" class="list-item"  ui-sref-active="active">' +
+                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                        '<div class="nav-icon {{data.icon}}"></div>' +
+                        '<a ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
+                        '</div>' +
+                        '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
+                        '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
+                        '</ul>');
 
                 function replaceWithStandard (template) {
                     element.replaceWith($compile(template)(scope));
