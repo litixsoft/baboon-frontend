@@ -91,6 +91,95 @@ describe('Auth service', function () {
             });
         });
 
+        describe('.userIsInRole()', function () {
+            it('should return the right value when there is an acl', function () {
+                expect(service.userIsInRole('User')).toBeTruthy();
+                expect(service.userIsInRole('Guest')).toBeTruthy();
+                expect(service.userIsInRole('NoRole')).toBeFalsy();
+            });
+
+            it('should return false when the user has no roles', function () {
+                window.sessionStorage.user = JSON.stringify({name: 'test', roles: []});
+                expect(service.userIsInRole('User')).toBeFalsy();
+                expect(service.userIsInRole('Guest')).toBeFalsy();
+                expect(service.userIsInRole('NoRole')).toBeFalsy();
+            });
+
+            it('should return false when the user has no roles', function () {
+                window.sessionStorage.user = JSON.stringify({name: 'test', roles: null});
+                expect(service.userIsInRole('User')).toBeFalsy();
+                expect(service.userIsInRole('Guest')).toBeFalsy();
+                expect(service.userIsInRole('NoRole')).toBeFalsy();
+            });
+
+            it('should return false when there is no user', function () {
+                window.sessionStorage.user = null;
+                expect(service.userIsInRole('User')).toBeFalsy();
+                expect(service.userIsInRole('Guest')).toBeFalsy();
+                expect(service.userIsInRole('NoRole')).toBeFalsy();
+            });
+
+            it('should return false when there is no user', function () {
+                window.sessionStorage.user = '';
+                expect(service.userIsInRole('User')).toBeFalsy();
+                expect(service.userIsInRole('Guest')).toBeFalsy();
+                expect(service.userIsInRole('NoRole')).toBeFalsy();
+            });
+
+            it('should return false when role is not a string', function () {
+                expect(service.userIsInRole(1)).toBeFalsy();
+                expect(service.userIsInRole(null)).toBeFalsy();
+                expect(service.userIsInRole([])).toBeFalsy();
+            });
+        });
+
+        describe('.userHasAccess()', function () {
+            it('should return the right value when the user has roles', function () {
+                expect(service.userHasAccess('register')).toBeTruthy();
+                expect(service.userHasAccess('login')).toBeTruthy();
+                expect(service.userHasAccess('getAllUsers')).toBeTruthy();
+                expect(service.userHasAccess('noRight')).toBeFalsy();
+            });
+
+            it('should return false when the user has no acl', function () {
+                window.sessionStorage.user = JSON.stringify({name: 'test', acl: []});
+                expect(service.userHasAccess('register')).toBeFalsy();
+                expect(service.userHasAccess('login')).toBeFalsy();
+                expect(service.userHasAccess('getAllUsers')).toBeFalsy();
+                expect(service.userHasAccess('noRight')).toBeFalsy();
+            });
+
+            it('should return false when the user has no acl', function () {
+                window.sessionStorage.user = JSON.stringify({name: 'test', acl: null});
+                expect(service.userHasAccess('register')).toBeFalsy();
+                expect(service.userHasAccess('login')).toBeFalsy();
+                expect(service.userHasAccess('getAllUsers')).toBeFalsy();
+                expect(service.userHasAccess('noRight')).toBeFalsy();
+            });
+
+            it('should return false when there is no user', function () {
+                window.sessionStorage.user = null;
+                expect(service.userHasAccess('register')).toBeFalsy();
+                expect(service.userHasAccess('login')).toBeFalsy();
+                expect(service.userHasAccess('getAllUsers')).toBeFalsy();
+                expect(service.userHasAccess('noRight')).toBeFalsy();
+            });
+
+            it('should return false when there is no user', function () {
+                window.sessionStorage.user = '';
+                expect(service.userHasAccess('register')).toBeFalsy();
+                expect(service.userHasAccess('login')).toBeFalsy();
+                expect(service.userHasAccess('getAllUsers')).toBeFalsy();
+                expect(service.userHasAccess('noRight')).toBeFalsy();
+            });
+
+            it('should return false when right is not a string', function () {
+                expect(service.userHasAccess(1)).toBeFalsy();
+                expect(service.userHasAccess(null)).toBeFalsy();
+                expect(service.userHasAccess([])).toBeFalsy();
+            });
+        });
+
         describe('.getUser()', function () {
             it('should return the user from sessionStorage', function () {
                 expect(window.sessionStorage.user).toBe(JSON.stringify(testUser));
