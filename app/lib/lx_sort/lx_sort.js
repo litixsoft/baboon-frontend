@@ -21,8 +21,8 @@ angular.module('lx.sort', [])
             transclude: true,
             replace: true,
             template: '<div><span style="cursor: pointer;" ng-click="sort()" ng-transclude></span>' +
-                '<span class="glyphicon" ng-class="{\'glyphicon-arrow-up\': options.field === field && options.direction == 1, \'glyphicon-arrow-down\': options.field === field && options.direction == -1}"></span>' +
-                '</div>',
+            '<span class="glyphicon" ng-class="{\'glyphicon-arrow-up\': options.field === field && options.direction == 1, \'glyphicon-arrow-down\': options.field === field && options.direction == -1}"></span>' +
+            '</div>',
             scope: {
                 options: '=sortOpts',
                 onSorting: '&'
@@ -35,7 +35,7 @@ angular.module('lx.sort', [])
                         //scope.direction = scope.options[scope.field] || 1;
                         scope.direction = scope.options.direction || 1;
                         scope.direction *= -1;
-                        scope.onSorting({ sortingOptions: { field: scope.field, direction: scope.direction } });
+                        scope.onSorting({sortingOptions: {field: scope.field, direction: scope.direction}});
                     }
                 };
             }

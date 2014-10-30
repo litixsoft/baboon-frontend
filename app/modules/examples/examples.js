@@ -6,6 +6,7 @@ angular.module('examples', [
     'lx.navigation',
     'lx.layout',
     'lx.form',
+    'lx.sort',
     'lx.pager',
     'common.auth',
     'examples.home',

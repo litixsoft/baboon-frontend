@@ -18,7 +18,7 @@ describe('lxSort', function () {
             expect(options.direction).toBe(-1);
         };
 
-        scope.sortOpts = { field: 'name', direction: 1 };
+        scope.sortOpts = {field: 'name', direction: 1};
         element = angular.element('<lx-sort sort-opts="sortOpts" field-name="name" on-sorting="sort(sortingOptions)"></lx-sort>');
         compile(element)(scope);
         scope.$digest();
@@ -35,7 +35,7 @@ describe('lxSort', function () {
             expect(options.direction).toBe(-1);
         };
 
-        scope.sortOpts = { field: 'name' };
+        scope.sortOpts = {field: 'name'};
         element = angular.element('<lx-sort sort-opts="sortOpts" field-name="name" on-sorting="sort(sortingOptions)"></lx-sort>');
         compile(element)(scope);
         scope.$digest();
@@ -45,11 +45,11 @@ describe('lxSort', function () {
     });
 
     it('should be return without error', function () {
-        scope.sort = function() {};
+        scope.sort = function () {};
 
         spyOn(scope, 'sort');
 
-        scope.sortOpts = { field: 'name', direction: 1 };
+        scope.sortOpts = {field: 'name', direction: 1};
         element = angular.element('<lx-sort field-name="name" on-sorting="sort(sortingOptions)"></lx-sort>');
         compile(element)(scope);
         scope.$digest();

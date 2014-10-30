@@ -72,7 +72,7 @@
             </colgroup>
             <thead>
             <tr>
-                <th>Name</th>
+                <th><lx-sort on-sorting="getData(sortingOptions, pagingOptions)" sort-opts="sortOpts" field-name="name">Name</lx-sort></th>
                 <th>Index</th>
             </tr>
             </thead>
@@ -85,7 +85,7 @@
         </table>
 
         <div class="panel-footer">
-            <lx-pager count="count" current-page="currentPage" page-sizes="[1, 5, 10, 25]" page-size="10" on-paging="getData(pagingOptions)"></lx-pager>
+            <lx-pager count="count" current-page="currentPage" page-sizes="[1, 5, 10, 25]" page-size="10" on-paging="getData(sortOpts, pagingOptions)"></lx-pager>
         </div>
     </div>
 </div>
