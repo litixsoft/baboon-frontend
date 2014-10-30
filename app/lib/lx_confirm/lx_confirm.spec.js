@@ -21,7 +21,7 @@ describe('lxConfirm', function () {
     beforeEach(module('lx.confirm'));
 
     beforeEach(inject(function ($modal) {
-        spyOn($modal, 'open').andReturn(fakeModal);
+        spyOn($modal, 'open').and.returnValue(fakeModal);
     }));
 
     beforeEach(inject(function ($rootScope, $compile) {

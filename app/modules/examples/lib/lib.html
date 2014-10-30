@@ -4,8 +4,7 @@
     <p>♥ from the Baboon team by Litixsoft</p>
     <hr>
 
-    <form name="myForm" class="form-horizontal" role="form">
-
+    <form name="myForm" class="form-horizontal" role="form" novalidate>
         <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
@@ -57,5 +56,37 @@
     <hr />
     <a href="javascript:void(0)" lx-confirm="delete(1)" lx-confirm-title="Delete" lx-confirm-yes-text="Yes" lx-confirm-no-text="No"
        lx-confirm-message="Do you really want to delete?" title="Delete">Open Confirm</a>
+
+    <br />
+    <hr />
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">lx.Pager example</h3>
+        </div>
+
+        <table class="table table-striped">
+            <colgroup>
+                <col style="width:50%;" />
+                <col style="width:50%;" />
+            </colgroup>
+            <thead>
+            <tr>
+                <th><lx-sort on-sorting="getData(sortingOptions, pagingOptions)" sort-opts="sortOpts" field-name="name">Name</lx-sort></th>
+                <th>Index</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in items">
+                <td>{{ item.name }}</td>
+                <td>{{ item.index }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+            <lx-pager count="count" current-page="currentPage" page-sizes="[1, 5, 10, 25]" page-size="10" on-paging="getData(sortOpts, pagingOptions)"></lx-pager>
+        </div>
+    </div>
 </div>
 

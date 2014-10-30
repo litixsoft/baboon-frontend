@@ -112,10 +112,12 @@ module.exports = function (grunt) {
                 files: [
                     '.tmp/css/**/*.css',
                     '<%= yeoman.app %>/*.html',
+                    '<%= yeoman.app %>/**/*.less',
                     '<%= yeoman.app %>/{modules,common,assets}/**/*.html',
                     '<%= yeoman.app %>/{common,modules,assets,lib}/**/*.js',
                     '<%= yeoman.app %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
+                ],
+                tasks: ['less', 'autoprefixer']
             }
         },
 
@@ -125,7 +127,7 @@ module.exports = function (grunt) {
                 port: 9000,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost',
-                livereload: 35729
+                livereload: 35792
             },
             livereload: {
                 options: {
