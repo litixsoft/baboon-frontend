@@ -12,6 +12,20 @@ angular.module('examples.lib', [
     .controller('LibCtrl', function ($scope, lxForm, lxCache) {
         $scope.lxForm = lxForm('data');
         $scope.lxCache = lxCache;
+        $scope.initialPageSize = 10;
+        $scope.pagingOptions = {skip: 0, limit: $scope.initialPageSize};
+
+        var items = [];
+        for (var i = 0; i < 100; i++) {
+            items.push({name: 'Item ' + (i + 1), index: i});
+        }
+
+        $scope.getData = function (pagingOptions) {
+            $scope.items = items.slice(pagingOptions.skip, pagingOptions.skip + pagingOptions.limit);
+            $scope.count = 100;
+        };
+
+        $scope.getData($scope.pagingOptions);
 
         $scope.simulateServerErrors = function () {
             var errors = [
