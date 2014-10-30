@@ -20,7 +20,7 @@ angular.module('lx.pager', [])
     .directive('lxPager', function () {
         return {
             restrict: 'E',
-            template: '<div class="row">' +
+            template: '<div>' +
             '<div class="btn-toolbar lx-pager">' +
             '<div class="btn-group">' +
             '<button class="btn btn-primary" ng-click="firstPage()" ng-disabled="currentPage == 1"><span class="glyphicon glyphicon-step-backward"></span></button>' +
