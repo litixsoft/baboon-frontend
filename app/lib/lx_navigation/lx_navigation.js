@@ -155,18 +155,37 @@ angular.module('lx.navigation', [])
             link: function (scope, element) {
 
                 var tplContent = '<ul class="nav navbar-nav">' +
-                    '<li ng-if="item.state" ng-repeat="item in menu" ui-sref-active="active">' +
+                    '<li ng-repeat="item in menu">' +
+                    '<div ng-if="item.state" ui-sref-active="active">'+
                     '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>' +
-                    '</li>' +
-                    '<li ng-if="!item.state" ng-repeat="item in menu" ng-class="{active: isActive(item.route)}">' +
+                    '</div>' +
+                    '<div ng-if="!item.state" ng-class="{active: isActive(item.route)}">' +
                     '<a href="{{item.route}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
                     '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
+                    '</div>'+
                     '</li>' +
                     '</ul>';
 
+
                 function replaceWithStandard (template) {
+                    angular.forEach(scope.menu,function(key){
+                        if(key.route && key.state){
+                            console.error("Please use only one routing element in your navigation. Route or State, not both together!! ",key);
+                            element.replaceWith($compile('<span style="color:red;padding:15px;">NAV ERROR</span>')(scope));
+                            return false;
+                        }
+                    });
                     element.replaceWith($compile(template)(scope));
                 }
+
+                var orientation = scope.orientation || 'horizontal';
+                element.toggleClass('nav-stacked', orientation === 'vertical');
+
+                scope.menu = $lxNavigation.getNavigation({
+                    currentApp: ACTIVE_APP,
+                    navName: scope.navName,
+                    user: scope.navUser
+                });
 
                 if (scope.navTemplatePath && scope.navTemplatePath.length > 3) {
                     $http.get(scope.navTemplatePath, {cache: $templateCache})
@@ -183,15 +202,6 @@ angular.module('lx.navigation', [])
                 } else {
                     replaceWithStandard(tplContent);
                 }
-
-                var orientation = scope.orientation || 'horizontal';
-                element.toggleClass('nav-stacked', orientation === 'vertical');
-
-                scope.menu = $lxNavigation.getNavigation({
-                    currentApp: ACTIVE_APP,
-                    navName: scope.navName,
-                    user: scope.navUser
-                });
 
                 scope.isActiveApp = function (app) {
                     return app === ACTIVE_APP;
@@ -255,23 +265,14 @@ angular.module('lx.navigation', [])
                         '</ul>');
 
                 function replaceWithStandard (template) {
+                    angular.forEach(scope.navList,function(key){
+                        if(key.route && key.state){
+                            console.error("Please use only one routing element in your navigation. Route or State, not both together!! ",key);
+                            element.replaceWith($compile('<span style="color:red;padding:15px;">NAV ERROR</span>')(scope));
+                            return false;
+                        }
+                    });
                     element.replaceWith($compile(template)(scope));
-                }
-
-                if (scope.navTemplatePath && scope.navTemplatePath.length > 3) {
-                    $http.get(scope.navTemplatePath, {cache: $templateCache})
-                        .success(function (tplGetContent) {
-                            if (tplGetContent.substr(0, 5) !== '<!doc') {
-                                replaceWithStandard(tplGetContent);
-                            } else {
-                                replaceWithStandard(tplContent);
-                            }
-                        })
-                        .error(function () {
-                            replaceWithStandard(tplContent);
-                        });
-                } else {
-                    replaceWithStandard(tplContent);
                 }
 
                 scope.app = ACTIVE_APP;
@@ -321,6 +322,22 @@ angular.module('lx.navigation', [])
                         }
                     });
                     scope.openAll(scope.navList);
+                }
+
+                if (scope.navTemplatePath && scope.navTemplatePath.length > 3) {
+                    $http.get(scope.navTemplatePath, {cache: $templateCache})
+                        .success(function (tplGetContent) {
+                            if (tplGetContent.substr(0, 5) !== '<!doc') {
+                                replaceWithStandard(tplGetContent);
+                            } else {
+                                replaceWithStandard(tplContent);
+                            }
+                        })
+                        .error(function () {
+                            replaceWithStandard(tplContent);
+                        });
+                } else {
+                    replaceWithStandard(tplContent);
                 }
             }
         };

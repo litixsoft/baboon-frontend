@@ -15,20 +15,20 @@ angular.module('admin', [
                 main: [
                     {
                         title: 'Home',
-                        state: 'mainHome',
+//                        state: 'mainHome',
                         route: '/main/home',
                         app: 'main'
                     },
                     {
                         title: 'Examples',
-                        state: 'examplesHome',
+//                        state: 'examplesHome',
                         route: '/examples/home',
                         app: 'examples'
                     },
                     {
                         title: 'Admin',
                         state: 'adminHome',
-                        route: '/admin/home',
+//                        route: '/admin/home',
                         app: 'admin'
                     }
                 ]
