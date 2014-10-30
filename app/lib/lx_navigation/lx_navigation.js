@@ -142,7 +142,7 @@ angular.module('lx.navigation', [])
  * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
  *
  */
-    .directive('lxComNav', function ($location, ACTIVE_APP, $http, $templateCache, $compile, $lxNavigation) {
+    .directive('lxComNav', function ($location, ACTIVE_APP, $http, $templateCache, $compile, $lxNavigation, $log) {
         return {
             restrict: 'E',
             replace: true,
@@ -156,21 +156,20 @@ angular.module('lx.navigation', [])
 
                 var tplContent = '<ul class="nav navbar-nav">' +
                     '<li ng-repeat="item in menu">' +
-                    '<div ng-if="item.state" ui-sref-active="active">'+
+                    '<div ng-if="item.state" ui-sref-active="active">' +
                     '<a ui-sref="{{item.state}}" ng-show="isActiveApp(item.app) && item.state">{{item.title}}</a>' +
                     '</div>' +
                     '<div ng-if="!item.state" ng-class="{active: isActive(item.route)}">' +
                     '<a href="{{item.route}}" ng-show="isActiveApp(item.app)">{{item.title}}</a>' +
                     '<a href="{{item.route}}" target="_self" ng-show="!isActiveApp(item.app)">{{item.title}}</a>' +
-                    '</div>'+
+                    '</div>' +
                     '</li>' +
                     '</ul>';
 
-
                 function replaceWithStandard (template) {
-                    angular.forEach(scope.menu,function(key){
-                        if(key.route && key.state){
-                            console.error("Please use only one routing element in your navigation. Route or State, not both together!! ",key);
+                    angular.forEach(scope.menu, function (key) {
+                        if (key.route && key.state) {
+                            $log.error('"Please use only one routing element in your navigation. Route or State, not both together!! ', key);
                             element.replaceWith($compile('<span style="color:red;padding:15px;">NAV ERROR</span>')(scope));
                             return false;
                         }
@@ -227,7 +226,7 @@ angular.module('lx.navigation', [])
  * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
  *
  */
-    .directive('lxComNavTree', function ($route, $location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation) {
+    .directive('lxComNavTree', function ($route, $location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation, $log) {
         return {
             restrict: 'E',
             replace: true,
@@ -244,30 +243,30 @@ angular.module('lx.navigation', [])
                     '</ul>';
 
                 $templateCache.put('lx_navigation/standard/nav_tree_inside',
-                        '<div ng-if="!data.state && data.route" class="list-item" ng-class="{active: isActive(data.route)}">' +
-                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
-                        '<div class="nav-icon {{data.icon}}"></div>' +
-                        '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
-                        '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
-                        '</div>' +
-                        '<div ng-if="data.state && !data.route" class="list-item"  ui-sref-active="active">' +
-                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
-                        '<div class="nav-icon {{data.icon}}"></div>' +
-                        '<a ui-sref="{{data.state}}" ng-if="isActiveApp(data.app) && data.state"><span>{{data.title}}</span></a>' +
-                        '</div>' +
-                        '<div ng-if="!data.state && !data.route" class="list-item"  ui-sref-active="active">' +
-                        '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
-                        '<div class="nav-icon {{data.icon}}"></div>' +
-                        '<a ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
-                        '</div>' +
-                        '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
-                        '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
-                        '</ul>');
+                    '<div ng-if="!data.state && data.route" class="list-item" ng-class="{active: isActive(data.route)}">' +
+                    '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                    '<div class="nav-icon {{data.icon}}"></div>' +
+                    '<a ng-if="data.route && isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}"><span>{{data.title}}</span></a>' +
+                    '<a ng-if="data.route && !isActiveApp(data.app)" ng-class="{spacer: data.children.length > 0}" ng-href="{{data.route}}" target="_self"><span>{{data.title}}</span></a>' +
+                    '</div>' +
+                    '<div ng-if="data.state && !data.route" class="list-item"  ui-sref-active="active">' +
+                    '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                    '<div class="nav-icon {{data.icon}}"></div>' +
+                    '<a ui-sref="{{data.state}}" ng-if="isActiveApp(data.app) && data.state"><span>{{data.title}}</span></a>' +
+                    '</div>' +
+                    '<div ng-if="!data.state && !data.route" class="list-item"  ui-sref-active="active">' +
+                    '<div class="opensub {{data.hide}}" ng-show="data.children" ng-click="toggleShow(data)"></div>' +
+                    '<div class="nav-icon {{data.icon}}"></div>' +
+                    '<a ng-class="{spacer: data.children.length > 0}" ng-click="toggleShow(data);" style="cursor:pointer;"><span>{{data.title}}</span></a>' +
+                    '</div>' +
+                    '<ul class="display {{data.hide}}" ng-if="data.children.length">' +
+                    '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
+                    '</ul>');
 
                 function replaceWithStandard (template) {
-                    angular.forEach(scope.navList,function(key){
-                        if(key.route && key.state){
-                            console.error("Please use only one routing element in your navigation. Route or State, not both together!! ",key);
+                    angular.forEach(scope.navList, function (key) {
+                        if (key.route && key.state) {
+                            $log.error('Please use only one routing element in your navigation. Route or State, not both together!! ', key);
                             element.replaceWith($compile('<span style="color:red;padding:15px;">NAV ERROR</span>')(scope));
                             return false;
                         }
