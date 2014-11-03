@@ -616,6 +616,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test:dist', [
         'eslint:all',
         'build',
+        'build:release',
         'karma:dist',
         'bgShell:updateWebdriver',
         'connect:testDist',

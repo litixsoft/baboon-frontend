@@ -53,8 +53,8 @@ describe('Scenario: test application routing.', function () {
     it('should be correct redirect to /examples/home by route /examples', function () {
         browser.get('/examples');
 
-        element.all(by.css('.lx-intro h1')).then(function (items) {
-            expect(items.length).toBe(1);
+        element.all(by.css('h1')).then(function (items) {
+            expect(items.length).toBe(2);
             expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
         });
     });
@@ -62,8 +62,8 @@ describe('Scenario: test application routing.', function () {
     it('should be correct redirect to /examples/home by route /examples/foo', function () {
         browser.get('/examples/foo');
 
-        element.all(by.css('.lx-intro h1')).then(function (items) {
-            expect(items.length).toBe(1);
+        element.all(by.css('h1')).then(function (items) {
+            expect(items.length).toBe(2);
             expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
         });
     });
@@ -71,8 +71,8 @@ describe('Scenario: test application routing.', function () {
     it('should be correct content by route /examples/home', function () {
         browser.get('/examples/home');
 
-        element.all(by.css('.lx-intro h1')).then(function (items) {
-            expect(items.length).toBe(1);
+        element.all(by.css('h1')).then(function (items) {
+            expect(items.length).toBe(2);
             expect(items[0].getText()).toBe('Examples Baboon Webtoolkit');
         });
     });
