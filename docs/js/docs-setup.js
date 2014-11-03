@@ -77,6 +77,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "lx.pager.directive:lxPager",
+      "shortName": "lxPager",
+      "type": "directive",
+      "moduleName": "lx.pager",
+      "shortDescription": "Creates an pager for custom or server side paging.",
+      "keywords": "api array callback called count creates current custom details directive display guide items lx onpaging pager pagesize pagesizes paging select server side size sizes user"
+    },
+    {
+      "section": "api",
       "id": "lx.socket",
       "shortName": "lx.socket",
       "type": "overview",
@@ -100,6 +109,15 @@ NG_DOCS={
       "moduleName": "lx.socket",
       "shortDescription": "Set the host and connection options for socket",
       "keywords": "$lxsocket amount api attempt attempting attempts automatically connect connect_error connect_timeout connection emitted error events host increases long lx maximum number options reconnect reconnection reconnectionattempts reconnectiondelay reconnectiondelaymax reconnections service set socket time timeout true type wait wrong"
+    },
+    {
+      "section": "api",
+      "id": "lx.sort.directive:lxSort",
+      "shortName": "lxSort",
+      "type": "directive",
+      "moduleName": "lx.sort",
+      "shortDescription": "Directive for custom sorting or server side sorting.",
+      "keywords": "api callback called configuration custom details directive fieldname guide lx onsorting options property server side sort sorting sortopts"
     }
   ],
   "apis": {
