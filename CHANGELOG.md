@@ -1,3 +1,19 @@
+<a name="0.5.4"></a>
+### 0.5.4 (2014-11-25)
+
+
+#### Bug Fixes
+
+* copy fonts in dist build ([eab2e65d](https://github.com/litixsoft/baboon-frontend/commit/eab2e65d387309311664c4ef4c43716aaab48d02))
+
+
+#### Features
+
+* update to angular.js 1.3.4 ([10cf0db3](https://github.com/litixsoft/baboon-frontend/commit/10cf0db372461855e645145946bf2a6c772e21e0))
+* update to angular.js 1.3.3 ([584acb55](https://github.com/litixsoft/baboon-frontend/commit/584acb55c9c77ec463199d2fc9837d802210e3ba))
+* update to angular.js 1.3.2 ([c67dc897](https://github.com/litixsoft/baboon-frontend/commit/c67dc897c5b26742b916530f2d8adade09726ac4))
+
+
 <a name="0.5.3"></a>
 ### 0.5.3 (2014-11-03)
 
