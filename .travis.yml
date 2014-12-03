@@ -1,23 +1,18 @@
 language: node_js
-
-notifications:
-  slack:
-    secure: DQze6XL83q17MvFwpOJFpZf7MJaMb9+CfXRrFd4ULwJI6vUhrrAfMALnvB70kMgcX6lyb5L4hyAr9Fn/YnGGZ5dY8J5eSinNG3k41LGNKzmay11bbDwRmx3g9ENiIMdNg1ebIz758dqcVZOWBqwd/ov/CZty4XKSskxEG7E61Kk=
-
 node_js:
-  - '0.10'
-
+- '0.10'
 env:
-  - VERSION=latest
-  - VERSION=master
-
+- VERSION=latest
+- VERSION=master
 before_script:
-  - 'export DISPLAY=:99.0'
-  - 'sh -e /etc/init.d/xvfb start'
-  - npm install -g grunt-cli
-  - npm install -g bower
-  - bower install --force angular#$VERSION angular-mocks#$VERSION
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- npm install -g grunt-cli
+- npm install -g bower
+- bower install --force angular#$VERSION angular-mocks#$VERSION
 matrix:
   allow_failures:
-    - env: VERSION=master
+  - env: VERSION=master
+notifications:
+  slack:
+    secure: X8BnEnXD73U7Uaxxwv27pt5UUPBXS/k1IA4YoCPzj2dRFmq7A85Kwehv3OGS8KUiFn2EStQL16mnCXfGvIJCL54wzOYhu9Kg3HzdfmZdfppTYCNCKZpdjme4CLL7bobu16+BRopsVqF+RO9fTnPlzptcjJmkqQA3uFVeTwi4wUg=
