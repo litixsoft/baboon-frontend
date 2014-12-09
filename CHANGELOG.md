@@ -1,3 +1,18 @@
+<a name="0.5.5"></a>
+### 0.5.5 (2014-12-09)
+
+
+#### Bug Fixes
+
+* **lx.pager:** currentPage was always set to 1 when initializing the pager ([fa31d8c7](https://github.com/litixsoft/baboon-frontend/commit/fa31d8c7de1b01064e1c29680fbe0c55d8fb9cbf))
+
+
+#### Features
+
+* update to angularjs 1.3.6 ([bcb594b1](https://github.com/litixsoft/baboon-frontend/commit/bcb594b1430a0aa0e36187997f47d0ccdefacf4c))
+* update to angularjs 1.3.5 ([6f760ff7](https://github.com/litixsoft/baboon-frontend/commit/6f760ff71452387616eed74c9cd642207af04700))
+
+
 <a name="0.5.4"></a>
 ### 0.5.4 (2014-11-25)
 
