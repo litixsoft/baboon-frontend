@@ -57,7 +57,7 @@ angular.module('lx.pager', [])
                 var defaultPageSizeOptions = [1, 5, 10, 25, 100];
                 var defaultPageSize = 10;
                 scope.pageSize = defaultPageSize;
-                scope.currentPage = 1;
+                scope.currentPage = scope.currentPage || 1;
                 scope.count = scope.count || 0;
 
                 function addPageSizeToPageSizeOptions (pageSize, pageSizeOptions) {

@@ -44,6 +44,34 @@ describe('lxPager', function () {
 
         scope.$digest();
         expect(elementScope.pageSizeOptions).toEqual([1, 5, 10, 25, 100]);
+        expect(elementScope.currentPage).toBe(1);
+    });
+
+    it('should use the currentPage if the currentPage injected through the attrs', function () {
+        scope.currentPage = 3;
+        scope.count = 100;
+        element = angular.element('<lx-pager count="count" current-page="currentPage" on-paging="getData(pagingOptions)"></lx-pager>');
+        compile(element)(scope);
+        scope.$digest();
+        scope.$digest();
+        var elementScope = element.isolateScope();
+
+        scope.$digest();
+        expect(elementScope.currentPage).toEqual(3);
+    });
+
+    it('should use the currentPage if the currentPage injected through the attrs with pageSize', function () {
+        scope.currentPage = 3;
+        scope.count = 100;
+        scope.pagesize = 5;
+        element = angular.element('<lx-pager count="count" current-page="currentPage" page-size="{{ pagesize }}" on-paging="getData(pagingOptions)"></lx-pager>');
+        compile(element)(scope);
+        scope.$digest();
+        scope.$digest();
+        var elementScope = element.isolateScope();
+
+        scope.$digest();
+        expect(elementScope.currentPage).toEqual(3);
     });
 
     it('should use the default page-Sizes if the page-Size injected through the attrs are no array', function () {

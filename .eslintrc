@@ -45,6 +45,7 @@
         "jasmine": false,
         "inject": false,
         "it": false,
+        "iit": false,
         "spyOn": false
     }
 }
