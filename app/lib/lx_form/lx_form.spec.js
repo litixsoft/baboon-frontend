@@ -175,7 +175,7 @@ describe('lx form service', function () {
                 var data = {id: 1, name: 'wayne', age: 99};
 
                 service.setModel(data);
-                var inCache = service.hasLoadedModelFromCache('1');
+                var inCache = service.hasLoadedModelFromCache(1);
                 expect(inCache).toBeTruthy();
             });
 

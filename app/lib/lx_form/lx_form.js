@@ -79,21 +79,21 @@ angular.module('lx.form', ['lx.cache'])
              * @description
              * Tries to load the model from lxCache.
              *
-             * @param {string=} key The key of the model.
+             * @param {string=} currentKey The key of the model.
              * @returns {boolean} true if model has loaded from cache, otherwise false.
              */
-            pub.hasLoadedModelFromCache = function (key) {
-                if (key && lxCache[key]) {
+            pub.hasLoadedModelFromCache = function (currentKey) {
+                if (currentKey && lxCache[currentKey]) {
                     // load from lxCache
-                    pub.model = lxCache[key];
+                    pub.model = lxCache[currentKey];
 
-                    if (lxCache[key + '_Master']) {
+                    if (lxCache[currentKey + '_Master']) {
                         // load master from lxCache
-                        master = lxCache[key + '_Master'];
+                        master = lxCache[currentKey + '_Master'];
                     }
 
                     return true;
-                } else if (!key) {
+                } else if (!currentKey) {
                     if (lxCache[modelName]) {
                         // load from lxCache
                         pub.model = lxCache[modelName];

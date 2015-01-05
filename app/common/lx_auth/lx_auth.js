@@ -2,7 +2,7 @@
 
 angular.module('common.auth', [])
     .factory('Auth', function ($http, $q, $window) {
-        var user;
+        var currentUser;
 
         return {
             confirmation: function (id) {
@@ -144,13 +144,13 @@ angular.module('common.auth', [])
                 return promise;
             },
             getUser: function () {
-                if (user) {
-                    return user;
+                if (currentUser) {
+                    return currentUser;
                 }
 
                 try {
-                    user = JSON.parse($window.sessionStorage.user || {});
-                    return user || {};
+                    currentUser = JSON.parse($window.sessionStorage.user || {});
+                    return currentUser || {};
                 } catch (error) {
                     return {};
                 }
