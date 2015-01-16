@@ -1,3 +1,17 @@
+<a name="0.5.6"></a>
+### 0.5.6 (2015-01-16)
+
+
+#### Bug Fixes
+
+* **lx.navigation:** property resources was missing in cloneNavObject() ([a429116e](https://github.com/litixsoft/baboon-frontend/commit/a429116ec2ba27e7521256b6831b7b8f80d8bad4))
+
+
+#### Features
+
+* update to angular 1.3.9 ([12258cae](https://github.com/litixsoft/baboon-frontend/commit/12258cae6ed6e3110798d893f26e0d2c3750ead1))
+
+
 <a name="0.5.5"></a>
 ### 0.5.5 (2014-12-09)
 
