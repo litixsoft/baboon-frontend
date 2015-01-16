@@ -21,7 +21,8 @@ angular.module('lx.navigation', [])
                 route: value.route,
                 app: value.app,
                 state: value.state,
-                roles: value.roles
+                roles: value.roles,
+                resources: value.resources
             };
         }
 
