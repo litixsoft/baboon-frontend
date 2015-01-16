@@ -190,4 +190,4 @@ Release a new major version
 [Litixsoft GmbH](http://www.litixsoft.de)
 
 ## License
-Copyright (c) 2014 Litixsoft GmbH Licensed under the MIT license.
+Copyright (c) 2014-2015 Litixsoft GmbH Licensed under the MIT license.
