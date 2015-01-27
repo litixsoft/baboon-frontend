@@ -184,49 +184,6 @@ module.exports = function (grunt) {
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-stylish')
-            },
-            all: {
-                src: '<%= yeoman.lint %>'
-            },
-            test: {
-                src: [
-                    '<%= yeoman.app %>/app/**/*.spec.js',
-                    '<%= yeoman.app %>/common/**/*.spec.js'
-                ]
-            },
-            jslint: {
-                options: {
-                    reporter: 'jslint',
-                    reporterOutput: '<%= yeoman.reports %>/lint/jshint.xml'
-                },
-                files: {
-                    src: [
-                        'Gruntfile.js',
-                        '<%= yeoman.app %>/app/**/*.js',
-                        '<%= yeoman.app %>/common/**/*.js'
-                    ]
-                }
-            },
-            checkstyle: {
-                options: {
-                    reporter: 'checkstyle',
-                    reporterOutput: '<%= yeoman.reports %>/lint/jshint_checkstyle.xml'
-                },
-                files: {
-                    src: [
-                        'Gruntfile.js',
-                        '<%= yeoman.app %>/app/**/*.js',
-                        '<%= yeoman.app %>/common/**/*.js'
-                    ]
-                }
-            }
-        },
-
-        // Make sure code styles are up to par and there are no obvious mistakes
         eslint: {
             all: {
                 src: '<%= yeoman.lint %>'
