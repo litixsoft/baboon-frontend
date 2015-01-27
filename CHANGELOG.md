@@ -1,3 +1,12 @@
+<a name="0.5.7"></a>
+### 0.5.7 (2015-01-27)
+
+
+#### Features
+
+* update to angular 1.3.11 ([25980a91](https://github.com/litixsoft/baboon-frontend/commit/25980a9130fe73a7566c71fa1e133a1eb6f2bdf5))
+
+
 <a name="0.5.6"></a>
 ### 0.5.6 (2015-01-16)
 
