@@ -135,8 +135,14 @@ angular.module('lx.form', ['lx.cache'])
                     delete lxCache[model[key] + '_Master'];
                 } else {
                     // set lxCache
-                    lxCache[model[key]] = pub.model;
-                    lxCache[model[key] + '_Master'] = master;
+                    /*eslint-disable */
+                    if (model[key] !== undefined) {
+                        lxCache[model[key]] = pub.model;
+                        lxCache[model[key] + '_Master'] = master;
+                    } else {
+                        lxCache[modelName] = pub.model;
+                    }
+                    /*eslint-enable */
                 }
             };
 

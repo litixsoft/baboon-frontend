@@ -36,7 +36,7 @@ describe('lx form service', function () {
         });
 
         describe('setModel()', function () {
-            it('should set the model and store it in cache', function () {
+            it('should set the model and store it in cache by id', function () {
                 var data = {id: 1, name: 'wayne', age: 99};
 
                 service.setModel(data);
@@ -47,6 +47,19 @@ describe('lx form service', function () {
 
                     expect(cache[1]).toEqual(data);
                     expect(cache['1_Master']).toEqual(data);
+                });
+            });
+
+            it('should set the model and store it in cache by name', function () {
+                var data = {name: 'wayne', age: 99};
+
+                service.setModel(data);
+                expect(service.model).toEqual(data);
+
+                inject(function ($injector) {
+                    var cache = $injector.get('lxCache');
+
+                    expect(cache.test).toEqual(data);
                 });
             });
 
