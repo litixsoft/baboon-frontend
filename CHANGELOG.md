@@ -1,3 +1,12 @@
+<a name="0.5.8"></a>
+### 0.5.8 (2015-01-30)
+
+
+#### Bug Fixes
+
+* **lx.form:** setModel() now also stores the model in cache correctly when no key is given ([91cb146f](https://github.com/litixsoft/baboon-frontend/commit/91cb146fb0fef0df4db4682bb3998e38b52b9670))
+
+
 <a name="0.5.7"></a>
 ### 0.5.7 (2015-01-27)
 
