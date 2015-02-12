@@ -11,6 +11,15 @@ angular.module('lx.socket', ['btford.socket-io'])
 
         var _host, _options;
 
+        // the socket.io object
+        var socketIO;
+
+        function checkIfSocketExists () {
+            if (!socketIO) {
+                throw new Error('Socket not connected');
+            }
+        }
+
         /**
          * @ngdoc service
          * @name lx.socket.$lxSocket#set
@@ -42,6 +51,7 @@ angular.module('lx.socket', ['btford.socket-io'])
             options.reconnectionDelayMax = options.reconnectionDelayMax || 20000;
             options.timeout = options.timeout || 5000;
             options.reconnectionAttempts = options.reconnectionAttempts || 100;
+            options.autoconnect = options.hasOwnProperty('autoconnect') ? !!options.autoconnect : true;
 
             try {
                 // Check host
@@ -98,33 +108,55 @@ angular.module('lx.socket', ['btford.socket-io'])
          * @returns {object} $lxSocket The $lxSocket object
          */
         this.$get = function ($rootScope, socketFactory, $log, $timeout) {
-
             // $get return object
             var self = {};
 
-            // Factory creates a socket.io instance
-            function socketIoFactory () {
+            /**
+             * @ngdoc method
+             * @name lx.socket.$lxSocket#connect
+             * @methodOf lx.socket.$lxSocket
+             *
+             * @description
+             * Connects to the socket on the server.
+             *
+             * @param {object=} options The options for the connection. Are merged with the options set in the set() method
+             * @throws {TypeError} Error when wrong type of options
+             *
+             * @example
+             Without options:
+             <pre>
+             $lxSocket.connect();
+             </pre>
+             With options:
+             <pre>
+             $lxSocket.connect({query: {username: 'wayne'}});
+             </pre>
+             */
+            self.connect = function (options) {
+                // Check options
+                if (options && !angular.isObject(options)) {
+                    throw new TypeError('Parameter options is missing or is not of type object.');
+                }
 
                 // Socket connection
-                var connection = io.connect(_host, _options); // jshint ignore:line
+                var connection = io.connect(_host, angular.extend({}, _options, options || {})); // jshint ignore:line
 
                 // Engine.io for upgrade event
                 var engine = connection.io.engine;
-                var socket;
 
                 //btford socket factory
-                socket = socketFactory({
+                socketIO = socketFactory({
                     ioSocket: connection
                 });
 
                 // Connection to socket
-                socket.connection = connection;
+                socketIO.connection = connection;
 
-                socket.forward('connect');
-                socket.forward('disconnect');
+                socketIO.forward('connect');
+                socketIO.forward('disconnect');
 
                 // Connect event
-                socket.on('connect', function () {
+                socketIO.on('connect', function () {
                     $log.info('socket connected with:', engine.transport.query.transport);
                     $rootScope.socketConnected = true;
                 });
@@ -135,17 +167,18 @@ angular.module('lx.socket', ['btford.socket-io'])
                 });
 
                 // Disconnect event
-                socket.on('disconnect', function () {
+                socketIO.on('disconnect', function () {
                     $log.info('socket disconnected');
                     $rootScope.socketConnected = false;
                     $rootScope.socketWsUpgrade = false;
                 });
 
-                return socket;
-            }
+                //return socket;
+            };
 
-            // Create Socket.io instance
-            var socketIO = socketIoFactory();
+            if (_options.autoconnect) {
+                self.connect();
+            }
 
             /**
              * @ngdoc method
@@ -158,7 +191,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @returns {boolean} socket.connection.connected
              */
             self.isConnected = function () {
-                return socketIO.connection.connected;
+                return socketIO && socketIO.connection.connected;
             };
 
             /**
@@ -209,6 +242,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              </pre>
              */
             self.emit = function (eventName, data, callback) {
+                checkIfSocketExists();
 
                 // Check eventName
                 if (typeof eventName !== 'string') {
@@ -231,16 +265,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
                 // Request to server when connected
                 if (socketIO.connection.connected) {
-
                     return typeof callback === 'function' ? socketIO.emit(eventName, data, callback) : socketIO.emit(eventName, data);
-                    //// Check if callback exists
-                    //if (typeof callback === ) {
-                    //    // Send message to server with callback
-                    //    return socket.emit(eventName, data, callback);
-                    //} else {
-                    //    // Send emit message to server without callback
-                    //    return socket.emit(eventName, data);
-                    //}
                 } else {
                     // Socket is not connected.
                     // If socket.emit is used for the first time,
@@ -249,7 +274,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
                     // Error function
                     //noinspection Eslint
-                    var error = function () {
+                    var error = function error () {
                         var err = new Error('Error: 405 Method Not Allowed, socket is not connected.');
                         err.status = 405;
                         throw err;
@@ -265,7 +290,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
                     // Check connection status
                     var loop = function (fn) {
-                        setTimeout(function () {
+                        $timeout(function () {
                             if (socketIO.connection.connected || condition) {
                                 return fn();
                             } else {
@@ -278,16 +303,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     loop(function () {
                         // Check if connected
                         if (socketIO.connection.connected) {
-
                             return typeof callback === 'function' ? socketIO.emit(eventName, data, callback) : socketIO.emit(eventName, data);
-                            //// Check if callback exists
-                            //if (callback) {
-                            //    // Send message to server with callback
-                            //    return socket.emit(eventName, data, callback);
-                            //} else {
-                            //    // Send emit message to server without callback
-                            //    return socket.emit(eventName, data);
-                            //}
                         } else {
                             // Run error function
                             return error();
@@ -309,6 +325,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.forward = function (event, scope) {
+                checkIfSocketExists();
 
                 // Check event
                 if (typeof event !== 'string') {
@@ -316,7 +333,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                 }
 
                 // Check callback
-                if (scope && typeof scope !== 'object') {
+                if (scope && !angular.isObject(scope)) {
                     throw new TypeError('Parameter scope is not of type object.');
                 }
 
@@ -337,6 +354,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.on = function (event, callback) {
+                checkIfSocketExists();
 
                 // Check event
                 if (typeof event !== 'string') {
@@ -366,6 +384,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.addListener = function (event, callback) {
+                checkIfSocketExists();
 
                 // Check event
                 if (typeof event !== 'string') {
@@ -395,6 +414,7 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.removeListener = function (event, callback) {
+                checkIfSocketExists();
 
                 // Check event
                 if (typeof event !== 'string') {
@@ -409,7 +429,22 @@ angular.module('lx.socket', ['btford.socket-io'])
                 socketIO.removeListener(event, callback);
             };
 
+            /**
+             * @ngdoc method
+             * @name lx.socket.$lxSocket#removeAllListeners
+             * @methodOf lx.socket.$lxSocket
+             *
+             * @description
+             * Removes all listeners from the socket
+             * The same as on.
+             *
+             * @param {string} event The event to listen to
+             * @param {function(data)=} callback Callback function
+             * @param {function=} callback.data Data callback function to be called after event is removed from socket
+             * @throws {TypeError} Error when wrong type of event or callback
+             */
             self.removeAllListeners = function (event, callback) {
+                checkIfSocketExists();
 
                 // Check event
                 if (typeof event !== 'string') {
