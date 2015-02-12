@@ -2,6 +2,11 @@
 ### 0.5.9 (2015-02-12)
 
 
+#### Features
+
+* **lx.socket:** add option "autoconnect" to control if the socket connects automatically when $lxSocket $get() factory function is called
+* **lx.socket:** add method connect() to $lxSocket to make a manual connection, you can pass an option object to the connect function which is then merged with original options from the set() method
+
 <a name="0.5.8"></a>
 ### 0.5.8 (2015-01-30)
 
