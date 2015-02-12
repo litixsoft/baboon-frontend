@@ -99,7 +99,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "lx.socket",
       "shortDescription": "Mapper for btford.socket-io with extended functionality.",
-      "keywords": "$log $lxsocket $rootscope $timeout actual addlistener adds angular api btford callback called checks connected connection console current data displays emit err error event eventname events extended factory false forward forwards function functionality io isconnected listen listener log lx mapper message method object raised register removed removelistener removes scope send server service socket socket-io socketfactory socketio stack status success supplies timeout transport true type wrong"
+      "keywords": "$log $lxsocket $rootscope $timeout actual addlistener adds angular api btford callback called checks connect connected connection connects console current data displays emit err error event eventname events extended factory false forward forwards function functionality io isconnected listen listener listeners log lx mapper merged message method object options raised register removealllisteners removed removelistener removes scope send server service set socket socket-io socketfactory socketio stack status success supplies timeout transport true type wayne wrong"
     },
     {
       "section": "api",
