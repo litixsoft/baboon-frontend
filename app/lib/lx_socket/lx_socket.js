@@ -10,6 +10,8 @@ angular.module('lx.socket', ['btford.socket-io'])
     .provider('$lxSocket', function () {
 
         var _host, _options;
+        var _receiveEventBuffer = [];
+        var _forwardEventBuffer = [];
 
         // the socket.io object
         var socketIO;
@@ -159,6 +161,22 @@ angular.module('lx.socket', ['btford.socket-io'])
                 socketIO.on('connect', function () {
                     $log.info('socket connected with:', engine.transport.query.transport);
                     $rootScope.socketConnected = true;
+
+                    // broadcast socket.io connect event
+                    $rootScope.$broadcast('socket:connect');
+
+                    // process buffers
+                    angular.forEach(_receiveEventBuffer, function (onEvent) {
+                        socketIO.on(onEvent.name, onEvent.action);
+                    });
+
+                    angular.forEach(_forwardEventBuffer, function (forwardEvent) {
+                        socketIO.forward(forwardEvent.name, forwardEvent.scope);
+                    });
+
+                    // clear buffers
+                    _receiveEventBuffer = [];
+                    _forwardEventBuffer = [];
                 });
 
                 engine.on('upgrade', function (msg) {
@@ -172,8 +190,6 @@ angular.module('lx.socket', ['btford.socket-io'])
                     $rootScope.socketConnected = false;
                     $rootScope.socketWsUpgrade = false;
                 });
-
-                //return socket;
             };
 
             if (_options.autoconnect) {
@@ -242,8 +258,6 @@ angular.module('lx.socket', ['btford.socket-io'])
              </pre>
              */
             self.emit = function (eventName, data, callback) {
-                checkIfSocketExists();
-
                 // Check eventName
                 if (typeof eventName !== 'string') {
                     throw new TypeError('Parameter eventName  is missing or is not of type string.');
@@ -264,7 +278,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                 }
 
                 // Request to server when connected
-                if (socketIO.connection.connected) {
+                if (self.isConnected()) {
                     return typeof callback === 'function' ? socketIO.emit(eventName, data, callback) : socketIO.emit(eventName, data);
                 } else {
                     // Socket is not connected.
@@ -291,7 +305,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     // Check connection status
                     var loop = function (fn) {
                         $timeout(function () {
-                            if (socketIO.connection.connected || condition) {
+                            if (self.isConnected() || condition) {
                                 return fn();
                             } else {
                                 loop(fn);
@@ -302,7 +316,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     // Start loop for connection
                     loop(function () {
                         // Check if connected
-                        if (socketIO.connection.connected) {
+                        if (self.isConnected()) {
                             return typeof callback === 'function' ? socketIO.emit(eventName, data, callback) : socketIO.emit(eventName, data);
                         } else {
                             // Run error function
@@ -325,8 +339,6 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.forward = function (event, scope) {
-                checkIfSocketExists();
-
                 // Check event
                 if (typeof event !== 'string') {
                     throw new TypeError('Parameter event is not of type string.');
@@ -337,7 +349,13 @@ angular.module('lx.socket', ['btford.socket-io'])
                     throw new TypeError('Parameter scope is not of type object.');
                 }
 
-                socketIO.forward(event, scope);
+                if (self.isConnected()) {
+                    // register event
+                    socketIO.forward(event, scope);
+                } else {
+                    // add to buffer
+                    _forwardEventBuffer.push({name: event, scope: scope});
+                }
             };
 
             /**
@@ -354,8 +372,6 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.on = function (event, callback) {
-                checkIfSocketExists();
-
                 // Check event
                 if (typeof event !== 'string') {
                     throw new TypeError('Parameter event is not of type string.');
@@ -366,7 +382,13 @@ angular.module('lx.socket', ['btford.socket-io'])
                     throw new TypeError('Parameter callback is not of type function.');
                 }
 
-                socketIO.on(event, callback);
+                if (self.isConnected()) {
+                    // register event
+                    socketIO.on(event, callback);
+                } else {
+                    // add to buffer
+                    _receiveEventBuffer.push({name: event, action: callback});
+                }
             };
 
             /**
@@ -384,8 +406,6 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type by event or callback
              */
             self.addListener = function (event, callback) {
-                checkIfSocketExists();
-
                 // Check event
                 if (typeof event !== 'string') {
                     throw new TypeError('Parameter event is not of type string.');
@@ -396,7 +416,13 @@ angular.module('lx.socket', ['btford.socket-io'])
                     throw new TypeError('Parameter callback is not of type function.');
                 }
 
-                socketIO.addListener(event, callback);
+                if (self.isConnected()) {
+                    // register event
+                    socketIO.addListener(event, callback);
+                } else {
+                    // add to buffer
+                    _receiveEventBuffer.push({name: event, action: callback});
+                }
             };
 
             /**
@@ -444,8 +470,6 @@ angular.module('lx.socket', ['btford.socket-io'])
              * @throws {TypeError} Error when wrong type of event or callback
              */
             self.removeAllListeners = function (event, callback) {
-                checkIfSocketExists();
-
                 // Check event
                 if (typeof event !== 'string') {
                     throw new TypeError('Parameter event is not of type string.');
@@ -456,7 +480,12 @@ angular.module('lx.socket', ['btford.socket-io'])
                     throw new TypeError('Parameter callback is not of type function.');
                 }
 
-                socketIO.removeAllListeners(event, callback);
+                if (self.isConnected()) {
+                    socketIO.removeAllListeners(event, callback);
+                } else {
+                    _receiveEventBuffer = [];
+                    _forwardEventBuffer = [];
+                }
             };
 
             // $get return object
