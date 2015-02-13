@@ -1,4 +1,4 @@
-<a href="https://github.com/litixsoft/baboon-frontend.git/edit/master/app/lib/lx_socket/lx_socket.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L110" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">$lxSocket</code>
+<a href="https://github.com/litixsoft/baboon-frontend.git/edit/master/app/lib/lx_socket/lx_socket.js" class="improve-docs"><i class="icon-edit"> </i>Improve this doc</a><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L112" class="view-source"><i class="icon-eye-open"> </i>View source</a><h1><code ng:non-bindable="">$lxSocket</code>
 <div><span class="hint">service in module <code ng:non-bindable="">lx.socket</code>
 </span>
 </div>
@@ -19,7 +19,7 @@
 </div></td></tr></tbody></table><h4 id="usage_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="lx-socket-lxsocket-page"><p>$lxSocket The $lxSocket object</p>
 </div></td></tr></table></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L386" class="view-source icon-eye-open"> </a><h3 id="methods_addlistener">addListener(event, callback)</h3>
+<ul class="methods"><li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L408" class="view-source icon-eye-open"> </a><h3 id="methods_addlistener">addListener(event, callback)</h3>
 <div class="addlistener"><div class="lx-socket-lxsocket-addlistener-page"><p>Adds a listener on the socket
 The same as on.</p>
 </div><h5 id="methods_addlistener_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-addlistener-page"><p>The event to listen to</p>
@@ -27,7 +27,7 @@ The same as on.</p>
 </div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="lx-socket-lxsocket-addlistener-page"><p>Data callback function to be called after the event is raised</p>
 </div></td></tr></tbody></table></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L135" class="view-source icon-eye-open"> </a><h3 id="methods_connect">connect(options)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L137" class="view-source icon-eye-open"> </a><h3 id="methods_connect">connect(options)</h3>
 <div class="connect"><div class="lx-socket-lxsocket-connect-page"><p>Connects to the socket on the server.</p>
 </div><h5 id="methods_connect_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>options <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="lx-socket-lxsocket-connect-page"><p>The options for the connection. Are merged with the options set in the set() method</p>
 </div></td></tr></tbody></table><h4 id="methods_connect_example">Example</h4>
@@ -42,7 +42,7 @@ $lxSocket.connect({query: {username: 'wayne'}});
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L244" class="view-source icon-eye-open"> </a><h3 id="methods_emit">emit(eventName, data, callback)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L260" class="view-source icon-eye-open"> </a><h3 id="methods_emit">emit(eventName, data, callback)</h3>
 <div class="emit"><div class="lx-socket-lxsocket-emit-page"><p>Send event with or without callback to socket server.</p>
 </div><h5 id="methods_emit_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>eventName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-emit-page"><p>Name of server event</p>
 </div></td></tr><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="lx-socket-lxsocket-emit-page"><p>Data for server</p>
@@ -68,25 +68,25 @@ $lxSocket.emit('name', data);
 </div></div>
 </div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L327" class="view-source icon-eye-open"> </a><h3 id="methods_forward">forward(event, scope)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L341" class="view-source icon-eye-open"> </a><h3 id="methods_forward">forward(event, scope)</h3>
 <div class="forward"><div class="lx-socket-lxsocket-forward-page"><p>Forwards an socket event to a scope</p>
 </div><h5 id="methods_forward_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-forward-page"><p>The event to listen to</p>
 </div></td></tr><tr><td>scope <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="lx-socket-lxsocket-forward-page"><p>The scope to forward the events to</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L193" class="view-source icon-eye-open"> </a><h3 id="methods_isconnected">isConnected()</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L209" class="view-source icon-eye-open"> </a><h3 id="methods_isconnected">isConnected()</h3>
 <div class="isconnected"><div class="lx-socket-lxsocket-isconnected-page"><p>Checks whether the socket is connected and supplies true or false</p>
 </div><h5 id="methods_isconnected_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="lx-socket-lxsocket-isconnected-page"><p>socket.connection.connected</p>
 </div></td></tr></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L356" class="view-source icon-eye-open"> </a><h3 id="methods_on">on(event, callback)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L374" class="view-source icon-eye-open"> </a><h3 id="methods_on">on(event, callback)</h3>
 <div class="on"><div class="lx-socket-lxsocket-on-page"><p>Register an event on the socket</p>
 </div><h5 id="methods_on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-on-page"><p>The event to listen to</p>
 </div></td></tr><tr><td>callback <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function(data</a></td><td><div class="lx-socket-lxsocket-on-page"><p>Callback function</p>
 </div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="lx-socket-lxsocket-on-page"><p>Data callback function</p>
 </div></td></tr></tbody></table></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L446" class="view-source icon-eye-open"> </a><h3 id="methods_removealllisteners">removeAllListeners(event, callback)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L472" class="view-source icon-eye-open"> </a><h3 id="methods_removealllisteners">removeAllListeners(event, callback)</h3>
 <div class="removealllisteners"><div class="lx-socket-lxsocket-removealllisteners-page"><p>Removes all listeners from the socket
 The same as on.</p>
 </div><h5 id="methods_removealllisteners_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-removealllisteners-page"><p>The event to listen to</p>
@@ -94,7 +94,7 @@ The same as on.</p>
 </div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="lx-socket-lxsocket-removealllisteners-page"><p>Data callback function to be called after event is removed from socket</p>
 </div></td></tr></tbody></table></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L416" class="view-source icon-eye-open"> </a><h3 id="methods_removelistener">removeListener(event, callback)</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L442" class="view-source icon-eye-open"> </a><h3 id="methods_removelistener">removeListener(event, callback)</h3>
 <div class="removelistener"><div class="lx-socket-lxsocket-removelistener-page"><p>Removes a listener from the socket
 The same as on.</p>
 </div><h5 id="methods_removelistener_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>event</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-removelistener-page"><p>The event to listen to</p>
@@ -102,7 +102,7 @@ The same as on.</p>
 </div><table><thead><tr><th>Property</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>data <div><em>(optional)</em></div></td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="lx-socket-lxsocket-removelistener-page"><p>Data callback function to be called after event is removed from socket</p>
 </div></td></tr></tbody></table></td></tr></tbody></table></div>
 </li>
-<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/9a1a51b/app/lib/lx_socket/lx_socket.js#L207" class="view-source icon-eye-open"> </a><h3 id="methods_transport">transport()</h3>
+<li><a href="https://github.com/litixsoft/baboon-frontend.git/blob/7b0fb1d/app/lib/lx_socket/lx_socket.js#L223" class="view-source icon-eye-open"> </a><h3 id="methods_transport">transport()</h3>
 <div class="transport"><div class="lx-socket-lxsocket-transport-page"><p>Displays the current transport of socket.</p>
 </div><h5 id="methods_transport_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="lx-socket-lxsocket-transport-page"><p>transport - Actual transport (polling|websocket)</p>
 </div></td></tr></table></div>
