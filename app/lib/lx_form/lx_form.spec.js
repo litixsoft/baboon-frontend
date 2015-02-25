@@ -92,6 +92,18 @@ describe('lx form service', function () {
                     expect(cache.test).toBeUndefined();
                 });
             });
+
+            it('should do nothing when model is not an object', function () {
+                service.setModel();
+                expect(service.model).toEqual({});
+
+                inject(function ($injector) {
+                    var cache = $injector.get('lxCache');
+
+                    expect(cache[1]).toBeUndefined();
+                    expect(cache['1_Master']).toBeUndefined();
+                });
+            });
         });
 
         describe('reset()', function () {

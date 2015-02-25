@@ -120,6 +120,10 @@ angular.module('lx.form', ['lx.cache'])
              * @param {boolean} resetCache Specifies if the lxCache should be resetted.
              */
             pub.setModel = function (model, resetCache) {
+                if (!angular.isObject(model)) {
+                    return;
+                }
+
                 if (!pub.model[key] && resetCache) {
                     // no key -> create, delete model from lxCache
                     delete lxCache[modelName];
