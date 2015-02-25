@@ -1,3 +1,12 @@
+<a name="0.5.11"></a>
+### 0.5.11 (2015-02-25)
+
+
+#### Bug Fixes
+
+* **lxForm:** do nothing when model is no object when calling setModel(model) ([12455cfc](https://github.com/litixsoft/baboon-frontend/commit/12455cfc9aeefa078316f845c930fbcadd5382d6))
+
+
 <a name="0.5.10"></a>
 ### 0.5.10 (2015-02-13)
 
