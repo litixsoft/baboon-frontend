@@ -65,7 +65,7 @@
         "grunt-contrib-watch": "^0.6.1",
         "grunt-conventional-changelog": "^1.1.0",
         "grunt-ngdocs": "^0.2.7",
-        "grunt-eslint": "^7.0.1",
+        "grunt-eslint": "^9.0.0",
         "grunt-filerev": "^2.2.0",
         "grunt-karma": "^0.10.1",
         "grunt-newer": "^1.1.0",
