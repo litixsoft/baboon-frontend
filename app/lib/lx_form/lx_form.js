@@ -56,10 +56,7 @@ angular.module('lx.form', ['lx.cache'])
              * @param {object} form The angularjs form controller.
              */
             pub.reset = function (form) {
-
-                if (form) {
-                    pub.resetForm(form);
-                }
+                pub.resetForm(form);
 
                 // reset model
                 pub.model = angular.copy(master);
@@ -135,15 +132,14 @@ angular.module('lx.form', ['lx.cache'])
              *
              * @param {object} model The model.
              * @param {boolean} resetCache Specifies if the lxCache should be resetted.
+             * @param {object} form The current formController.
              */
             pub.setModel = function (model, resetCache, form) {
                 if (!angular.isObject(model)) {
                     return;
                 }
 
-                if (form){
-                    pub.resetForm(form);
-                }
+                pub.resetForm(form);
 
                 if (!pub.model[key] && resetCache) {
                     // no key -> create, delete model from lxCache
