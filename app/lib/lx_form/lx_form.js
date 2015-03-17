@@ -24,15 +24,15 @@ angular.module('lx.form', ['lx.cache'])
 
             /**
              * @ngdoc method
-             * @name lx.form.lxForm#reset
+             * @name lx.form.lxForm#resetForm
              * @methodOf lx.form.lxForm
              *
              * @description
-             * Resets the model to the master.
+             * Resets the form
              *
              * @param {object} form The angularjs form controller.
              */
-            pub.reset = function (form) {
+            pub.resetForm = function (form) {
                 if (form) {
                     // clear form errors
                     pub.resetValidation(form);
@@ -42,6 +42,23 @@ angular.module('lx.form', ['lx.cache'])
 
                     // set form to untouched state
                     form.$setUntouched();
+                }
+            };
+
+            /**
+             * @ngdoc method
+             * @name lx.form.lxForm#reset
+             * @methodOf lx.form.lxForm
+             *
+             * @description
+             * Resets the model to the master.
+             *
+             * @param {object} form The angularjs form controller.
+             */
+            pub.reset = function (form) {
+
+                if (form) {
+                    pub.resetForm(form);
                 }
 
                 // reset model
@@ -119,9 +136,13 @@ angular.module('lx.form', ['lx.cache'])
              * @param {object} model The model.
              * @param {boolean} resetCache Specifies if the lxCache should be resetted.
              */
-            pub.setModel = function (model, resetCache) {
+            pub.setModel = function (model, resetCache, form) {
                 if (!angular.isObject(model)) {
                     return;
+                }
+
+                if (form){
+                    pub.resetForm(form);
                 }
 
                 if (!pub.model[key] && resetCache) {
