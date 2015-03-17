@@ -37,7 +37,7 @@ NG_DOCS={
       "type": "object",
       "moduleName": "lx.form",
       "shortDescription": "Form service which allow caching, reset the object and populates validation errors.",
-      "keywords": "add allow angularjs api cache caching changes checks controller currentkey errors false form hasloadedmodelfromcache isunchanged key load loaded lx lxcache lxform master method model modelname object populates populateservervalidation property reset resetcache resets resetted server service setmodel sets specifies true unchanged validation"
+      "keywords": "add allow angularjs api cache caching changes checks controller current currentkey errors false form formcontroller hasloadedmodelfromcache isunchanged key load loaded lx lxcache lxform master method model modelname object populates populateservervalidation property reset resetcache resetform resets resetted server service setmodel sets specifies true unchanged validation"
     },
     {
       "section": "api",

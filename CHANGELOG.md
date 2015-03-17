@@ -1,3 +1,12 @@
+<a name="0.5.12"></a>
+### 0.5.12 (2015-03-17)
+
+
+#### Features
+
+* update to angular.js 1.3.14 ([b288de37](https://github.com/litixsoft/baboon-frontend/commit/b288de37946d3d559f4e6c4acf3cf5ca5172cbc8))
+
+
 <a name="0.5.11"></a>
 ### 0.5.11 (2015-02-25)
 
