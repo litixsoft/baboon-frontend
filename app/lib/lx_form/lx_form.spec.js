@@ -171,29 +171,30 @@ describe('lx form service', function () {
             });
         });
 
-        //describe('populateValidation()', function () {
-        //    it('should add the validation errors', function () {
-        //        var form = {errors: {id: 'required'}};
-        //        var errors = [
-        //            {property: 'date', message: 'format'},
-        //            {property: 'name', message: 'length'}
-        //        ];
-        //
-        //        expect(form.errors.id).toBeDefined();
-        //        service.populateValidation(form, errors);
-        //        expect(form.errors.id).toBeUndefined();
-        //        expect(form.errors.date).toBeDefined();
-        //        expect(form.errors.name).toBeDefined();
-        //    });
-        //
-        //    it('should not add the validation errors', function () {
-        //        var form = {errors: {id: 'required'}};
-        //
-        //        expect(form.errors.id).toBeDefined();
-        //        service.populateValidation(form, null);
-        //        expect(form.errors.id).toBeDefined();
-        //    });
-        //});
+        describe('populateServerValidation()', function () {
+            it('should add the validation errors', function () {
+                var form = {errors: {id: 'required'}};
+                var errors = [
+                    {property: 'date', message: 'format'},
+                    {property: 'name', message: 'length', expected: 'wayne'}
+                ];
+
+                expect(form.errors.id).toBeDefined();
+                service.populateServerValidation(form, errors);
+                expect(form.errors.id).toBe('required');
+                //expect(form.errors.date).toBeDefined();
+                //expect(form.errors.name).toBeDefined();
+                //expect(form.errors.name).toBeDefined();
+            });
+
+            it('should not add the validation errors', function () {
+                var form = {errors: {id: 'required'}};
+
+                expect(form.errors.id).toBeDefined();
+                service.populateServerValidation(form, null);
+                expect(form.errors.id).toBeDefined();
+            });
+        });
 
         describe('hasLoadedModelFromCache()', function () {
             it('should has model in cache', function () {

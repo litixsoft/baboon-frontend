@@ -188,11 +188,22 @@ angular.module('lx.form', ['lx.cache'])
                         if (form[prop]) {
                             form[prop].$setValidity('server', false);
                             form[prop].$error.serverMsg = value.message;
+                            form[prop].$error.expected = value.expected;
                         }
                     });
                 }
             };
 
+            /**
+             * @ngdoc method
+             * @name lx.form.lxForm#resetServerErrors
+             * @methodOf lx.form.lxForm
+             *
+             * @description
+             * Resets all server errors in the form.
+             *
+             * @param {object} form The angularjs form controller.
+             */
             pub.resetServerErrors = function (form) {
                 angular.forEach(form, function (value) {
                     // filter out the form controls with server errors
@@ -202,11 +213,21 @@ angular.module('lx.form', ['lx.cache'])
 
                         // remove error message
                         delete value.$error.serverMsg;
-
+                        delete value.$error.expected;
                     }
                 });
             };
 
+            /**
+             * @ngdoc method
+             * @name lx.form.lxForm#resetValidation
+             * @methodOf lx.form.lxForm
+             *
+             * @description
+             * Sets all controls in the form to valid state.
+             *
+             * @param {object} form The angularjs form controller.
+             */
             pub.resetValidation = function (form) {
                 angular.forEach(form, function (control, name) {
                     // filter out the form controls
