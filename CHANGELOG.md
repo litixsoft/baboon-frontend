@@ -1,3 +1,13 @@
+<a name="0.5.13"></a>
+### 0.5.13 (2015-03-25)
+
+
+#### Features
+
+* update to angular.js 1.3.15 ([25991a42](https://github.com/litixsoft/baboon-frontend/commit/25991a424116e1506f6893fab6763025fcea0544))
+* **lx.form:** save property "expected" in the server error object of the control ([288f02e5](https://github.com/litixsoft/baboon-frontend/commit/288f02e53403063f8826d9dbf151dfa7b1e67fd7))
+
+
 <a name="0.5.12"></a>
 ### 0.5.12 (2015-03-17)
 
