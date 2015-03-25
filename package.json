@@ -59,7 +59,7 @@
         "grunt-contrib-copy": "^0.8.0",
         "grunt-contrib-cssmin": "^0.12.2",
         "grunt-contrib-htmlmin": "^0.4.0",
-        "grunt-contrib-imagemin": "^0.9.3",
+        "grunt-contrib-imagemin": "^0.9.4",
         "grunt-contrib-less": "^1.0.0",
         "grunt-contrib-uglify": "^0.8.0",
         "grunt-contrib-watch": "^0.6.1",
@@ -82,7 +82,7 @@
         "karma-mocha-reporter": "*",
         "karma-phantomjs-launcher": "^0.1.4",
         "load-grunt-tasks": "^3.1.0",
-        "protractor": "^1.8.0",
+        "protractor": "^2.0.0",
         "time-grunt": "^1.1.0"
     }
 }
