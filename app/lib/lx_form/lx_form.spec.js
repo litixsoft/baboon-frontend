@@ -187,6 +187,20 @@ describe('lx form service', function () {
                 //expect(form.errors.name).toBeDefined();
             });
 
+            it('should work when the error contains no property field', function () {
+                var form = {errors: {id: 'required'}};
+                var errors = [
+                    {message: 'format'}
+                ];
+
+                expect(form.errors.id).toBeDefined();
+                service.populateServerValidation(form, errors);
+                expect(form.errors.id).toBe('required');
+                //expect(form.errors.date).toBeDefined();
+                //expect(form.errors.name).toBeDefined();
+                //expect(form.errors.name).toBeDefined();
+            });
+
             it('should not add the validation errors', function () {
                 var form = {errors: {id: 'required'}};
 

@@ -183,12 +183,14 @@ angular.module('lx.form', ['lx.cache'])
                     pub.resetServerErrors(form);
 
                     angular.forEach(errors, function (value) {
-                        var prop = value.property.toLowerCase();
+                        if (value.property) {
+                            var prop = value.property.toLowerCase();
 
-                        if (form[prop]) {
-                            form[prop].$setValidity('server', false);
-                            form[prop].$error.serverMsg = value.message;
-                            form[prop].$error.expected = value.expected;
+                            if (form[prop]) {
+                                form[prop].$setValidity('server', false);
+                                form[prop].$error.serverMsg = value.message;
+                                form[prop].$error.expected = value.expected;
+                            }
                         }
                     });
                 }
