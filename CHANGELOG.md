@@ -1,3 +1,12 @@
+<a name="0.5.14"></a>
+### 0.5.14 (2015-03-26)
+
+
+#### Bug Fixes
+
+* **lx.form:** handle case when error object does not contain the field 'property' ([bf5042f3](https://github.com/litixsoft/baboon-frontend/commit/bf5042f33d668dcabd6a5d6b16e2ed76aa1d5aae))
+
+
 <a name="0.5.13"></a>
 ### 0.5.13 (2015-03-25)
 
