@@ -21,7 +21,7 @@ angular.module('lx.sort', [])
             transclude: true,
             replace: true,
             template: '<div><span style="cursor: pointer;" ng-click="sort()" ng-transclude></span>' +
-            '<span class="glyphicon" ng-class="{\'glyphicon-arrow-up\': options.field === field && options.direction == 1, \'glyphicon-arrow-down\': options.field === field && options.direction == -1}"></span>' +
+            '<span class="fa" ng-class="{\'fa-caret-up\': options.field === field && options.direction == 1, \'fa-caret-down\': options.field === field && options.direction == -1, \'fa-sort\': options.field !== field}"></span>' +
             '</div>',
             scope: {
                 options: '=sortOpts',
