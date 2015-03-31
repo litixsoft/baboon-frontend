@@ -1,6 +1,6 @@
 {
     "name": "baboon-frontend",
-    "version": "0.5.14",
+    "version": "0.5.15",
     "description": "Baboon singlepage frontend, based on AngularJS, backend independent.",
     "homepage": "https://github.com/litixsoft/baboon-frontend",
     "author": "Litixsoft GmbH <info@litixsoft.de> (http://www.litixsoft.de)",
