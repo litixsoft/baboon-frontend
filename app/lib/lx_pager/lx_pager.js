@@ -17,36 +17,44 @@ angular.module('lx.pager', [])
  * For more details see our {@link /pager Guide}.
  *
  */
-    .directive('lxPager', function () {
+    .directive('lxPager', function ($templateCache) {
+        $templateCache.put('lx_pager-default-template', '<div>' +
+        '<div class="btn-toolbar lx-pager">' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary" ng-click="firstPage()" ng-disabled="currentPage == 1"><span class="glyphicon glyphicon-step-backward"></span></button>' +
+        '<button class="btn btn-primary" ng-click="previousPage()" ng-disabled="currentPage == 1"><span class="glyphicon glyphicon-backward"></span></button>' +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<input class="form-control count-control" type="text" ng-model="currentPage">' +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary" ng-disabled="true">of {{numberOfPages()}}</button>' +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary" ng-click="nextPage()" ng-disabled="currentPage >= numberOfPages()"><span class="glyphicon glyphicon-forward"></span></button>' +
+        '<button class="btn btn-primary" ng-click="lastPage()" ng-disabled="currentPage >= numberOfPages()"><span class="glyphicon glyphicon-step-forward"></span></button>' +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<select class="form-control" ng-model="pageSize" ng-options="p for p in pageSizeOptions"></select>' +
+        '</div>' +
+        '<div class="btn-group">' +
+        '<button class="btn btn-primary" ng-disabled="true">{{count}} items</button>' +
+        '</div>' +
+        '</div>' +
+        '</div>');
+
         return {
             restrict: 'E',
-            template: '<div>' +
-            '<div class="btn-toolbar lx-pager">' +
-            '<div class="btn-group">' +
-            '<button class="btn btn-primary" ng-click="firstPage()" ng-disabled="currentPage == 1"><span class="glyphicon glyphicon-step-backward"></span></button>' +
-            '<button class="btn btn-primary" ng-click="previousPage()" ng-disabled="currentPage == 1"><span class="glyphicon glyphicon-backward"></span></button>' +
-            '</div>' +
-            '<div class="btn-group">' +
-            '<input class="form-control count-control" type="text" ng-model="currentPage">' +
-            '</div>' +
-            '<div class="btn-group">' +
-            '<button class="btn btn-primary" ng-disabled="true">of {{numberOfPages()}}</button>' +
-            '</div>' +
-            '<div class="btn-group">' +
-            '<button class="btn btn-primary" ng-click="nextPage()" ng-disabled="currentPage >= numberOfPages()"><span class="glyphicon glyphicon-forward"></span></button>' +
-            '<button class="btn btn-primary" ng-click="lastPage()" ng-disabled="currentPage >= numberOfPages()"><span class="glyphicon glyphicon-step-forward"></span></button>' +
-            '</div>' +
-            '<div class="btn-group">' +
-            '<select class="form-control" ng-model="pageSize" ng-options="p for p in pageSizeOptions"></select>' +
-            '</div>' +
-            '<div class="btn-group">' +
-            '<button class="btn btn-primary" ng-disabled="true">{{count}} items</button>' +
-            '</div>' +
-            '</div>' +
-            '</div>',
+            templateUrl: function (elem, attr) {
+                if (attr.template) {
+                    return attr.template;
+                }
+
+                return 'lx_pager-default-template';
+            },
             replace: true,
             scope: {
-                count: '=',
+                count: '=?',
                 currentPage: '=?',
                 onPaging: '&',
                 pageSize: '@',

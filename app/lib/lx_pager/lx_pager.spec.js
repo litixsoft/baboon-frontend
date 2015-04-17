@@ -157,9 +157,9 @@ describe('lxPager', function () {
     it('should should not match any if-else path in $observe for pageSizes', function () {
         element = angular.element('<lx-pager count="count" current-page="currentPage" ></lx-pager>');
         compile(element)(scope);
+        scope.$digest();
         var elementScope = element.isolateScope();
         elementScope.pageSizeOptions = {};
-        scope.$digest();
     });
 
     it('should should not match the if path in $observe for pageSize with pageSize === "number"', function () {
@@ -268,6 +268,7 @@ describe('lxPager', function () {
     it('should should initialize missing count', function () {
         element = angular.element('<lx-pager current-page="currentPage" ></lx-pager>');
         compile(element)(scope);
+        scope.$digest();
         var elementScope = element.isolateScope();
         expect(elementScope.count).toBe(0);
     });
@@ -276,6 +277,7 @@ describe('lxPager', function () {
         scope.count = 'ad';
         element = angular.element('<lx-pager count="count" current-page="currentPage" ></lx-pager>');
         compile(element)(scope);
+        scope.$digest();
         var elementScope = element.isolateScope();
         elementScope.lastPage();
         expect(elementScope.currentPage).toBe(1);
