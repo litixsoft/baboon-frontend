@@ -1,3 +1,10 @@
+<a name="0.5.15"></a>
+### 0.5.15 (2015-03-31)
+
+#### Features
+
+* **lx.sort:** now with font awesome instead twitter bootstrap
+
 <a name="0.5.14"></a>
 ### 0.5.14 (2015-03-26)
 
