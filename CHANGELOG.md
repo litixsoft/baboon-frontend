@@ -1,3 +1,17 @@
+<a name"0.5.16"></a>
+### 0.5.16 (2015-04-17)
+
+
+#### Bug Fixes
+
+* dont not exclude .css/.less/.html files from bower ([849940a0](https://github.com/litixsoft/baboon-frontend/commit/849940a0))
+
+
+#### Features
+
+* **lx.pager:** you can now specify the attribute "template" to overwrite the default template o ([c2556ed2](https://github.com/litixsoft/baboon-frontend/commit/c2556ed2))
+
+
 <a name="0.5.15"></a>
 ### 0.5.15 (2015-03-31)
 
