@@ -1,3 +1,12 @@
+<a name="0.5.17"></a>
+### 0.5.17 (2015-07-24)
+
+
+#### Bug Fixes
+
+* **lx.float:** read the numberOfDigits in the init phase of the directive ([408d77a](https://github.com/litixsoft/baboon-frontend/commit/408d77a))
+
+
 <a name"0.5.16"></a>
 ### 0.5.16 (2015-04-17)
 

@@ -526,7 +526,9 @@ module.exports = function (grunt) {
         // Update CHANGELOG.md
         conventionalChangelog: {
             options: {
-                changelogOpts: {}
+                changelogOpts: {
+                    preset: 'angular'
+                }
             },
             release: {
                 src: 'CHANGELOG.md'
