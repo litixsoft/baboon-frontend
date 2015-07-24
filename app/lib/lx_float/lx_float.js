@@ -35,9 +35,16 @@ angular.module('lx.float', [])
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, elm, attrs, ngModel) {
+                // default value
                 var numberOfDigits = 2;
 
-                // get the number of digits from attr
+                // set number of digits synchronously
+                var val = scope.$eval(attrs.lxFloat);
+                if (typeof val === 'number') {
+                    numberOfDigits = val;
+                }
+
+                // get the number of digits from attr asynchronously
                 attrs.$observe('lxFloat', function (value) {
                     value = scope.$eval(value);
 
