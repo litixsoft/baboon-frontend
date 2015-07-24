@@ -1,6 +1,6 @@
 {
     "name": "baboon-frontend",
-    "version": "0.5.16",
+    "version": "0.5.17",
     "description": "Baboon Webtoolkit, based on ExpressJS and AngularJS, backend independent.",
     "homepage": "https://github.com/litixsoft/baboon-frontend",
     "author": {

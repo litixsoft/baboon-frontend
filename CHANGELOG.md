@@ -1,3 +1,25 @@
+<a name="0.5.17"></a>
+## 0.5.17 (2015-07-24)
+
+
+### chore
+
+* chore: update dependencies
+ ([a17e968](https://github.com/litixsoft/baboon-frontend/commit/a17e968))
+* chore: update test task for travis
+ ([5a81fe8](https://github.com/litixsoft/baboon-frontend/commit/5a81fe8))
+* chore: use docker images in travis
+ ([5e1f4dd](https://github.com/litixsoft/baboon-frontend/commit/5e1f4dd))
+* chore: use grunt travis for npm test command
+ ([917e697](https://github.com/litixsoft/baboon-frontend/commit/917e697))
+
+### fix
+
+* fix(lx.float): read the numberOfDigits in the init phase of the directive
+ ([408d77a](https://github.com/litixsoft/baboon-frontend/commit/408d77a))
+
+
+
 <a name"0.5.16"></a>
 ### 0.5.16 (2015-04-17)
 
