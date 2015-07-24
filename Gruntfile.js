@@ -517,8 +517,13 @@ module.exports = function (grunt) {
         },
 
         // Update CHANGELOG.md
-        changelog: {
-            options: {}
+        conventionalChangelog: {
+            options: {
+                changelogOpts: {}
+            },
+            release: {
+                src: 'CHANGELOG.md'
+            }
         },
 
         // Update version, changelog and commit
@@ -653,7 +658,7 @@ module.exports = function (grunt) {
             'docs',
             'build:release',
                 'bump:' + (version || 'patch') + ':bump-only',
-            'changelog',
+            'conventionalChangelog:release',
             'bump-commit'
         ]);
     });
