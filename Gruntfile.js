@@ -453,6 +453,13 @@ module.exports = function (grunt) {
                 configFile: 'config/karma.conf.js',
                 singleRun: true
             },
+            travis: {
+                configFile: 'config/karma.conf.js',
+                browsers: ['PhantomJS'],
+                detectBrowsers: {
+                    enabled: false
+                }
+            },
             dist: {
                 configFile: 'config/karma.dist.conf.js',
                 singleRun: true
@@ -464,7 +471,7 @@ module.exports = function (grunt) {
                 configFile: 'config/karma.conf.js',
                 reporters: ['mocha', 'junit'],
                 junitReporter: {
-                    outputFile: '<%= yeoman.reports %>/test/client/karma.xml',
+                    outputDir: '<%= yeoman.reports %>/test/client/',
                     suite: 'karma'
                 }
             },
@@ -579,6 +586,12 @@ module.exports = function (grunt) {
         'karma:unit'
     ]);
 
+    grunt.registerTask('travis', [
+        'eslint:all',
+        'build:dev',
+        'karma:travis'
+    ]);
+
     grunt.registerTask('test:dist', [
         'eslint:all',
         'build',
@@ -657,7 +670,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'docs',
             'build:release',
-                'bump:' + (version || 'patch') + ':bump-only',
+            'bump:' + (version || 'patch') + ':bump-only',
             'conventionalChangelog:release',
             'bump-commit'
         ]);
