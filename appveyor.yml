@@ -1,0 +1,40 @@
+version: 1.0.{build}
+
+clone_depth: 10
+
+# Fix line endings on Windows
+init:
+  - git config --global core.autocrlf true
+
+branches:
+  only:
+  - master
+
+build:
+  verbosity: minimal
+
+environment:
+  matrix:
+  # node.js
+  - nodejs_version: "0.10"
+  - nodejs_version: "0.11"
+  - nodejs_version: "0.12"
+  # io.js
+  - nodejs_version: "1.0"
+  - nodejs_version: "2.0"
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - cmd: npm install -g grunt-cli
+  - cmd: npm install -g bower
+  - cmd: npm install
+  - cmd: bower install
+
+est_script:
+  # Output useful info for debugging.
+  - node --version && npm --version
+  - cmd: npm test
+
+matrix:
+  allow_failures:
+    - nodejs_version: "0.11"
