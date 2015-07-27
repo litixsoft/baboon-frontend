@@ -10,8 +10,7 @@ branches:
   only:
   - master
 
-build:
-  verbosity: minimal
+build: off
 
 environment:
   matrix:
@@ -25,6 +24,8 @@ environment:
 
 install:
   - ps: Install-Product node $env:nodejs_version
+  - cmd: npm -g install npm@2
+  - cmd: set PATH=%APPDATA%\npm;%PATH%
   - cmd: npm install -g grunt-cli
   - cmd: npm install -g bower
   - cmd: npm install
