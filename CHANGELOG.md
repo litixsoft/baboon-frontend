@@ -1,3 +1,12 @@
+<a name="0.5.18"></a>
+## [0.5.18](https://github.com/litixsoft/baboon-frontend/compare/v0.5.16...v0.5.18) (2016-01-22)
+
+### Features
+
+* **lx.float:** add attribute lx-float-round to specify if the number should be rounded ([17bdc81](https://github.com/litixsoft/baboon-frontend/commit/17bdc81))
+
+
+
 <a name="0.5.17"></a>
 ### 0.5.17 (2015-07-24)
 
