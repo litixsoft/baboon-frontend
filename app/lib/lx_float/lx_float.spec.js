@@ -141,7 +141,7 @@ describe('lxFloat', function () {
             scope.config = {
                 digits: 2,
                 round: false
-            }
+            };
             $compile(element)(scope);
             scope.$digest();
             form = scope.form;

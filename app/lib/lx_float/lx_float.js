@@ -42,7 +42,7 @@ angular.module('lx.float', [])
             decimal = Math.floor(decimal);
 
             var multiplier = Math.pow(10, decimal);
-            return (Math.floor(parseFloat(number) * multiplier) / multiplier).toFixed(decimal)
+            return (Math.floor(parseFloat(number) * multiplier) / multiplier).toFixed(decimal);
         }
 
         return {
