@@ -460,6 +460,14 @@ module.exports = function (grunt) {
                     enabled: false
                 }
             },
+            debug: {
+                configFile: 'config/karma.conf.js',
+                singleRun: false,
+                browsers: ['Chrome'],
+                detectBrowsers: {
+                    enabled: false
+                }
+            },
             dist: {
                 configFile: 'config/karma.dist.conf.js',
                 singleRun: true

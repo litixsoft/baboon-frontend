@@ -11,9 +11,9 @@
 ## Installation
 
     $ bower install baboon-frontend
-    
+
 The bower module includes only the lib with the directives and services. We are currently working on a yeoman generator for scaffolding a complete app.
-    
+
 ## Documentation
 
 See the docs folder
@@ -125,7 +125,7 @@ Linux / Mac:
 Windows:
 
     $ npm install -g bower grunt-cli
-    
+
 #### Install baboon-frontend and run the example app
 The example application is also the reference implementation of Baboon.
 Fork Baboon repository and install the dependent modules with npm and bower.
@@ -145,23 +145,23 @@ Every test run includes the code style check with eslint.
 Unit tests
 
     $ grunt test
-    
+
 Unit tests code coverage
 
     $ grunt cover
-    
+
 End 2 end test with protractor
 
     $ grunt e2e
-    
+
 Unit and e2e tests in production mode (minified files)
 
     $ grunt test:dist
-    
+
 Continuous integration test (generates test results as xml files)
 
     $ grunt ci
-    
+
 ## Release a new version
 We use [grunt-bump](https://github.com/vojtajina/grunt-bump) and [grunt-conventional-changelog](https://github.com/btford/grunt-conventional-changelog) internally to manage our releases.
 To handle the workflow, we created a grunt task `release`. This happens:
@@ -190,4 +190,4 @@ Release a new major version
 [Litixsoft GmbH](http://www.litixsoft.de)
 
 ## License
-Copyright (c) 2014-2015 Litixsoft GmbH Licensed under the MIT license.
+Copyright (c) 2014-2016 Litixsoft GmbH Licensed under the MIT license.

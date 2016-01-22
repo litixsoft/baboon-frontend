@@ -8,17 +8,18 @@ angular.module('lx.float', [])
  * @element input
  *
  * @description
- * Convert and round any number to a float by given decimal places. It replaces a decimal comma with an decimal point. An non-float-input returns undefined.
+ * Convert and round any number to a float by given decimal places. It replaces a decimal comma with an decimal point. An non-float-input returns undefined. Optionally you can specify if the number should not be rounded.
  *
  * For more information look at the [guide](/float).
  *
- * @param {number=} [lx-float=2] Number of decimal places.
+ * @param {number=}  [lx-float=2] Number of decimal places. (Default is 2)
+ * @param {boolean=} [lx-float-round=true] Specifies if the number should be rounded. (Default is true)
  *
  */
     .directive('lxFloat', function () {
         var FLOAT_REGEXP = /^\-?\d+((\.|,)?(\d+)?)?$/;
 
-        function roundToDecimal (number, decimal) {
+        function roundToDecimal(number, decimal) {
             var zeros = 1.0.toFixed(decimal);
             zeros = zeros.substr(2);
             var mul_div = parseInt('1' + zeros, 10);
@@ -31,17 +32,37 @@ angular.module('lx.float', [])
             return Math.round(number * mul_div) / mul_div;
         }
 
+        function cutToDecimal(number, decimal) {
+            // check range for decimal value
+            if (decimal < 0 || decimal > 20) {
+                decimal = 0;
+            }
+
+            // ensure decimal is an integer
+            decimal = Math.floor(decimal);
+
+            var multiplier = Math.pow(10, decimal);
+            return (Math.floor(parseFloat(number) * multiplier) / multiplier).toFixed(decimal)
+        }
+
         return {
             restrict: 'A',
             require: 'ngModel',
             link: function (scope, elm, attrs, ngModel) {
-                // default value
+                // default values
                 var numberOfDigits = 2;
+                var roundNumbers = true;
 
                 // set number of digits synchronously
                 var val = scope.$eval(attrs.lxFloat);
                 if (typeof val === 'number') {
                     numberOfDigits = val;
+                }
+
+                // get if the numbers should be rounded from attr synchronously
+                var round = scope.$eval(attrs.lxFloatRound);
+                if (typeof round === 'boolean') {
+                    roundNumbers = round;
                 }
 
                 // get the number of digits from attr asynchronously
@@ -50,6 +71,15 @@ angular.module('lx.float', [])
 
                     if (typeof value === 'number') {
                         numberOfDigits = value;
+                    }
+                });
+
+                // get if the numbers should be rounded from attr asynchronously
+                attrs.$observe('lxFloatRound', function (value) {
+                    value = scope.$eval(value);
+
+                    if (typeof value === 'boolean') {
+                        roundNumbers = value;
                     }
                 });
 
@@ -71,7 +101,13 @@ angular.module('lx.float', [])
 
                 ngModel.$formatters.unshift(function (modelValue) {
                     if (!isNaN(modelValue) && modelValue !== null) {
-                        modelValue = parseFloat(modelValue).toFixed(numberOfDigits).replace('.', ',');
+                        if (roundNumbers) {
+                            modelValue = parseFloat(modelValue).toFixed(numberOfDigits);
+                        } else {
+                            modelValue = cutToDecimal(modelValue, numberOfDigits);
+                        }
+
+                        modelValue = modelValue.replace('.', ',');
                     }
 
                     return modelValue;
