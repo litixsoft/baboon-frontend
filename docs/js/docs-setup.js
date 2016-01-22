@@ -27,8 +27,8 @@ NG_DOCS={
       "shortName": "lxFloat",
       "type": "directive",
       "moduleName": "lx.float",
-      "shortDescription": "Convert and round any number to a float by given decimal places. It replaces a decimal comma with an decimal point. An non-float-input returns undefined.",
-      "keywords": "api comma convert decimal directive float input lx non-float-input number places point replaces returns round undefined"
+      "shortDescription": "Convert and round any number to a float by given decimal places. It replaces a decimal comma with an decimal point. An non-float-input returns undefined. Optionally you can specify if the number should not be rounded.",
+      "keywords": "api comma convert decimal directive float input lx non-float-input number optionally places point replaces returns round rounded specifies true undefined"
     },
     {
       "section": "api",
