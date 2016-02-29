@@ -1,3 +1,14 @@
+<a name="0.5.19"></a>
+## [0.5.19](https://github.com/litixsoft/baboon-frontend/compare/v0.5.18...v0.5.19) (2016-02-29)
+
+
+### Features
+
+* **lx.form:** add property isDirty and function isNew() ([d19b743](https://github.com/litixsoft/baboon-frontend/commit/d19b743))
+* update to angular 1.5.0 ([0843d8b](https://github.com/litixsoft/baboon-frontend/commit/0843d8b))
+
+
+
 <a name="0.5.18"></a>
 ## [0.5.18](https://github.com/litixsoft/baboon-frontend/compare/v0.5.16...v0.5.18) (2016-01-22)
 
