@@ -17,6 +17,8 @@ describe('lx form service', function () {
 
         it('should be initialized correctly', function () {
             expect(service.model).toBeDefined();
+            expect(service.isDirty).toBeFalsy();
+            expect(service.isNew()).toBeFalsy();
             expect(service.reset).toBeDefined();
             expect(service.isUnchanged).toBeDefined();
             expect(service.hasLoadedModelFromCache).toBeDefined();
@@ -41,6 +43,8 @@ describe('lx form service', function () {
 
                 service.setModel(data);
                 expect(service.model).toEqual(data);
+                expect(service.isDirty).toBeTruthy();
+                expect(service.isNew()).toBeFalsy();
 
                 inject(function ($injector) {
                     var cache = $injector.get('lxCache');
@@ -55,6 +59,23 @@ describe('lx form service', function () {
 
                 service.setModel(data);
                 expect(service.model).toEqual(data);
+                expect(service.isDirty).toBeTruthy();
+                expect(service.isNew()).toBeTruthy();
+
+                inject(function ($injector) {
+                    var cache = $injector.get('lxCache');
+
+                    expect(cache.test).toEqual(data);
+                });
+            });
+
+            it('should set the model and store it in cache by name', function () {
+                var data = {name: 'wayne', age: 99, _id:1};
+
+                service.setModel(data);
+                expect(service.model).toEqual(data);
+                expect(service.isDirty).toBeTruthy();
+                expect(service.isNew()).toBeFalsy();
 
                 inject(function ($injector) {
                     var cache = $injector.get('lxCache');
@@ -217,6 +238,15 @@ describe('lx form service', function () {
                 service.setModel(data);
                 var inCache = service.hasLoadedModelFromCache(1);
                 expect(inCache).toBeTruthy();
+                expect(service.isDirty).toBeTruthy();
+            });
+
+            it('should has not model in cache', function () {
+                expect(service.isDirty).toBeFalsy();
+
+                var inCache = service.hasLoadedModelFromCache('2');
+                expect(inCache).toBeFalsy();
+                expect(service.isDirty).toBeFalsy();
             });
 
             it('should has not model in cache', function () {

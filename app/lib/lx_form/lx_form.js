@@ -23,6 +23,31 @@ angular.module('lx.form', ['lx.cache'])
             pub.model = {};
 
             /**
+             * @ngdoc property
+             * @name lx.form.lxForm#isDirty
+             * @methodOf lx.form.lxForm
+             *
+             * @description
+             * Returns if the model has changed.
+             *
+             */
+            pub.isDirty = false;
+
+            /**
+             * @ngdoc method
+             * @name lx.form.lxForm#isNew
+             * @methodOf lx.form.lxForm
+             *
+             * @description
+             * Returns if the model has changed and the id field is not defined.
+             *
+             * @param {object} form The angularjs form controller.
+             */
+            pub.isNew = function () {
+                return pub.isDirty && !(pub.model[key] || pub.model._id);
+            };
+
+            /**
              * @ngdoc method
              * @name lx.form.lxForm#resetForm
              * @methodOf lx.form.lxForm
@@ -106,6 +131,7 @@ angular.module('lx.form', ['lx.cache'])
                         master = lxCache[currentKey + '_Master'];
                     }
 
+                    pub.isDirty = true;
                     return true;
                 } else if (!currentKey) {
                     if (lxCache[modelName]) {
@@ -116,6 +142,7 @@ angular.module('lx.form', ['lx.cache'])
                         lxCache[modelName] = pub.model;
                     }
 
+                    pub.isDirty = true;
                     return true;
                 }
 
@@ -165,6 +192,8 @@ angular.module('lx.form', ['lx.cache'])
                     }
                     /*eslint-enable */
                 }
+
+                pub.isDirty = true;
             };
 
             /**
