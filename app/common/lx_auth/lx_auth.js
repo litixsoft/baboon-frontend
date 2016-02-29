@@ -156,10 +156,10 @@ angular.module('common.auth', [])
                 }
             },
             userIsLoggedIn: function () {
-                return !!this.getUser().token;
+                return Boolean(this.getUser().token);
             },
             rightsEnabled: function () {
-                return !!this.getUser().acl;
+                return Boolean(this.getUser().acl);
             },
             getAcl: function () {
                 return this.getUser().acl;
