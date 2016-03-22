@@ -2,7 +2,9 @@
 
 describe('lxFloat', function () {
     describe('Tests with valid directive configuration', function () {
+        /*eslint-disable no-unused-vars */
         var scope, form, compile;
+        /*eslint-enable no-unused-vars */
 
         beforeEach(module('lx.float'));
 

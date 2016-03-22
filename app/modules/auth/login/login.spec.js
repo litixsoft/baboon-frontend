@@ -10,7 +10,7 @@ describe('auth', function () {
     beforeEach(module('auth.login'));
 
     describe('AuthLoginCtrlTest', function () {
-        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$window_) {
+        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_) {
             $window = {
                 // now, $window.location.path will update that empty object
                 location: {},

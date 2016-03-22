@@ -1,7 +1,9 @@
 'use strict';
 
 describe('lxInteger', function () {
+    /*eslint-disable no-unused-vars */
     var scope, form, compile;
+    /*eslint-enable no-unused-vars */
 
     beforeEach(module('lx.integer'));
 
