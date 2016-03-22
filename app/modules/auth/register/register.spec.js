@@ -1,18 +1,19 @@
 'use strict';
 
 describe('auth', function () {
-    var scope, $httpBackend, baseUri;
+    var scope, $httpBackend;
 
+    beforeEach(module('ngRoute'));
+    beforeEach(module('common'));
     beforeEach(module('common.auth'));
-    beforeEach(module('auth'));
+    beforeEach(module('common.utils'));
     beforeEach(module('auth.register'));
 
     describe('AuthRegisterCtrl', function () {
-        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$location_, BASE_URI) {
+        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_) {
             scope = $rootScope.$new();
             $controller('AuthRegisterCtrl', {$scope: scope});
             $httpBackend = _$httpBackend_;
-            baseUri = BASE_URI;
         }));
 
         it('should be initialized correctly', function () {
@@ -48,7 +49,7 @@ describe('auth', function () {
             });
 
             it('should show success message', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/register', testData).respond(200, '');
+                $httpBackend.expectPOST('auth/account/register', testData).respond(200, '');
                 scope.form = {$invalid: false};
 
                 scope.register(testData);
@@ -59,7 +60,7 @@ describe('auth', function () {
                 var $setValidityName = '';
                 var $setValidityValid = null;
 
-                $httpBackend.expectPOST(baseUri + 'auth/account/register', testData).respond(422, [
+                $httpBackend.expectPOST('auth/account/register', testData).respond(422, [
                     {property: 'email', message: 'Error message from test'}
                 ]);
                 scope.form = {
@@ -83,7 +84,7 @@ describe('auth', function () {
             });
 
             it('should show an generic error for all errors except 400 and 401', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/register', testData).respond(500, '');
+                $httpBackend.expectPOST('auth/account/register', testData).respond(500, '');
                 scope.form = {$invalid: false};
 
                 scope.register(testData);

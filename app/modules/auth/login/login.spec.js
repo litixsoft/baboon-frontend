@@ -1,14 +1,16 @@
 'use strict';
 
 describe('auth', function () {
-    var scope, $httpBackend, baseUri, $window;
+    var scope, $httpBackend, $window;
 
+    beforeEach(module('ngRoute'));
+    beforeEach(module('common'));
     beforeEach(module('common.auth'));
-    beforeEach(module('auth'));
+    beforeEach(module('common.utils'));
     beforeEach(module('auth.login'));
 
     describe('AuthLoginCtrlTest', function () {
-        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$window_, BASE_URI) {
+        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$window_) {
             $window = {
                 // now, $window.location.path will update that empty object
                 location: {},
@@ -20,7 +22,6 @@ describe('auth', function () {
             scope = $rootScope.$new();
             $controller('AuthLoginCtrl', {$scope: scope, $window: $window});
             $httpBackend = _$httpBackend_;
-            baseUri = BASE_URI;
         }));
 
         it('should be initialized correctly', function () {
@@ -54,7 +55,7 @@ describe('auth', function () {
             });
 
             it('should show success message', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(200, 'TestToken');
+                $httpBackend.expectPOST('auth/account/login', testData).respond(200, 'TestToken');
                 scope.form = {$invalid: false};
 
                 scope.login(testData);
@@ -69,7 +70,7 @@ describe('auth', function () {
                 var $setValidityName = '';
                 var $setValidityValid = null;
 
-                $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(422, [
+                $httpBackend.expectPOST('auth/account/login', testData).respond(422, [
                     {property: 'email', message: 'Error message from test'}
                 ]);
                 scope.form = {
@@ -93,7 +94,7 @@ describe('auth', function () {
             });
 
             it('should show 404 message', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(404, '');
+                $httpBackend.expectPOST('auth/account/login', testData).respond(404, '');
                 scope.form = {$invalid: false};
 
                 scope.login(testData);
@@ -104,7 +105,7 @@ describe('auth', function () {
             });
 
             it('should show 403 message', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(403, '');
+                $httpBackend.expectPOST('auth/account/login', testData).respond(403, '');
                 scope.form = {$invalid: false};
 
                 scope.login(testData);
@@ -115,7 +116,7 @@ describe('auth', function () {
             });
 
             it('should show an generic error for all errors except 400 and 401', function () {
-                $httpBackend.expectPOST(baseUri + 'auth/account/login', testData).respond(500, '');
+                $httpBackend.expectPOST('auth/account/login', testData).respond(500, '');
                 scope.form = {$invalid: false};
 
                 scope.login(testData);

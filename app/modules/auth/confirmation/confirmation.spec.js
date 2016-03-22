@@ -1,19 +1,19 @@
 'use strict';
 
 describe('auth', function () {
-    var scope, $httpBackend, baseUri, $location;
+    var scope, $httpBackend, $location;
 
+    beforeEach(module('ngRoute'));
+    beforeEach(module('common'));
     beforeEach(module('common.auth'));
-    beforeEach(module('auth'));
     beforeEach(module('auth.confirmation'));
 
     describe('AuthConfirmationCtrlTest', function () {
-        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, BASE_URI, _$location_) {
+        beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$location_) {
             scope = $rootScope.$new();
             $location = _$location_;
             $controller('AuthConfirmationCtrl', {$scope: scope, $routeParams: {id: '1'}, $location: $location});
             $httpBackend = _$httpBackend_;
-            baseUri = BASE_URI;
             //$httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
         }));
 
@@ -35,7 +35,7 @@ describe('auth', function () {
 
         describe('has function for initial load', function () {
             it('should show success message', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(200, '');
                 $httpBackend.flush();
 
                 expect(scope.alerts.length).toBe(1);
@@ -44,7 +44,7 @@ describe('auth', function () {
             });
 
             it('should show 404 message', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(404, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(404, '');
                 $httpBackend.flush();
 
                 expect(scope.alerts.length).toBe(1);
@@ -52,7 +52,7 @@ describe('auth', function () {
             });
 
             it('should show 409 message', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(409, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(409, '');
                 $httpBackend.flush();
 
                 expect(scope.alerts.length).toBe(1);
@@ -61,7 +61,7 @@ describe('auth', function () {
             });
 
             it('should show an generic error for all errors except 404 and 409', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(500, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(500, '');
                 $httpBackend.flush();
 
                 expect(scope.alerts.length).toBe(1);
@@ -71,10 +71,10 @@ describe('auth', function () {
 
         describe('has a function renew() which', function () {
             it('should show a success message', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(200, '');
                 $httpBackend.flush();
 
-                $httpBackend.expectPOST(baseUri + 'auth/account/renew').respond(200, '');
+                $httpBackend.expectPOST('auth/account/renew').respond(200, '');
                 scope.renew();
                 $httpBackend.flush();
 
@@ -83,10 +83,10 @@ describe('auth', function () {
             });
 
             it('should show an error message', function () {
-                $httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
+                $httpBackend.expectGET('auth/account/confirmation/1').respond(200, '');
                 $httpBackend.flush();
 
-                $httpBackend.expectPOST(baseUri + 'auth/account/renew').respond(500, '');
+                $httpBackend.expectPOST('auth/account/renew').respond(500, '');
                 scope.renew();
                 $httpBackend.flush();
 
