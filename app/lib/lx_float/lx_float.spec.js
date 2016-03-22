@@ -2,7 +2,7 @@
 
 describe('lxFloat', function () {
     describe('Tests with valid directive configuration', function () {
-        var scope, form;
+        var scope, form, compile;
 
         beforeEach(module('lx.float'));
 
@@ -120,6 +120,65 @@ describe('lxFloat', function () {
             scope.model.val = '3.23,4';
             scope.$digest();
             expect(form.val.$valid).toBe(false);
+        });
+
+        describe('with min and max attribute', function () {
+            beforeEach(inject(function ($compile, $rootScope) {
+                // init scope
+                scope = $rootScope.$new();
+                compile = $compile;
+
+                var element = angular.element(
+                    '<form name="form">' +
+                    '<intput type="text" ng-model="model.val" name="val" lx-float min="20" max="30.7774"/>' +
+                    '</form>'
+                );
+
+                scope.model = {};
+                $compile(element)(scope);
+                scope.$digest();
+                form = scope.form;
+            }));
+
+            it('should be valid when value is in range', function () {
+                form.val.$setViewValue('25');
+                expect(scope.model.val).toBe(25);
+                expect(form.val.$valid).toBe(true);
+            });
+
+            it('should be valid when value is in range', function () {
+                form.val.$setViewValue('30,7773');
+                expect(scope.model.val).toBe(30.78);
+                expect(form.val.$valid).toBe(true);
+            });
+
+            it('should be invalid when value is less than minimum', function () {
+                form.val.$setViewValue('5');
+                expect(scope.model.val).toBeUndefined();
+                expect(form.val.$valid).toBe(false);
+                expect(form.val.$error.min).toBe(true);
+            });
+
+            it('should be invalid when value is less than minimum', function () {
+                form.val.$setViewValue('19.99');
+                expect(scope.model.val).toBeUndefined();
+                expect(form.val.$valid).toBe(false);
+                expect(form.val.$error.min).toBe(true);
+            });
+
+            it('should be invalid when value is greater than maximum', function () {
+                form.val.$setViewValue('30.79');
+                expect(scope.model.val).toBeUndefined();
+                expect(form.val.$valid).toBe(false);
+                expect(form.val.$error.max).toBe(true);
+            });
+
+            it('should be invalid when value is greater than maximum', function () {
+                form.val.$setViewValue('40');
+                expect(scope.model.val).toBeUndefined();
+                expect(form.val.$valid).toBe(false);
+                expect(form.val.$error.max).toBe(true);
+            });
         });
     });
 

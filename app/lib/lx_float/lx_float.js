@@ -48,6 +48,10 @@ angular.module('lx.float', [])
         return {
             restrict: 'A',
             require: 'ngModel',
+            scope: {
+                min: '@',
+                max: '@'
+            },
             link: function (scope, elm, attrs, ngModel) {
                 // default values
                 var numberOfDigits = 2;
@@ -83,8 +87,42 @@ angular.module('lx.float', [])
                     }
                 });
 
+                // watch for changes of the attribute min
+                attrs.$observe('min', function (value) {
+                    // only set value when min is a float
+                    if (value && FLOAT_REGEXP.test(value)) {
+                        scope.minimun = roundToDecimal(parseFloat(value.replace(',', '.')), numberOfDigits);
+                    }
+                });
+
+                // watch for changes of the attribute max
+                attrs.$observe('max', function (value) {
+                    // only set value when max is a float
+                    if (value && FLOAT_REGEXP.test(value)) {
+                        scope.maximum = roundToDecimal(parseFloat(value.replace(',', '.')), numberOfDigits);
+                    }
+                });
+
                 ngModel.$validators.lxfloat = function (value) {
                     return value === null || value === undefined ? true : FLOAT_REGEXP.test(value);
+                };
+
+                ngModel.$validators.min = function (value) {
+                    if (angular.isNumber(scope.minimun) && FLOAT_REGEXP.test(value)) {
+                        var v = typeof value === 'number' ? roundToDecimal(value, numberOfDigits) : roundToDecimal(parseFloat(value.replace(',', '.')), numberOfDigits);
+                        return v >= scope.minimun;
+                    }
+
+                    return true;
+                };
+
+                ngModel.$validators.max = function (value) {
+                    if (angular.isNumber(scope.maximum) && FLOAT_REGEXP.test(value)) {
+                        var v = typeof value === 'number' ? roundToDecimal(value, numberOfDigits) : roundToDecimal(parseFloat(value.replace(',', '.')), numberOfDigits);
+                        return v <= scope.maximum;
+                    }
+
+                    return true;
                 };
 
                 ngModel.$parsers.push(function (viewValue) {
