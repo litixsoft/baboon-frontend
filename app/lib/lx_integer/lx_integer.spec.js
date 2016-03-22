@@ -1,15 +1,14 @@
 'use strict';
 
 describe('lxInteger', function () {
-    var scope, form;
+    var scope, form, compile;
 
     beforeEach(module('lx.integer'));
-
-
 
     beforeEach(inject(function ($compile, $rootScope) {
         // init scope
         scope = $rootScope.$new();
+        compile = $compile;
 
         var element = angular.element(
                 '<form name="form">' +
@@ -104,5 +103,44 @@ describe('lxInteger', function () {
         scope.model.val = 1;
         scope.$digest();
         expect(form.val.$valid).toBe(true);
+    });
+
+    describe('with min and max attribute', function () {
+        beforeEach(inject(function ($compile, $rootScope) {
+            // init scope
+            scope = $rootScope.$new();
+            compile = $compile;
+
+            var element = angular.element(
+                '<form name="form">' +
+                '<intput type="text" ng-model="model.val" name="val" lx-integer min="20" max="30"/>' +
+                '</form>'
+            );
+
+            scope.model = {};
+            $compile(element)(scope);
+            scope.$digest();
+            form = scope.form;
+        }));
+
+        it('should be valid when value is in range', function () {
+            form.val.$setViewValue('25');
+            expect(scope.model.val).toBe(25);
+            expect(form.val.$valid).toBe(true);
+        });
+
+        it('should be invalid when value is less than minimum', function () {
+            form.val.$setViewValue('5');
+            expect(scope.model.val).toBeUndefined();
+            expect(form.val.$valid).toBe(false);
+            expect(form.val.$error.min).toBe(true);
+        });
+
+        it('should be invalid when value is greater than maximum', function () {
+            form.val.$setViewValue('40');
+            expect(scope.model.val).toBeUndefined();
+            expect(form.val.$valid).toBe(false);
+            expect(form.val.$error.max).toBe(true);
+        });
     });
 });
