@@ -1,3 +1,14 @@
+<a name="0.5.20"></a>
+## [0.5.20](https://github.com/litixsoft/baboon-frontend/compare/v0.5.19...v0.5.20) (2016-03-22)
+
+
+### Features
+
+* **lx.float:** add min and max attributes to validate the minimum and maximum value ([eec5ebc](https://github.com/litixsoft/baboon-frontend/commit/eec5ebc))
+* **lx.integer:** add min and max attributes to validate the minimum and maximum value ([7dd6b9f](https://github.com/litixsoft/baboon-frontend/commit/7dd6b9f))
+
+
+
 <a name="0.5.19"></a>
 ## [0.5.19](https://github.com/litixsoft/baboon-frontend/compare/v0.5.18...v0.5.19) (2016-02-29)
 
