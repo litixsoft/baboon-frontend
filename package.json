@@ -3,7 +3,7 @@
     "version": "0.5.20",
     "description": "Baboon singlepage frontend, based on AngularJS, backend independent.",
     "homepage": "https://github.com/litixsoft/baboon-frontend",
-    "author": "Litixsoft GmbH <info@litixsoft.de> (http://www.litixsoft.de)",
+    "author": "Litixsoft GmbH <info@litixsoft.de> (https://www.litixsoft.de)",
     "maintainers": [
         "Timo Liebetrau <t.liebetrau@litixsoft.de>",
         "Marco Kannenberg <m.kannenberg@litixsoft.de>",
@@ -12,7 +12,8 @@
         "Thomas Scheibe <th.scheibe@litixsoft.de>",
         "Mike Alig <m.alig@litixsoft.de>",
         "Joerg Raschke <j.Raschke@litixsoft.de>",
-        "Andreas Krummsdorf <a.krummsdorf@litixsoft.de>"
+        "Andreas Krummsdorf <a.krummsdorf@litixsoft.de>",
+        "Matthias Tempel <m.tempel@litixsoft.de>"
     ],
     "repository": {
         "type": "git",
@@ -46,8 +47,19 @@
     "scripts": {
         "test": "grunt travis --stack"
     },
-    "dependencies": {},
+    "dependencies": {
+        "angular": "1.5.11",
+        "angular-bootstrap": "0.12.2",
+        "angular-messages": "1.5.11",
+        "angular-route": "1.5.11",
+        "angular-socket-io": "0.7.0",
+        "angular-ui-router": "0.2.18",
+        "bootstrap": "3.3.7",
+        "font-awesome": "4.7.0"
+    },
     "devDependencies": {
+        "angular-mocks": "1.5.11",
+        "angular-scenario": "1.5.11",
         "grunt": "^0.4.5",
         "grunt-autoprefixer": "^3.0.4",
         "grunt-bg-shell": "^2.3.3",

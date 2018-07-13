@@ -5,7 +5,6 @@ var fs = require('fs');
 var url = require('url');
 
 module.exports = function (grunt) {
-
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
 
@@ -18,7 +17,7 @@ module.exports = function (grunt) {
      * @param {!string} folder The path to the code coverage folder.
      * @returns {string} The path to the index.html file
      */
-    function getCoverageReport (folder) {
+    function getCoverageReport(folder) {
         var reports = grunt.file.expand(folder + '*/index.html');
 
         if (reports && reports.length > 0) {
@@ -37,8 +36,7 @@ module.exports = function (grunt) {
      * @param {!string} root The base path of documents
      * @param {!function} next Callback for next function in stack
      */
-    function connectRewrite (req, res, root, next) {
-
+    function connectRewrite(req, res, root, next) {
         var appFile = 'index.html';
         var urlPath = url.parse(req.url).pathname;
         var arr = urlPath.split('/');
@@ -82,7 +80,6 @@ module.exports = function (grunt) {
 
     // Define the configuration for all the tasks
     grunt.initConfig({
-
         pkg: grunt.file.readJSON('package.json'),
 
         // Project settings
@@ -412,13 +409,13 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        cwd: 'app/bower_components/bootstrap/dist',
+                        cwd: 'node_modules/bootstrap/dist',
                         src: 'fonts/*',
                         dest: '<%= yeoman.dist %>/assets'
                     },
                     {
                         expand: true,
-                        cwd: 'app/bower_components/fontawesome',
+                        cwd: 'node_modules/font-awesome',
                         src: 'fonts/*',
                         dest: '<%= yeoman.dist %>/assets'
                     },
@@ -427,6 +424,16 @@ module.exports = function (grunt) {
                         cwd: '<%= yeoman.app %>',
                         dest: '<%= yeoman.dist %>',
                         src: ['common/**/*.html', 'modules/**/*.html']
+                    }
+                ]
+            },
+            dev: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'node_modules/',
+                        src: ['angular*/**', 'bootstrap/**', 'font-awesome/**'],
+                        dest: '<%= yeoman.app %>/components/'
                     }
                 ]
             }
@@ -559,10 +566,10 @@ module.exports = function (grunt) {
                 scripts: ['angular.js', '../src.js'],
                 html5Mode: false
             },
-//          tutorial: {
-//              src: ['content/tutorial/*.ngdoc'],
-//              title: 'Tutorial'
-//          },
+            //          tutorial: {
+            //              src: ['content/tutorial/*.ngdoc'],
+            //              title: 'Tutorial'
+            //          },
             api: {
                 src: ['app/lib/**/*.js', '!app/lib/**/*.spec.js', '!app/lib/**/*.min.js'],
                 title: 'API Documentation'
@@ -651,7 +658,8 @@ module.exports = function (grunt) {
     grunt.registerTask('build:dev', [
         'clean:server',
         'concurrent:server',
-        'autoprefixer'
+        'autoprefixer',
+        'copy:dev'
     ]);
 
     grunt.registerTask('build', [

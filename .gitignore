@@ -1,5 +1,5 @@
 .idea
 .tmp
-bower_components
+app/components
 build
 node_modules
