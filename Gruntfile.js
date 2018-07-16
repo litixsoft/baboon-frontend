@@ -432,7 +432,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'node_modules/',
-                        src: ['angular*/**', 'bootstrap/**', 'font-awesome/**'],
+                        src: ['angular*/**', 'bootstrap/**', 'font-awesome/**', '@uirouter/**'],
                         dest: '<%= yeoman.app %>/components/'
                     }
                 ]

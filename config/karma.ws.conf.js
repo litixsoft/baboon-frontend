@@ -20,7 +20,7 @@ module.exports = function (config) {
             'app/components/angular-route/angular-route.js',
             'app/components/angular-messages/angular-messages.js',
             'app/components/angular-mocks/angular-mocks.js',
-            'app/components/angular-ui-router/release/angular-ui-router.js',
+            'app/components/@uirouter/angularjs/release/angular-ui-router.js',
             'app/components/angular-bootstrap/ui-bootstrap-tpls.js',
             'app/components/angular-socket-io/socket.js',
             'app/lib/**/*.js',

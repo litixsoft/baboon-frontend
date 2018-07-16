@@ -8,7 +8,6 @@
  */
 angular.module('lx.socket', ['btford.socket-io'])
     .provider('$lxSocket', function () {
-
         var _host, _options;
         var _receiveEventBuffer = [];
         var _forwardEventBuffer = [];
@@ -16,7 +15,7 @@ angular.module('lx.socket', ['btford.socket-io'])
         // the socket.io object
         var socketIO;
 
-        function checkIfSocketExists () {
+        function checkIfSocketExists() {
             if (!socketIO) {
                 throw new Error('Socket not connected');
             }
@@ -40,7 +39,6 @@ angular.module('lx.socket', ['btford.socket-io'])
          * @throws {TypeError} Error when wrong type by options
          */
         this.set = function (host, options) {
-
             // Set options
             options = options || {};
 
@@ -53,7 +51,7 @@ angular.module('lx.socket', ['btford.socket-io'])
             options.reconnectionDelayMax = options.reconnectionDelayMax || 20000;
             options.timeout = options.timeout || 5000;
             options.reconnectionAttempts = options.reconnectionAttempts || 100;
-            options.autoconnect = options.hasOwnProperty('autoconnect') ? !!options.autoconnect : true;
+            options.autoconnect = options.hasOwnProperty('autoconnect') ? Boolean(options.autoconnect) : true;
 
             try {
                 // Check host
@@ -288,7 +286,7 @@ angular.module('lx.socket', ['btford.socket-io'])
 
                     // Error function
                     //noinspection Eslint
-                    var error = function error () {
+                    var error = function error() {
                         var err = new Error('Error: 405 Method Not Allowed, socket is not connected.');
                         err.status = 405;
                         throw err;
@@ -354,7 +352,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     socketIO.forward(event, scope);
                 } else {
                     // add to buffer
-                    _forwardEventBuffer.push({name: event, scope: scope});
+                    _forwardEventBuffer.push({ name: event, scope: scope });
                 }
             };
 
@@ -387,7 +385,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     socketIO.on(event, callback);
                 } else {
                     // add to buffer
-                    _receiveEventBuffer.push({name: event, action: callback});
+                    _receiveEventBuffer.push({ name: event, action: callback });
                 }
             };
 
@@ -421,7 +419,7 @@ angular.module('lx.socket', ['btford.socket-io'])
                     socketIO.addListener(event, callback);
                 } else {
                     // add to buffer
-                    _receiveEventBuffer.push({name: event, action: callback});
+                    _receiveEventBuffer.push({ name: event, action: callback });
                 }
             };
 
