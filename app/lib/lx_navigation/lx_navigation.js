@@ -15,7 +15,7 @@ angular.module('lx.navigation', [])
     .provider('$lxNavigation', function () {
         var config = {};
 
-        function cloneNavObject (value) {
+        function cloneNavObject(value) {
             return {
                 title: value.title,
                 route: value.route,
@@ -26,7 +26,7 @@ angular.module('lx.navigation', [])
             };
         }
 
-        function userHasAccess (user, navItem) {
+        function userHasAccess(user, navItem) {
             if (!navItem.roles && !navItem.resources || !user) {
                 return true;
             }
@@ -58,7 +58,7 @@ angular.module('lx.navigation', [])
             }
         }
 
-        function getUserNavigation (navigation, currentApp, user) {
+        function getUserNavigation(navigation, currentApp, user) {
             var result = [];
 
             angular.forEach(navigation, function (navItem) {
@@ -128,21 +128,21 @@ angular.module('lx.navigation', [])
             return pub;
         };
     })
-/**
- * @ngdoc directive
- * @name lx.navigation.directive:lxComNav
- * @restrict E
- *
- * @description
- * Creates the navigation in a flat list.
- *
- * For more information look at the [guide](/lxComNav).
- *
- * @param {string=} orientation The orientation of the list, horizontal or vertical.
- * @param {string} navLinklist The list with all navigation links.
- * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
- *
- */
+    /**
+     * @ngdoc directive
+     * @name lx.navigation.directive:lxComNav
+     * @restrict E
+     *
+     * @description
+     * Creates the navigation in a flat list.
+     *
+     * For more information look at the [guide](/lxComNav).
+     *
+     * @param {string=} orientation The orientation of the list, horizontal or vertical.
+     * @param {string} navLinklist The list with all navigation links.
+     * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
+     *
+     */
     .directive('lxComNav', function ($location, ACTIVE_APP, $http, $templateCache, $compile, $lxNavigation, $log) {
         return {
             restrict: 'E',
@@ -167,7 +167,7 @@ angular.module('lx.navigation', [])
                     '</li>' +
                     '</ul>';
 
-                function replaceWithStandard (template) {
+                function replaceWithStandard(template) {
                     angular.forEach(scope.menu, function (key) {
                         if (key.route && key.state) {
                             $log.error('"Please use only one routing element in your navigation. Route or State, not both together!! ', key);
@@ -188,15 +188,15 @@ angular.module('lx.navigation', [])
                 });
 
                 if (scope.navTemplatePath && scope.navTemplatePath.length > 3) {
-                    $http.get(scope.navTemplatePath, {cache: $templateCache})
-                        .success(function (tplGetContent) {
-                            if (tplGetContent.substr(0, 5) !== '<!doc') {
-                                replaceWithStandard(tplGetContent);
+                    $http.get(scope.navTemplatePath, { cache: $templateCache })
+                        .then(function (response) {
+                            if (response.data.substr(0, 5) !== '<!doc') {
+                                replaceWithStandard(response.data);
                             } else {
                                 replaceWithStandard(tplContent);
                             }
                         })
-                        .error(function () {
+                        .catch(function () {
                             replaceWithStandard(tplContent);
                         });
                 } else {
@@ -213,20 +213,20 @@ angular.module('lx.navigation', [])
             }
         };
     })
-/**
- * @ngdoc directive
- * @name lx.navigation.directive:lxComNavTree
- * @restrict E
- *
- * @description
- * Creates the navigation in a tree list.
- *
- * For more information look at the [guide](/lxComNavTree).
- *
- * @param {string} navLinklist The list with all navigation links.
- * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
- *
- */
+    /**
+     * @ngdoc directive
+     * @name lx.navigation.directive:lxComNavTree
+     * @restrict E
+     *
+     * @description
+     * Creates the navigation in a tree list.
+     *
+     * For more information look at the [guide](/lxComNavTree).
+     *
+     * @param {string} navLinklist The list with all navigation links.
+     * @param {object=} navTemplatePath The path to a template which should overwrite the standard layout.
+     *
+     */
     .directive('lxComNavTree', function ($route, $location, $templateCache, ACTIVE_APP, $http, $compile, $lxNavigation, $log) {
         return {
             restrict: 'E',
@@ -264,7 +264,7 @@ angular.module('lx.navigation', [])
                     '<li ng-repeat="data in data.children" ng-include="\'lx_navigation/standard/nav_tree_inside\'"></li>' +
                     '</ul>');
 
-                function replaceWithStandard (template) {
+                function replaceWithStandard(template) {
                     angular.forEach(scope.navList, function (key) {
                         if (key.route && key.state) {
                             $log.error('Please use only one routing element in your navigation. Route or State, not both together!! ', key);
@@ -325,15 +325,15 @@ angular.module('lx.navigation', [])
                 }
 
                 if (scope.navTemplatePath && scope.navTemplatePath.length > 3) {
-                    $http.get(scope.navTemplatePath, {cache: $templateCache})
-                        .success(function (tplGetContent) {
-                            if (tplGetContent.substr(0, 5) !== '<!doc') {
-                                replaceWithStandard(tplGetContent);
+                    $http.get(scope.navTemplatePath, { cache: $templateCache })
+                        .then(function (response) {
+                            if (response.data.substr(0, 5) !== '<!doc') {
+                                replaceWithStandard(response.data);
                             } else {
                                 replaceWithStandard(tplContent);
                             }
                         })
-                        .error(function () {
+                        .catch(function () {
                             replaceWithStandard(tplContent);
                         });
                 } else {
