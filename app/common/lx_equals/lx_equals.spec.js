@@ -10,10 +10,10 @@ describe('lxEqualsTest', function () {
         scope = $rootScope.$new();
 
         var element = angular.element(
-                '<form name="form">' +
-                '<input type="password" ng-model="model.password" name="password">' +
-                '<input type="password" ng-model="model.password2" name="password2" lx-equals="model.password">' +
-                '</form>'
+            '<form name="form">' +
+            '<input type="password" ng-model="model.password" name="password">' +
+            '<input type="password" ng-model="model.password2" name="password2" lx-equals="model.password">' +
+            '</form>'
         );
 
         scope.model = {};
@@ -27,7 +27,7 @@ describe('lxEqualsTest', function () {
         expect(scope.model.password2).toBeUndefined();
     });
 
-    it('should pass with same password', function() {
+    it('should pass with same password', function () {
         form.password.$setViewValue('password');
         form.password2.$setViewValue('password');
         expect(scope.model.password).toEqual('password');
@@ -36,7 +36,7 @@ describe('lxEqualsTest', function () {
         expect(form.password2.$valid).toBe(true);
     });
 
-    it('should pass with same password', function() {
+    it('should pass with same password', function () {
         form.password.$setViewValue('password');
         form.password2.$setViewValue('password2');
         expect(scope.model.password).toEqual('password');
@@ -45,7 +45,7 @@ describe('lxEqualsTest', function () {
         expect(form.password2.$valid).toBe(false);
     });
 
-    it('should return null if model is null', function() {
+    it('should return null if model is null', function () {
         scope.model.password = null;
         scope.model.password2 = null;
         scope.$digest();
@@ -53,7 +53,7 @@ describe('lxEqualsTest', function () {
         expect(form.password2.$valid).toBe(true);
     });
 
-    it('should pass with valid model', function() {
+    it('should pass with valid model', function () {
         scope.model.password = 'password';
         scope.model.password2 = 'password';
         scope.$digest();
@@ -61,7 +61,7 @@ describe('lxEqualsTest', function () {
         expect(form.password2.$valid).toBe(true);
     });
 
-    it('should not pass with invalid model', function() {
+    it('should not pass with invalid model', function () {
         scope.model.password = 'password';
         scope.model.password2 = 'password2';
         scope.$digest();
@@ -69,15 +69,15 @@ describe('lxEqualsTest', function () {
         expect(form.password2.$valid).toBe(false);
     });
 
-    it('should print an error if attribute is missing', function() {
-        inject(function($compile) {
+    it('should print an error if attribute is missing', function () {
+        inject(function ($compile) {
             spyOn(console, 'error');
 
             var element = angular.element(
-                    '<form name="form">' +
-                    '<input type="password" ng-model="model.password" name="password">' +
-                    '<input type="password" ng-model="model.password2" name="password2" lx-equals>' +
-                    '</form>'
+                '<form name="form">' +
+                '<input type="password" ng-model="model.password" name="password">' +
+                '<input type="password" ng-model="model.password2" name="password2" lx-equals>' +
+                '</form>'
             );
 
             scope.model = {};

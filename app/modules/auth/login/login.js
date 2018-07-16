@@ -26,18 +26,18 @@ angular.module('auth.login', [])
 
             $scope.requesting = true;
             Auth.login(model)
-                .success(function () {
+                .then(function () {
                     $window.location.href = '/main/home';
                 })
-                .error(function (error, status) {
+                .catch(function (response) {
                     $scope.requesting = false;
 
-                    if (status === 422 && error) {
-                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
-                    } else if (status === 404 || status === 403) {
-                        $scope.alerts.push({msg: 'Die E-Mail oder das Passwort ist falsch.'});
+                    if (response.status === 422 && response.error) {
+                        lxUtils.populateServerErrors(response.error.errors || response.error, $scope.form);
+                    } else if (response.status === 404 || response.status === 403) {
+                        $scope.alerts.push({ msg: 'Die E-Mail oder das Passwort ist falsch.' });
                     } else {
-                        $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});
+                        $scope.alerts.push({ msg: 'Es ist ein Fehler aufgetreten.' });
                     }
                 });
         };

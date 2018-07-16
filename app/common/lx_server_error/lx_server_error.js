@@ -6,7 +6,7 @@ angular.module('common.servererror', [])
             restrict: 'A',
             require: '?ngModel',
             link: function (scope, elem, attrs, ctrl) {
-                ctrl.$validators.server = function() {
+                ctrl.$validators.server = function () {
                     delete ctrl.$error.serverMsg;
                     return true;
                 };

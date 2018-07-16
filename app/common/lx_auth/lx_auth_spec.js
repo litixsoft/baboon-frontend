@@ -34,7 +34,7 @@ describe('Auth service', function () {
             });
 
             it('should return false when there is no acl', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test'});
+                window.sessionStorage.user = JSON.stringify({ name: 'test' });
                 expect(service.rightsEnabled()).toBeFalsy();
             });
 
@@ -55,7 +55,7 @@ describe('Auth service', function () {
             });
 
             it('should return false when there is no token', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test'});
+                window.sessionStorage.user = JSON.stringify({ name: 'test' });
                 expect(service.userIsLoggedIn()).toBeFalsy();
             });
 
@@ -76,7 +76,7 @@ describe('Auth service', function () {
             });
 
             it('should return false when there is no acl', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test'});
+                window.sessionStorage.user = JSON.stringify({ name: 'test' });
                 expect(service.getAcl()).toBeUndefined();
             });
 
@@ -99,14 +99,14 @@ describe('Auth service', function () {
             });
 
             it('should return false when the user has no roles', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test', roles: []});
+                window.sessionStorage.user = JSON.stringify({ name: 'test', roles: [] });
                 expect(service.userIsInRole('User')).toBeFalsy();
                 expect(service.userIsInRole('Guest')).toBeFalsy();
                 expect(service.userIsInRole('NoRole')).toBeFalsy();
             });
 
             it('should return false when the user has no roles', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test', roles: null});
+                window.sessionStorage.user = JSON.stringify({ name: 'test', roles: null });
                 expect(service.userIsInRole('User')).toBeFalsy();
                 expect(service.userIsInRole('Guest')).toBeFalsy();
                 expect(service.userIsInRole('NoRole')).toBeFalsy();
@@ -142,7 +142,7 @@ describe('Auth service', function () {
             });
 
             it('should return false when the user has no acl', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test', acl: []});
+                window.sessionStorage.user = JSON.stringify({ name: 'test', acl: [] });
                 expect(service.userHasAccess('register')).toBeFalsy();
                 expect(service.userHasAccess('login')).toBeFalsy();
                 expect(service.userHasAccess('getAllUsers')).toBeFalsy();
@@ -150,7 +150,7 @@ describe('Auth service', function () {
             });
 
             it('should return false when the user has no acl', function () {
-                window.sessionStorage.user = JSON.stringify({name: 'test', acl: null});
+                window.sessionStorage.user = JSON.stringify({ name: 'test', acl: null });
                 expect(service.userHasAccess('register')).toBeFalsy();
                 expect(service.userHasAccess('login')).toBeFalsy();
                 expect(service.userHasAccess('getAllUsers')).toBeFalsy();
@@ -195,10 +195,10 @@ describe('Auth service', function () {
 
         describe('.login()', function () {
             it('should return the user with token when the login was successful', function () {
-                var result = {token: 'TestToken', name: '123'};
+                var result = { token: 'TestToken', name: '123' };
                 $httpBackend.expectPOST('auth/account/login', testUser).respond(200, result);
 
-                service.login(testUser).success(function () {
+                service.login(testUser).then(function () {
                     expect(window.sessionStorage.user).toBe(JSON.stringify(result));
                 });
 
@@ -209,7 +209,7 @@ describe('Auth service', function () {
                 var result = null;
                 $httpBackend.expectPOST('auth/account/login', testUser).respond(200, result);
 
-                service.login(testUser).success(function () {
+                service.login(testUser).then(function () {
                     expect(window.sessionStorage.user).toBe(JSON.stringify({}));
                 });
 
@@ -217,14 +217,14 @@ describe('Auth service', function () {
             });
 
             it('should return an error when the login failed', function () {
-                var result = {message: 'login error'};
+                var result = { message: 'login error' };
                 $httpBackend.expectPOST('auth/account/login', testUser).respond(404, result);
 
-                service.login(testUser).error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe(result.message);
-                        expect(status).toBe(404);
+                service.login(testUser).catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe(result.message);
+                        expect(response.status).toBe(404);
                     });
 
                 $httpBackend.flush();
@@ -238,11 +238,11 @@ describe('Auth service', function () {
 
                 $httpBackend.expectPOST('auth/account/login', testUser).respond(200, result);
 
-                service.login(testUser).error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe('Error parsing data from server');
-                        expect(status).toBe(400);
+                service.login(testUser).catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe('Error parsing data from server');
+                        expect(response.status).toBe(400);
                     });
 
                 $httpBackend.flush();
@@ -253,7 +253,7 @@ describe('Auth service', function () {
             it('should return success when the confirmation was successful', function () {
                 $httpBackend.expectGET('auth/account/confirmation/1').respond(200, {});
 
-                service.confirmation(1).success(function () {
+                service.confirmation(1).then(function () {
                     expect(true).toBeTruthy();
                 });
 
@@ -261,14 +261,14 @@ describe('Auth service', function () {
             });
 
             it('should return an error when the confirmation failed', function () {
-                var result = {message: 'confirmation error'};
+                var result = { message: 'confirmation error' };
                 $httpBackend.expectGET('auth/account/confirmation/2').respond(404, result);
 
-                service.confirmation(2).error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe(result.message);
-                        expect(status).toBe(404);
+                service.confirmation(2).catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe(result.message);
+                        expect(response.status).toBe(404);
                     });
 
                 $httpBackend.flush();
@@ -285,7 +285,7 @@ describe('Auth service', function () {
                     return true;
                 }).respond(200, {});
 
-                service.renew(1, 'someUrl').success(function () {
+                service.renew(1, 'someUrl').then(function () {
                     expect(true).toBeTruthy();
                 });
 
@@ -293,7 +293,7 @@ describe('Auth service', function () {
             });
 
             it('should return an error when the renew failed', function () {
-                var result = {message: 'renew error'};
+                var result = { message: 'renew error' };
                 $httpBackend.expectPOST('auth/account/renew', function (data) {
                     expect(data).toBe('id=2&url=anotherURL');
                     return true;
@@ -302,11 +302,11 @@ describe('Auth service', function () {
                     return true;
                 }).respond(404, result);
 
-                service.renew(2, 'anotherURL').error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe(result.message);
-                        expect(status).toBeUndefined();
+                service.renew(2, 'anotherURL').catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe(result.message);
+                        expect(response.status).toBe(404);
                     });
 
                 $httpBackend.flush();
@@ -320,7 +320,7 @@ describe('Auth service', function () {
                     return true;
                 }).respond(200, {});
 
-                service.register(testUser).success(function () {
+                service.register(testUser).then(function () {
                     expect(true).toBeTruthy();
                 });
 
@@ -328,14 +328,14 @@ describe('Auth service', function () {
             });
 
             it('should return an error when the register failed', function () {
-                var result = {message: 'register error'};
+                var result = { message: 'register error' };
                 $httpBackend.expectPOST('auth/account/register').respond(404, result);
 
-                service.register(testUser).error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe(result.message);
-                        expect(status).toBe(404);
+                service.register(testUser).catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe(result.message);
+                        expect(response.status).toBe(404);
                     });
 
                 $httpBackend.flush();
@@ -359,7 +359,7 @@ describe('Auth service', function () {
                     return true;
                 }).respond(200, {});
 
-                service.password(testUser).success(function () {
+                service.password(testUser).then(function () {
                     expect(true).toBeTruthy();
                 });
 
@@ -367,14 +367,14 @@ describe('Auth service', function () {
             });
 
             it('should return an error when the password failed', function () {
-                var result = {message: 'password error'};
+                var result = { message: 'password error' };
                 $httpBackend.expectPOST('auth/account/password').respond(404, result);
 
-                service.password(testUser).error(
-                    function (err, status) {
-                        expect(err).toBeDefined();
-                        expect(err.message).toBe(result.message);
-                        expect(status).toBe(404);
+                service.password(testUser).catch(
+                    function (response) {
+                        expect(response.error).toBeDefined();
+                        expect(response.error.message).toBe(result.message);
+                        expect(response.status).toBe(404);
                     });
 
                 $httpBackend.flush();

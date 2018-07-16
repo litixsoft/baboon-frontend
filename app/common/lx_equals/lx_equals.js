@@ -11,7 +11,7 @@ angular.module('common.equals', [])
                     return;
                 }
 
-                ctrl.$validators.lxequals = function(modelValue, viewValue) {
+                ctrl.$validators.lxequals = function (modelValue, viewValue) {
                     var value = modelValue || viewValue;
                     var other = scope.$eval(attrs.lxEquals);
                     return value === other;

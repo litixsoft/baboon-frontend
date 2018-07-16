@@ -7,36 +7,21 @@ angular.module('common.auth', [])
         return {
             confirmation: function (id) {
                 var deferred = $q.defer();
-                var promise = deferred.promise;
 
                 $http.get('auth/account/confirmation/' + id)
-                    .success(deferred.resolve)
-                    .error(function (err, status) {
-                        deferred.reject({data: err, status: status});
+                    .then(deferred.resolve)
+                    .catch(function (response) {
+                        deferred.reject({ error: response.data, status: response.status });
                     });
-
-                promise.success = function (fn) {
-                    promise.then(fn);
-                    return promise;
-                };
-
-                promise.error = function (fn) {
-                    promise.then(null, function (response) {
-                        fn(response.data, response.status);
-                    });
-                    return promise;
-                };
-
-                return promise;
+                return deferred.promise;
             },
             renew: function (id, url) {
                 var deferred = $q.defer();
-                var promise = deferred.promise;
 
                 $http({
                     method: 'POST',
                     url: 'auth/account/renew',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     transformRequest: function (obj) {
                         var str = [];
                         angular.forEach(obj, function (value, key) {
@@ -44,104 +29,53 @@ angular.module('common.auth', [])
                         });
                         return str.join('&');
                     },
-                    data: {id: id, url: url}
+                    data: { id: id, url: url }
                 })
-                    .success(deferred.resolve)
-                    .error(deferred.reject);
-
-                promise.success = function (fn) {
-                    promise.then(fn);
-                    return promise;
-                };
-
-                promise.error = function (fn) {
-                    promise.then(null, fn);
-                    return promise;
-                };
-
-                return promise;
+                    .then(deferred.resolve)
+                    .catch(function (response) {
+                        deferred.reject({ error: response.data, status: response.status });
+                    });
+                return deferred.promise;
             },
             register: function (user) {
                 var deferred = $q.defer();
-                var promise = deferred.promise;
 
-                $http.post('auth/account/register', user, {type: 'application/json'})
-                    .success(deferred.resolve)
-                    .error(function (err, status) {
-                        deferred.reject({data: err, status: status});
+                $http.post('auth/account/register', user, { type: 'application/json' })
+                    .then(deferred.resolve)
+                    .catch(function (response) {
+                        deferred.reject({ error: response.data, status: response.status });
                     });
-
-                promise.success = function (fn) {
-                    promise.then(fn);
-                    return promise;
-                };
-
-                promise.error = function (fn) {
-                    promise.then(null, function (response) {
-                        fn(response.data, response.status);
-                    });
-                    return promise;
-                };
-
-                return promise;
+                return deferred.promise;
             },
             login: function (user) {
                 var deferred = $q.defer();
-                var promise = deferred.promise;
 
-                $http.post('auth/account/login', user, {type: 'application/json'})
-                    .success(function (data) {
+                $http.post('auth/account/login', user, { type: 'application/json' })
+                    .then(function (response) {
                         try {
-                            $window.sessionStorage.user = JSON.stringify(data || {});
+                            $window.sessionStorage.user = JSON.stringify(response && response.data || {});
                             deferred.resolve();
                         } catch (error) {
-                            deferred.reject({data: new Error('Error parsing data from server'), status: 400});
+                            deferred.reject({ error: new Error('Error parsing data from server'), status: 400 });
                         }
                     })
-                    .error(function (err, status) {
-                        deferred.reject({data: err, status: status});
+                    .catch(function (response) {
+                        deferred.reject({ error: response.data, status: response.status });
                     });
-
-                promise.success = function (fn) {
-                    promise.then(fn);
-                    return promise;
-                };
-
-                promise.error = function (fn) {
-                    promise.then(null, function (response) {
-                        fn(response.data, response.status);
-                    });
-                    return promise;
-                };
-
-                return promise;
+                return deferred.promise;
             },
             logout: function () {
                 delete $window.sessionStorage.user;
             },
             password: function (user) {
                 var deferred = $q.defer();
-                var promise = deferred.promise;
 
-                $http.post('auth/account/password', user, {type: 'application/json'})
-                    .success(deferred.resolve)
-                    .error(function (err, status) {
-                        deferred.reject({data: err, status: status});
+                $http.post('auth/account/password', user, { type: 'application/json' })
+                    .then(deferred.resolve)
+                    .catch(function (response) {
+                        deferred.reject({ error: response.data, status: response.status });
                     });
-
-                promise.success = function (fn) {
-                    promise.then(fn);
-                    return promise;
-                };
-
-                promise.error = function (fn) {
-                    promise.then(null, function (response) {
-                        fn(response.data, response.status);
-                    });
-                    return promise;
-                };
-
-                return promise;
+                return deferred.promise;
             },
             getUser: function () {
                 if (currentUser) {

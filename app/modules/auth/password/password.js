@@ -20,22 +20,22 @@ angular.module('auth.password', [])
             $scope.requesting = true;
 
             Auth.password(model)
-                .success(function () {
+                .then(function () {
                     $scope.alerts.push({
                         type: 'success',
                         msg: 'Das neue Passwort wurde an die hinterlegte E-Mail Adresse gesendet.'
                     });
                     $scope.requesting = false;
                 })
-                .error(function (error, status) {
+                .catch(function (response) {
                     $scope.requesting = false;
 
-                    if (status === 422 && error) {
-                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
-                    } else if (status === 404) {
-                        $scope.alerts.push({type: 'danger', msg: 'Die E-Mail ist nicht vorhanden.'});
+                    if (response.status === 422 && response.error) {
+                        lxUtils.populateServerErrors(response.error.errors || response.error, $scope.form);
+                    } else if (response.status === 404) {
+                        $scope.alerts.push({ type: 'danger', msg: 'Die E-Mail ist nicht vorhanden.' });
                     } else {
-                        $scope.alerts.push({type: 'danger', msg: 'Es ist ein Fehler aufgetreten.'});
+                        $scope.alerts.push({ type: 'danger', msg: 'Es ist ein Fehler aufgetreten.' });
                     }
                 });
         };

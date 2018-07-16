@@ -12,7 +12,7 @@ describe('auth', function () {
     describe('AuthPasswordCtrlTest', function () {
         beforeEach(inject(function ($controller, $rootScope, _$httpBackend_) {
             scope = $rootScope.$new();
-            $controller('AuthPasswordCtrl', {$scope: scope});
+            $controller('AuthPasswordCtrl', { $scope: scope });
             $httpBackend = _$httpBackend_;
         }));
 
@@ -24,7 +24,7 @@ describe('auth', function () {
 
         describe('has a function closeAlert() which', function () {
             it('should close an alert', function () {
-                scope.alerts = [{type: 'danger', msg: 'error'}];
+                scope.alerts = [{ type: 'danger', msg: 'error' }];
                 scope.closeAlert(0);
                 expect(scope.alerts.length).toBe(0);
             });
@@ -32,21 +32,21 @@ describe('auth', function () {
 
         describe('has a function send() which', function () {
             it('should return if form is invalid', function () {
-                scope.form = {$invalid: true};
-                scope.alerts = [{type: 'danger', msg: 'error'}];
+                scope.form = { $invalid: true };
+                scope.alerts = [{ type: 'danger', msg: 'error' }];
                 scope.requesting = false;
 
-                scope.send({email: 'foo@bar.com'});
+                scope.send({ email: 'foo@bar.com' });
 
                 expect(scope.requesting).toBeFalsy();
                 expect(scope.alerts.length).toBe(0);
             });
 
             it('should show success message', function () {
-                $httpBackend.expectPOST('auth/account/password', {email: 'foo@bar.com'}).respond(201, '');
-                scope.form = {$invalid: false};
+                $httpBackend.expectPOST('auth/account/password', { email: 'foo@bar.com' }).respond(201, '');
+                scope.form = { $invalid: false };
 
-                scope.send({email: 'foo@bar.com'});
+                scope.send({ email: 'foo@bar.com' });
                 $httpBackend.flush();
 
                 expect(scope.requesting).toBeFalsy();
@@ -58,7 +58,7 @@ describe('auth', function () {
                 var $setValidityName = '';
                 var $setValidityValid = null;
 
-                $httpBackend.expectPOST('auth/account/password', {email: 'foo@bar.com'}).respond(422, [{
+                $httpBackend.expectPOST('auth/account/password', { email: 'foo@bar.com' }).respond(422, [{
                     property: 'email',
                     message: 'Error message from test'
                 }]);
@@ -73,7 +73,7 @@ describe('auth', function () {
                     }
                 };
 
-                scope.send({email: 'foo@bar.com'});
+                scope.send({ email: 'foo@bar.com' });
                 $httpBackend.flush();
 
                 expect(scope.requesting).toBeFalsy();
@@ -84,10 +84,10 @@ describe('auth', function () {
             });
 
             it('should show 404 message', function () {
-                $httpBackend.expectPOST('auth/account/password', {email: 'foo@bar.com'}).respond(404, '');
-                scope.form = {$invalid: false};
+                $httpBackend.expectPOST('auth/account/password', { email: 'foo@bar.com' }).respond(404, '');
+                scope.form = { $invalid: false };
 
-                scope.send({email: 'foo@bar.com'});
+                scope.send({ email: 'foo@bar.com' });
                 $httpBackend.flush();
 
                 expect(scope.requesting).toBeFalsy();
@@ -96,10 +96,10 @@ describe('auth', function () {
             });
 
             it('should show an generic error for all errors except 400 and 401', function () {
-                $httpBackend.expectPOST('auth/account/password', {email: 'foo@bar.com'}).respond(500, '');
-                scope.form = {$invalid: false};
+                $httpBackend.expectPOST('auth/account/password', { email: 'foo@bar.com' }).respond(500, '');
+                scope.form = { $invalid: false };
 
-                scope.send({email: 'foo@bar.com'});
+                scope.send({ email: 'foo@bar.com' });
                 $httpBackend.flush();
 
                 expect(scope.requesting).toBeFalsy();

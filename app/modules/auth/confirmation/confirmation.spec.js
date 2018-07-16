@@ -12,9 +12,8 @@ describe('auth', function () {
         beforeEach(inject(function ($controller, $rootScope, _$httpBackend_, _$location_) {
             scope = $rootScope.$new();
             $location = _$location_;
-            $controller('AuthConfirmationCtrl', {$scope: scope, $routeParams: {id: '1'}, $location: $location});
+            $controller('AuthConfirmationCtrl', { $scope: scope, $routeParams: { id: '1' }, $location: $location });
             $httpBackend = _$httpBackend_;
-            //$httpBackend.expectGET(baseUri + 'auth/account/confirmation/1').respond(200, '');
         }));
 
         it('should be initialized correctly', function () {
@@ -26,7 +25,7 @@ describe('auth', function () {
         describe('has a function closeAlert() which', function () {
             it('should close an alert', function () {
                 scope.alerts = [
-                    {type: 'danger', msg: 'error'}
+                    { type: 'danger', msg: 'error' }
                 ];
                 scope.closeAlert(0);
                 expect(scope.alerts.length).toBe(0);
@@ -40,7 +39,7 @@ describe('auth', function () {
 
                 expect(scope.alerts.length).toBe(1);
                 expect(scope.alerts[0].type).toBe('success');
-                expect(scope.success).toBeTruthy();
+                expect(scope.then).toBeTruthy();
             });
 
             it('should show 404 message', function () {

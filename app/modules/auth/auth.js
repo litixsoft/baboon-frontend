@@ -18,7 +18,7 @@ angular.module('auth', [
     .constant('ACTIVE_APP', 'auth')
     .config(function ($routeProvider, $httpProvider) {
         $httpProvider.interceptors.push('authInterceptor');
-        $routeProvider.otherwise({redirectTo: '/auth/login'});
+        $routeProvider.otherwise({ redirectTo: '/auth/login' });
     })
     .factory('authInterceptor', function (BASE_URI) {
         return {

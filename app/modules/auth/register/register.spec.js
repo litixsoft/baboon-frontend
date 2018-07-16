@@ -12,7 +12,7 @@ describe('auth', function () {
     describe('AuthRegisterCtrl', function () {
         beforeEach(inject(function ($controller, $rootScope, _$httpBackend_) {
             scope = $rootScope.$new();
-            $controller('AuthRegisterCtrl', {$scope: scope});
+            $controller('AuthRegisterCtrl', { $scope: scope });
             $httpBackend = _$httpBackend_;
         }));
 
@@ -24,7 +24,7 @@ describe('auth', function () {
 
         describe('has a function closeAlert() which', function () {
             it('should close an alert', function () {
-                scope.alerts = [{type: 'danger', msg: 'error'}];
+                scope.alerts = [{ type: 'danger', msg: 'error' }];
                 scope.closeAlert(0);
                 expect(scope.alerts.length).toBe(0);
             });
@@ -40,8 +40,8 @@ describe('auth', function () {
             };
 
             it('should return if form is invalid', function () {
-                scope.form = {$invalid: true};
-                scope.alerts = [{msg: 'error'}];
+                scope.form = { $invalid: true };
+                scope.alerts = [{ msg: 'error' }];
 
                 scope.register(testData);
 
@@ -50,7 +50,7 @@ describe('auth', function () {
 
             it('should show success message', function () {
                 $httpBackend.expectPOST('auth/account/register', testData).respond(200, '');
-                scope.form = {$invalid: false};
+                scope.form = { $invalid: false };
 
                 scope.register(testData);
                 $httpBackend.flush();
@@ -61,7 +61,7 @@ describe('auth', function () {
                 var $setValidityValid = null;
 
                 $httpBackend.expectPOST('auth/account/register', testData).respond(422, [
-                    {property: 'email', message: 'Error message from test'}
+                    { property: 'email', message: 'Error message from test' }
                 ]);
                 scope.form = {
                     $invalid: false,
@@ -85,7 +85,7 @@ describe('auth', function () {
 
             it('should show an generic error for all errors except 400 and 401', function () {
                 $httpBackend.expectPOST('auth/account/register', testData).respond(500, '');
-                scope.form = {$invalid: false};
+                scope.form = { $invalid: false };
 
                 scope.register(testData);
                 $httpBackend.flush();

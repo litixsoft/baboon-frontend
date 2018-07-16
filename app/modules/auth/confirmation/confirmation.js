@@ -14,25 +14,25 @@ angular.module('auth.confirmation', [])
             $scope.alerts.splice(index, 1);
         };
 
-        function confirmation () {
+        function confirmation() {
             $scope.alerts.length = 0;
 
             Auth.confirmation($routeParams.id)
-                .success(function () {
+                .then(function () {
                     $scope.alerts.push({
                         type: 'success',
                         msg: 'Die Registrierungs ist nun abgeschlossen und Sie können sich am System anmelden.'
                     });
-                    $scope.success = true;
+                    $scope.then = true;
                 })
-                .error(function (error, status) {
-                    if (status === 404) {
-                        $scope.alerts.push({type: 'danger', msg: 'Es wurden keine Daten gefunden.'});
-                    } else if (status === 409) {
-                        $scope.alerts.push({type: 'danger', msg: 'Der Zeitraum der Bestätigung ist abgelaufen.'});
+                .catch(function (response) {
+                    if (response.status === 404) {
+                        $scope.alerts.push({ type: 'danger', msg: 'Es wurden keine Daten gefunden.' });
+                    } else if (response.status === 409) {
+                        $scope.alerts.push({ type: 'danger', msg: 'Der Zeitraum der Bestätigung ist abgelaufen.' });
                         $scope.isExpired = true;
                     } else {
-                        $scope.alerts.push({type: 'danger', msg: 'Es ist ein Fehler aufgetreten.'});
+                        $scope.alerts.push({ type: 'danger', msg: 'Es ist ein Fehler aufgetreten.' });
                     }
                 });
         }
@@ -42,19 +42,19 @@ angular.module('auth.confirmation', [])
             $scope.isExpired = false;
 
             var url = $location.absUrl().substr(0, $location.absUrl().indexOf('/confirmation') + 13);
-            $scope.alerts.push({type: 'info', msg: 'Die Bestätigungsmail wird erneut gesendet...'});
+            $scope.alerts.push({ type: 'info', msg: 'Die Bestätigungsmail wird erneut gesendet...' });
 
             Auth.renew($routeParams.id, url)
-                .success(function () {
+                .then(function () {
                     $scope.alerts.length = 0;
                     $scope.alerts.push({
                         type: 'success',
                         msg: 'Es wurde eine neue Bestätigungsmail an die hinterlegte E-Mail Adresse geschickt.'
                     });
                 })
-                .error(function () {
+                .catch(function () {
                     $scope.alerts.length = 0;
-                    $scope.alerts.push({type: 'danger', msg: 'Es ist ein Fehler aufgetreten.'});
+                    $scope.alerts.push({ type: 'danger', msg: 'Es ist ein Fehler aufgetreten.' });
                 });
         };
 

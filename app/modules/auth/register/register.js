@@ -25,16 +25,16 @@ angular.module('auth.register', [])
             $scope.requesting = true;
 
             Auth.register(user)
-                .success(function () {
+                .then(function () {
                     $location.path('/auth/login');
                 })
-                .error(function (error, status) {
+                .catch(function (response) {
                     $scope.requesting = false;
 
-                    if (status === 422 && error) {
-                        lxUtils.populateServerErrors(error.errors || error, $scope.form);
+                    if (response.status === 422 && response.error) {
+                        lxUtils.populateServerErrors(response.error.errors || response.error, $scope.form);
                     } else {
-                        $scope.alerts.push({msg: 'Es ist ein Fehler aufgetreten.'});
+                        $scope.alerts.push({ msg: 'Es ist ein Fehler aufgetreten.' });
                     }
                 });
         };

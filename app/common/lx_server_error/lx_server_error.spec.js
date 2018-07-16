@@ -5,7 +5,7 @@ describe('serverErrorTest', function () {
 
     beforeEach(module('common.servererror'));
 
-    beforeEach(inject(function($rootScope, $compile) {
+    beforeEach(inject(function ($rootScope, $compile) {
         scope = $rootScope.$new();
         var element = angular.element('<form name="form"><input type="password" ng-model="model.password" name="password" lx-server-error /></form>');
         $compile(element)(scope);
@@ -14,7 +14,7 @@ describe('serverErrorTest', function () {
         scope.$digest();
     }));
 
-    it('should clear the error message', function() {
+    it('should clear the error message', function () {
         scope.form.password.$setValidity('server', false);
         scope.form.password.$error.serverMsg = 'TestError';
         scope.model.password = 'pass';

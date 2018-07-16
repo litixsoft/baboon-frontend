@@ -10,6 +10,7 @@ echo "==== Reset node_modules and components ===="
 echo "==========================================="
 echo ""
 echo "=== Delete node_modules"
+rm package-lock.json
 rm -r ./node_modules
 echo "=== finished"
 echo ""
