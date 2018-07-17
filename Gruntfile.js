@@ -3,6 +3,7 @@
 var path = require('path');
 var fs = require('fs');
 var url = require('url');
+var serveStatic = require('serve-static');
 
 module.exports = function (grunt) {
     // Load grunt tasks automatically
@@ -115,7 +116,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // The actual grunt server settings
         connect: {
             options: {
@@ -129,8 +129,8 @@ module.exports = function (grunt) {
                     open: true,
                     middleware: function (connect) {
                         return [
-                            connect.static('.tmp'),
-                            connect.static(appConfig.app),
+                            serveStatic('.tmp'),
+                            serveStatic(appConfig.app),
                             connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.app, next);
                             })
@@ -143,8 +143,8 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
-                            connect.static('.tmp'),
-                            connect.static(appConfig.app),
+                            serveStatic('.tmp'),
+                            serveStatic(appConfig.app),
                             connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.app, next);
                             })
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
                     port: 9001,
                     middleware: function (connect) {
                         return [
-                            connect.static(appConfig.dist),
+                            serveStatic(appConfig.dist),
                             connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.dist, next);
                             })
@@ -170,7 +170,7 @@ module.exports = function (grunt) {
                     open: true,
                     middleware: function (connect) {
                         return [
-                            connect.static(appConfig.dist),
+                            serveStatic(appConfig.dist),
                             connect().use('/', function (req, res, next) {
                                 connectRewrite(req, res, appConfig.dist, next);
                             })
@@ -179,7 +179,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         // Make sure code styles are up to par and there are no obvious mistakes
         eslint: {
             all: {
@@ -210,7 +209,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         // Empties folders to start fresh
         clean: {
             dist: {
@@ -231,7 +229,6 @@ module.exports = function (grunt) {
             jslint: '<%= yeoman.reports %>/jslint',
             coverage: '<%= yeoman.reports %>/coverage'
         },
-
         // Add vendor prefixed styles
         autoprefixer: {
             options: {
@@ -248,7 +245,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // Renames files for browser caching purposes
         filerev: {
             dist: {
@@ -260,7 +256,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // Reads HTML for usemin blocks to enable smart builds that automatically
         // concat, minify and revision files. Creates configurations in memory so
         // additional tasks can operate on them
@@ -279,7 +274,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         // Performs rewrites based on filerev and the useminPrepare configuration
         usemin: {
             html: ['<%= yeoman.dist %>/**/*.html'],
@@ -288,7 +282,6 @@ module.exports = function (grunt) {
                 assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/assets/images']
             }
         },
-
         imagemin: {
             dist: {
                 files: [
@@ -301,7 +294,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         svgmin: {
             dist: {
                 files: [
@@ -314,7 +306,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         htmlmin: {
             dist: {
                 options: {
@@ -334,7 +325,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         uglify: {
             release: {
                 options: {
@@ -353,7 +343,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // ngAnnotate tries to make the code safe for minification automatically by
         // using the Angular long form for dependency injection. It doesn't work on
         // things like resolve or inject so those have to be done manually.
@@ -383,7 +372,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {
@@ -438,7 +426,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
@@ -453,7 +440,6 @@ module.exports = function (grunt) {
                 'svgmin'
             ]
         },
-
         // Test settings
         karma: {
             unit: {
@@ -498,7 +484,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         // Open browser for livereload or coverage
         open: {
             coverage: {
@@ -507,7 +492,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-
         // Build css files
         less: {
             target: {
@@ -525,7 +509,6 @@ module.exports = function (grunt) {
                 ]
             }
         },
-
         // Run commands
         bgShell: {
             updateWebdriver: {
@@ -549,11 +532,10 @@ module.exports = function (grunt) {
                 src: 'CHANGELOG.md'
             }
         },
-
         // Update version, changelog and commit
         bump: {
             options: {
-                files: ['package.json', 'bower.json'],
+                files: ['package.json'],
                 updateConfigs: ['pkg'],
                 commitFiles: ['.'],
                 commitMessage: 'chore: release v%VERSION%',
@@ -566,10 +548,6 @@ module.exports = function (grunt) {
                 scripts: ['angular.js', '../src.js'],
                 html5Mode: false
             },
-            //          tutorial: {
-            //              src: ['content/tutorial/*.ngdoc'],
-            //              title: 'Tutorial'
-            //          },
             api: {
                 src: ['app/lib/**/*.js', '!app/lib/**/*.spec.js', '!app/lib/**/*.min.js'],
                 title: 'API Documentation'
@@ -581,7 +559,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('git:commitHook', 'Install git commit hook', function () {
         grunt.file.copy('validate-commit-msg.js', '.git/hooks/commit-msg');
-        require('fs').chmodSync('.git/hooks/commit-msg', '0755');
+        fs.chmodSync('.git/hooks/commit-msg', '0755');
         grunt.log.ok('Registered git hook: commit-msg');
     });
 

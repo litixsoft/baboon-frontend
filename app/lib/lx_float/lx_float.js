@@ -17,7 +17,7 @@ angular.module('lx.float', [])
  *
  */
     .directive('lxFloat', function () {
-        var FLOAT_REGEXP = /^\-?\d+((\.|,)?(\d+)?)?$/;
+        var FLOAT_REGEXP = /^-?\d+((\.|,)?(\d+)?)?$/;
 
         function roundToDecimal(number, decimal) {
             var zeros = 1.0.toFixed(decimal);

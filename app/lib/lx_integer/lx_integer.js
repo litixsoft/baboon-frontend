@@ -13,7 +13,7 @@ angular.module('lx.integer', [])
      * For more information look at the [guide](/integer).
      */
     .directive('lxInteger', function () {
-        var INTEGER_REGEXP = /^\-?\d+$/;
+        var INTEGER_REGEXP = /^-?\d+$/;
 
         return {
             restrict: 'A',
