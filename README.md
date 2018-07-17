@@ -3,8 +3,7 @@
 # baboon-frontend
 > Baboon SPA frontend reference application, based on Angular, backend independent.
 
-> [![Bower version](https://badge.fury.io/bo/baboon-frontend.svg)](http://badge.fury.io/bo/baboon-frontend)
-[![Build Status](https://secure.travis-ci.org/litixsoft/baboon-frontend.svg?branch=master)](https://travis-ci.org/litixsoft/baboon-frontend)
+> [![Build Status](https://secure.travis-ci.org/litixsoft/baboon-frontend.svg?branch=master)](https://travis-ci.org/litixsoft/baboon-frontend)
 [![david-dm](https://david-dm.org/litixsoft/baboon-frontend.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-frontend/)
 [![david-dm](https://david-dm.org/litixsoft/baboon-frontend/dev-status.svg?theme=shields.io)](https://david-dm.org/litixsoft/baboon-frontend#info=devDependencies&view=table)
 
@@ -12,7 +11,7 @@
 
     $ bower install baboon-frontend
 
-The bower module includes only the lib with the directives and services. We are currently working on a yeoman generator for scaffolding a complete app.
+The module includes the lib with the directives and services.
 
 ## Documentation
 
@@ -114,17 +113,17 @@ This section describes how to set up your development environment to build and t
 
 #### System requirements
 
-* Node.js 10.22 or newer
+* Node.js 6.0 or newer
 
 Global node modules
 
 Linux / Mac:
 
-    $ sudo npm install -g bower grunt-cli
+    $ sudo npm install -g grunt-cli
 
 Windows:
 
-    $ npm install -g bower grunt-cli
+    $ npm install -g grunt-cli
 
 #### Install baboon-frontend and run the example app
 The example application is also the reference implementation of Baboon.
@@ -133,7 +132,6 @@ Fork Baboon repository and install the dependent modules with npm and bower.
     $ git clone https://github.com/litixsoft/baboon-frontend.git
     $ cd baboon-frontend
     $ npm install
-    $ bower install
     $ grunt serve
 
 The `grunt serve` command builds the example application in development mode, starts the server and opens the application in a browser.
@@ -187,7 +185,7 @@ Release a new major version
     $ grunt release:major
 
 ## Author
-[Litixsoft GmbH](http://www.litixsoft.de)
+[Litixsoft GmbH](https://www.litixsoft.de)
 
 ## License
-Copyright (c) 2014-2016 Litixsoft GmbH Licensed under the MIT license.
+Copyright (c) 2014-2018 Litixsoft GmbH Licensed under the MIT license.
