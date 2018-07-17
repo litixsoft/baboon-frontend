@@ -9,7 +9,7 @@
 
 ## Installation
 
-    $ bower install baboon-frontend
+    $ npm install baboon-frontend
 
 The module includes the lib with the directives and services.
 

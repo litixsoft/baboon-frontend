@@ -68,6 +68,7 @@ module.exports = function (grunt) {
     var appConfig = {
         app: 'app',
         dist: 'build/dist',
+        release: 'build/release',
         reports: 'build/reports',
         lint: [
             'Gruntfile.js',
@@ -219,6 +220,17 @@ module.exports = function (grunt) {
                             '.tmp',
                             '<%= yeoman.dist %>/**/*',
                             '!<%= yeoman.dist %>/.git*'
+                        ]
+                    }
+                ]
+            },
+            release: {
+                files: [
+                    {
+                        dot: true,
+                        src: [
+                            '<%= yeoman.release %>/**/*',
+                            'app/lib/**/*.min.js*'
                         ]
                     }
                 ]
@@ -422,6 +434,27 @@ module.exports = function (grunt) {
                         cwd: 'node_modules/',
                         src: ['angular*/**', 'bootstrap/**', 'font-awesome/**', '@uirouter/**'],
                         dest: '<%= yeoman.app %>/components/'
+                    }
+                ]
+            },
+            release: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        src: ['common/**', 'lib/**', 'docs/**'],
+                        dest: '<%= yeoman.release %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/assets/images',
+                        src: 'logo.png',
+                        dest: '<%= yeoman.release %>/app/assets/images'
+                    },
+                    {
+                        expand: true,
+                        src: ['*.md', 'package.json', 'LICENSE'],
+                        dest: '<%= yeoman.release %>'
                     }
                 ]
             }
@@ -660,6 +693,14 @@ module.exports = function (grunt) {
         'ngAnnotate:release',
         'uglify:release',
         'clean:lib'
+    ]);
+
+    grunt.registerTask('build:npm-release', [
+        'clean',
+        'docs',
+        'build:release',
+        'conventionalChangelog:release',
+        'copy:release'
     ]);
 
     grunt.registerTask('release', 'Bump version, update changelog and tag version', function (version) {
