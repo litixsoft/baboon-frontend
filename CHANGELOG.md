@@ -1,27 +1,5 @@
 <a name="0.10.0"></a>
-# [0.10.0](https://github.com/litixsoft/baboon-frontend/compare/v0.5.20...v0.10.0) (2018-07-17)
-
-
-### Features
-
-* move dependencies from bower to npm ([4da5f5e](https://github.com/litixsoft/baboon-frontend/commit/4da5f5e))
-* update angular to version 1.7.x ([db1045d](https://github.com/litixsoft/baboon-frontend/commit/db1045d))
-
-
-
-<a name="0.10.0"></a>
-# [0.10.0](https://github.com/litixsoft/baboon-frontend/compare/v0.5.20...v0.10.0) (2018-07-17)
-
-
-### Features
-
-* move dependencies from bower to npm ([4da5f5e](https://github.com/litixsoft/baboon-frontend/commit/4da5f5e))
-* update angular to version 1.7.x ([db1045d](https://github.com/litixsoft/baboon-frontend/commit/db1045d))
-
-
-
-<a name="0.10.0"></a>
-# [0.10.0](https://github.com/litixsoft/baboon-frontend/compare/v0.5.20...v0.10.0) (2018-07-17)
+# [0.10.0](https://github.com/litixsoft/baboon-frontend/compare/v0.5.20...v0.10.0) (2018-07-18)
 
 
 ### Features
