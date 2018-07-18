@@ -10,7 +10,8 @@ NG_DOCS={
       "type": "object",
       "moduleName": "lx.cache",
       "shortDescription": "Factory that constructs a simple in memory cache and gives access to them. It is an easy way to caches an object in memory.",
-      "keywords": "access api cache caches constructs easy factory lx lxcache memory object simple"
+      "keywords": "access api cache caches constructs easy factory lx lxcache memory object simple",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -19,7 +20,8 @@ NG_DOCS={
       "type": "object",
       "moduleName": "lx.confirm",
       "shortDescription": "Directive which encapsulates a modal confirm window.",
-      "keywords": "api confirm directive encapsulates lx modal object window"
+      "keywords": "api confirm directive encapsulates lx modal object window",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -28,7 +30,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.float",
       "shortDescription": "Convert and round any number to a float by given decimal places. It replaces a decimal comma with an decimal point. An non-float-input returns undefined. Optionally you can specify if the number should not be rounded.",
-      "keywords": "api comma convert decimal directive float input lx non-float-input number optionally places point replaces returns round rounded specifies true undefined"
+      "keywords": "api comma convert decimal directive float input lx non-float-input number optionally places point replaces returns round rounded specifies true undefined",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -37,7 +40,8 @@ NG_DOCS={
       "type": "object",
       "moduleName": "lx.form",
       "shortDescription": "Form service which allow caching, reset the object and populates validation errors.",
-      "keywords": "add allow angularjs api cache caching changed changes checks controller controls current currentkey defined errors false field form formcontroller hasloadedmodelfromcache isdirty isnew isunchanged key load loaded lx lxcache lxform master method model modelname object populates populateservervalidation property reset resetcache resetform resets resetservererrors resetted resetvalidation returns server service setmodel sets specifies true unchanged valid validation"
+      "keywords": "add allow angularjs api cache caching changed changes checks controller controls current currentkey defined errors false field form formcontroller hasloadedmodelfromcache isdirty isnew isunchanged key load loaded lx lxcache lxform master method model modelname object populates populateservervalidation property reset resetcache resetform resets resetservererrors resetted resetvalidation returns server service setmodel sets specifies true unchanged valid validation",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -46,7 +50,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.integer",
       "shortDescription": "Converts a number to an integer. It convert an empty string to null and a non-number-string to undefined.",
-      "keywords": "api convert converts directive empty input integer lx non-number-string null number string undefined"
+      "keywords": "api convert converts directive empty input integer lx non-number-string null number string undefined",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -55,7 +60,8 @@ NG_DOCS={
       "type": "object",
       "moduleName": "lx.navigation",
       "shortDescription": "Service for navigation. Gets or sets the navigation.",
-      "keywords": "$lxnavigation acl api app config configuration current data getnavigation lx method navigation object options service set sets setup user"
+      "keywords": "$lxnavigation acl api app config configuration current data getnavigation lx method navigation object options service set sets setup user",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -64,7 +70,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.navigation",
       "shortDescription": "Creates the navigation in a flat list.",
-      "keywords": "api creates directive flat horizontal layout links list lx navigation navlinklist navtemplatepath orientation overwrite path standard template vertical"
+      "keywords": "api creates directive flat horizontal layout links list lx navigation navlinklist navtemplatepath orientation overwrite path standard template vertical",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -73,7 +80,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.navigation",
       "shortDescription": "Creates the navigation in a tree list.",
-      "keywords": "api creates directive layout links list lx navigation navlinklist navtemplatepath overwrite path standard template tree"
+      "keywords": "api creates directive layout links list lx navigation navlinklist navtemplatepath overwrite path standard template tree",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -82,7 +90,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.pager",
       "shortDescription": "Creates an pager for custom or server side paging.",
-      "keywords": "api array callback called count creates current custom details directive display guide items lx onpaging pager pagesize pagesizes paging select server side size sizes user"
+      "keywords": "api array callback called count creates current custom details directive display guide items lx onpaging pager pagesize pagesizes paging select server side size sizes user",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -90,7 +99,8 @@ NG_DOCS={
       "shortName": "lx.socket",
       "type": "overview",
       "moduleName": "lx.socket",
-      "keywords": "api lx overview socket"
+      "keywords": "api lx overview socket",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -99,7 +109,8 @@ NG_DOCS={
       "type": "service",
       "moduleName": "lx.socket",
       "shortDescription": "Mapper for btford.socket-io with extended functionality.",
-      "keywords": "$log $lxsocket $rootscope $timeout actual addlistener adds angular api btford callback called checks connect connected connection connects console current data displays emit err error event eventname events extended factory false forward forwards function functionality io isconnected listen listener listeners log lx mapper merged message method object options raised register removealllisteners removed removelistener removes scope send server service set socket socket-io socketfactory socketio stack status success supplies timeout transport true type wayne wrong"
+      "keywords": "$log $lxsocket $rootscope $timeout actual addlistener adds angular api btford callback called checks connect connected connection connects console current data displays emit err error event eventname events extended factory false forward forwards function functionality io isconnected listen listener listeners log lx mapper merged message method object options raised register removealllisteners removed removelistener removes scope send server service set socket socket-io socketfactory socketio stack status success supplies timeout transport true type wayne wrong",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -108,7 +119,8 @@ NG_DOCS={
       "type": "service",
       "moduleName": "lx.socket",
       "shortDescription": "Set the host and connection options for socket",
-      "keywords": "$lxsocket amount api attempt attempting attempts automatically connect connect_error connect_timeout connection emitted error events host increases long lx maximum number options reconnect reconnection reconnectionattempts reconnectiondelay reconnectiondelaymax reconnections service set socket time timeout true type wait wrong"
+      "keywords": "$lxsocket amount api attempt attempting attempts automatically connect connect_error connect_timeout connection emitted error events host increases long lx maximum number options reconnect reconnection reconnectionattempts reconnectiondelay reconnectiondelaymax reconnections service set socket time timeout true type wait wrong",
+      "isDeprecated": false
     },
     {
       "section": "api",
@@ -117,7 +129,8 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "lx.sort",
       "shortDescription": "Directive for custom sorting or server side sorting.",
-      "keywords": "api callback called configuration custom details directive fieldname guide lx onsorting options property server side sort sorting sortopts"
+      "keywords": "api callback called configuration custom details directive fieldname guide lx onsorting options property server side sort sorting sortopts",
+      "isDeprecated": false
     }
   ],
   "apis": {
