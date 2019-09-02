@@ -25,5 +25,4 @@ matrix:
   allow_failures:
   - env: VERSION=master
 notifications:
-  slack:
-    secure: X8BnEnXD73U7Uaxxwv27pt5UUPBXS/k1IA4YoCPzj2dRFmq7A85Kwehv3OGS8KUiFn2EStQL16mnCXfGvIJCL54wzOYhu9Kg3HzdfmZdfppTYCNCKZpdjme4CLL7bobu16+BRopsVqF+RO9fTnPlzptcjJmkqQA3uFVeTwi4wUg=
+  slack: litixsoft:MK3nCw9B3WA7oIP075BqXrkX
