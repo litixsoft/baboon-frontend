@@ -54,7 +54,7 @@
         "angular-route": "1.7.2",
         "angular-socket-io": "0.7.0",
         "@uirouter/angularjs": "1.0.18",
-        "bootstrap": "3.3.7",
+        "bootstrap": "3.4.1",
         "font-awesome": "4.7.0"
     },
     "devDependencies": {
