@@ -48,7 +48,7 @@
         "test": "grunt travis --stack"
     },
     "dependencies": {
-        "angular": "1.7.2",
+        "angular": "1.8.0",
         "angular-bootstrap": "0.12.2",
         "angular-messages": "1.7.2",
         "angular-route": "1.7.2",
